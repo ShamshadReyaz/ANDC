@@ -1,3 +1,4 @@
+/*
 buildscript {
     repositories {
         maven { url 'https://maven.fabric.io/public' }
@@ -7,10 +8,12 @@ buildscript {
         classpath 'io.fabric.tools:gradle:1.+'
     }
 }
+*/
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'com.google.gms.google-services'
+    id 'kotlin-android-extensions'
 }
 repositories {
     mavenCentral()
@@ -24,8 +27,8 @@ android {
 
     defaultConfig {
         applicationId "com.careerlauncher.gkninja"
-        minSdkVersion minSdk
-        targetSdkVersion targetSdk
+        minSdkVersion 21
+        targetSdkVersion 30
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
@@ -57,13 +60,13 @@ dependencies {
     implementation 'com.google.android.material:material:1.2.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
 
-    implementation platform('com.google.firebase:firebase-bom:25.12.0')
+   // implementation platform('com.google.firebase:firebase-bom:25.12.0')
     implementation "com.android.support:appcompat-v7:${support_lib_version}"
     implementation "com.android.support:design:${support_lib_version}"
-    implementation 'com.google.firebase:firebase-crashlytics:17.2.2'
+   // implementation 'com.google.firebase:firebase-crashlytics:17.2.2'
 
     // Recommended: Add the Google Analytics SDK.
-    implementation 'com.google.firebase:firebase-analytics:18.0.0'
+  //  implementation 'com.google.firebase:firebase-analytics:18.0.0'
     implementation 'com.android.support:multidex:1.0.2'
     implementation "com.squareup.retrofit2:retrofit:${retrofit_lib_version}"
     implementation "com.squareup.retrofit2:converter-gson:${retrofit_lib_version}"

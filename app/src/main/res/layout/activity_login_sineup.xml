@@ -21,16 +21,6 @@
         android:orientation="vertical"
         android:padding="@dimen/d_20dp">
 
-        <com.facebook.drawee.view.SimpleDraweeView
-            android:id="@+id/sdv"
-            android:layout_width="@dimen/d_100dp"
-            android:layout_height="@dimen/d_100dp"
-            android:layout_centerHorizontal="true"
-            android:layout_gravity="center"
-            android:layout_marginBottom="@dimen/d_10dp"
-            android:scaleType="centerCrop"
-            app:actualImageResource="@mipmap/ic_launcher_round"
-            app:roundAsCircle="true" />
 
         <TextView
             android:id="@+id/title"

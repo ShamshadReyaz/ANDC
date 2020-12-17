@@ -51,18 +51,6 @@
                 app:cardCornerRadius="@dimen/d_8dp"
                 app:cardElevation="@dimen/d_1dp">
 
-                <com.facebook.drawee.view.SimpleDraweeView
-                    android:id="@+id/sdv_banner"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/ic_ninja_banner"
-                    app:roundBottomEnd="true"
-                    app:roundBottomStart="true"
-                    app:roundTopEnd="true"
-                    app:roundTopStart="true"
-                    app:roundedCornerRadius="@dimen/d_10dp" />
-
             </androidx.cardview.widget.CardView>
 
             <RelativeLayout

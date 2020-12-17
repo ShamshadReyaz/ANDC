@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:clickable="true"
+    android:focusable="true">
+
+    <TextView
+        android:id="@+id/messageFooter"
+        style="@style/TextViewStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/light_gray"
+        android:fontFamily="@font/poppins_regular"
+        android:gravity="center_horizontal"
+        android:padding="@dimen/d_5dp"
+        android:textColor="@color/textColor"
+        android:textSize="@dimen/d_12dp" />
+
+    <LinearLayout
+        android:id="@+id/l1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="@color/colorPrimary"
+        android:orientation="horizontal"
+        android:padding="@dimen/d_5dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.15"
+            android:text="Rank"
+            android:gravity="center_horizontal"
+            android:fontFamily="@font/poppins_medium"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/text_size_small"
+            android:textStyle="bold" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.15"
+            android:text="Rank"
+            android:visibility="invisible"
+            android:gravity="center_horizontal"
+            android:fontFamily="@font/poppins_medium"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/text_size_small"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="Student"
+            android:fontFamily="@font/poppins_medium"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/text_size_small"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            android:gravity="center_horizontal"
+            android:text="Points"
+            android:fontFamily="@font/poppins_medium"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/text_size_small"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/messageFooter"
+        android:layout_below="@id/l1" />
+
+</RelativeLayout>

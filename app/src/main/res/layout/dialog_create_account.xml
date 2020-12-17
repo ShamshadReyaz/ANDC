@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.25"></RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.8"
+            android:background="@drawable/shape_rect_white_fill_corners"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.1" />
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.9">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginBottom="@dimen/d_5dp"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:text="Create Account"
+                        android:textColor="@color/textColorGame"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/label"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/name"
+                        android:layout_centerHorizontal="true"
+                        android:background="@color/light_gray"
+                        android:fontFamily="@font/poppins_medium"
+                        android:paddingLeft="@dimen/d_20dp"
+                        android:paddingTop="@dimen/d_5dp"
+                        android:paddingBottom="5dp"
+                        android:text="Personal Details"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="13sp" />
+
+                    <LinearLayout
+                        android:id="@+id/l1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/label"
+                        android:orientation="vertical"
+                        android:paddingLeft="@dimen/d_20dp"
+                        android:paddingTop="@dimen/d_10dp"
+                        android:paddingRight="@dimen/d_20dp"
+                        android:paddingBottom="@dimen/d_10dp">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/et_full_name_layout"
+                            style="@style/MyDenseOutlined"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColorHint="@color/colorGray"
+                            app:boxStrokeColor="@color/colorGray"
+                            app:errorEnabled="true">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/fullName"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="Enter Your Name"
+                                android:imeOptions="actionNext"
+                                android:inputType="textEmailAddress"
+                                android:textColor="@color/colorBlack"
+                                android:textSize="@dimen/d_13sp" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <TextView
+                            style="@style/TextViewStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_medium"
+                            android:text="Select Gender"
+                            android:textColor="@color/colorGray"
+                            android:textSize="@dimen/d_13sp" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/male"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/radio_selector_blue"
+                                android:paddingLeft="@dimen/d_10dp"
+                                android:paddingTop="@dimen/d_5dp"
+                                android:paddingRight="@dimen/d_10dp"
+                                android:paddingBottom="@dimen/d_5dp"
+                                android:text="Male"
+                                android:textColor="@color/radio_text_selector_2"
+                                android:textSize="13sp" />
+
+                            <TextView
+                                android:id="@+id/female"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/radio_selector_blue_v2"
+                                android:paddingLeft="@dimen/d_10dp"
+                                android:paddingTop="@dimen/d_5dp"
+                                android:paddingRight="@dimen/d_10dp"
+                                android:paddingBottom="@dimen/d_5dp"
+                                android:text="Female"
+                                android:textColor="@color/radio_text_selector_2"
+                                android:textSize="13sp" />
+
+                            <TextView
+                                android:id="@+id/others"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/radio_selector_pink"
+                                android:paddingLeft="@dimen/d_10dp"
+                                android:paddingTop="@dimen/d_5dp"
+                                android:paddingRight="@dimen/d_10dp"
+                                android:paddingBottom="@dimen/d_5dp"
+                                android:text="Others"
+                                android:textColor="@color/radio_text_selector_2"
+                                android:textSize="@dimen/d_13sp" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/label2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/l1"
+                        android:layout_centerHorizontal="true"
+                        android:background="@color/light_gray"
+                        android:fontFamily="@font/poppins_medium"
+                        android:paddingLeft="@dimen/d_20dp"
+                        android:paddingTop="@dimen/d_5dp"
+                        android:paddingBottom="5dp"
+                        android:text="Contact Details"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="13sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/label2"
+                        android:orientation="vertical"
+                        android:paddingLeft="@dimen/d_20dp"
+                        android:paddingTop="@dimen/d_10dp"
+                        android:paddingRight="@dimen/d_20dp"
+                        android:paddingBottom="@dimen/d_10dp">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/et_email_address_layout"
+                            style="@style/MyDenseOutlined"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColorHint="@color/colorGray"
+                            app:boxStrokeColor="@color/colorGray"
+                            app:errorEnabled="true">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/emailAddress"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="Enter Email Address"
+                                android:imeOptions="actionNext"
+                                android:inputType="textEmailAddress"
+                                android:textColor="@color/colorBlack"
+                                android:textSize="@dimen/d_13sp" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/et_mobile_layout"
+                            style="@style/MyDenseOutlined"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColorHint="@color/colorGray"
+                            app:boxStrokeColor="@color/colorGray"
+                            app:errorEnabled="true">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/mobileNumber"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="Enter Mobile Number"
+                                android:imeOptions="actionDone"
+                                android:inputType="phone"
+                                android:maxLength="10"
+                                android:textColor="@color/colorBlack"
+                                android:textSize="@dimen/d_13sp" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/etOtpTextInputLayout"
+                            style="@style/MyDenseOutlined"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:visibility="gone"
+                            android:textColorHint="@color/colorGray"
+                            app:boxStrokeColor="@color/colorGray"
+                            app:errorEnabled="true">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/otpNumber"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="Enter OTP"
+                                android:imeOptions="actionDone"
+                                android:inputType="phone"
+                                android:maxLength="4"
+                                android:textColor="@color/colorBlack"
+                                android:textSize="@dimen/d_13sp" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/btn_send_otp"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/d_5dp"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/poppins_medium"
+                                android:text="SEND OTP"
+                                android:textColor="@color/colorWhite"
+                                app:backgroundTint="@color/colorBlack"
+                                app:cornerRadius="3dp"
+                                app:elevation="5dp" />
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/resendOtp"
+                                android:layout_width="0dp"
+                                android:layout_marginLeft="10dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/d_5dp"
+                                android:layout_weight="1"
+                                android:visibility="gone"
+                                android:fontFamily="@font/poppins_medium"
+                                android:text="RE-SEND OTP"
+                                android:textColor="@color/colorWhite"
+                                app:backgroundTint="@color/colorNavyBlue"
+                                app:cornerRadius="3dp"
+                                app:elevation="5dp" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+            </androidx.core.widget.NestedScrollView>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.3">
+
+            <RelativeLayout
+                android:id="@+id/r1"
+                android:layout_width="110dp"
+                android:layout_height="110dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/circle_shape_grey">
+
+                <ImageView
+                    android:id="@+id/image"
+                    android:layout_width="105dp"
+                    android:layout_height="105dp"
+                    android:layout_centerInParent="true" />
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.7">
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

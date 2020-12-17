@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/nin_splash"
+        android:foreground="@color/foreground_clr" />
+
+    <TextView
+        android:id="@+id/appName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:drawableTop="@drawable/clgklogo_small"
+        android:fontFamily="@font/poppins_semibold"
+        android:text="CL GK Ninja"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/d_25sp"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
+
+        <com.careerlauncher.gkninja.utils.hankline.LineTextView
+            android:id="@+id/lineTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="This is LineTextView\nToday is Monday"
+            android:textSize="20sp"
+            android:paddingLeft="60dp"
+            android:paddingRight="60dp"
+            android:paddingTop="@dimen/d_10dp"
+            android:paddingBottom="@dimen/d_10dp"
+            android:drawableTop="@drawable/clgklogo_small"
+            android:drawablePadding="@dimen/d_10dp"
+            android:fontFamily="@font/poppins_medium"
+            android:textColor="@color/colorWhite"
+            android:gravity="center_horizontal"
+            app:animationDuration="3000"
+            app:lineColor="@color/colorLightGray"
+            app:lineWidth="4dp" />
+
+        <com.careerlauncher.gkninja.utils.hankfade.FadeTextView
+            android:id="@+id/fadeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="@dimen/d_10dp"
+            android:fontFamily="@font/poppins_medium"
+            android:text="jsbcjscjscjs"
+            android:textColor="@color/colorWhite"
+            android:textSize="20sp"
+            app:animationDuration="3000" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/footer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="@font/poppins_light"
+        android:gravity="center_horizontal"
+        android:background="@color/foreground_clr"
+        android:padding="10dp"
+        android:text="Powered by CareerLauncher"
+        android:textColor="@color/colorWhite"
+        android:textSize="14sp" />
+
+</RelativeLayout>

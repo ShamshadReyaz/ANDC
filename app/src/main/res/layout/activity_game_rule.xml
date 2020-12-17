@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include layout="@layout/include_layout_toolbar" />
+    <LinearLayout
+        android:id="@+id/footer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
+        <CheckBox
+            android:id="@+id/chkbox"
+            style="@style/TextViewStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/d_10dp"
+            android:visibility="gone"
+            android:buttonTint="@color/textColor"
+            android:layout_marginRight="@dimen/d_10dp"
+            android:fontFamily="@font/poppins_medium"
+            android:textColor="@color/textColor"
+            android:text="I have read all the rules, don't show again." />
+
+        <Button
+            android:id="@+id/btn_play"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="@dimen/d_10dp"
+            android:background="@drawable/rectangle_background_curve_save_next"
+            android:fontFamily="@font/poppins_medium"
+            android:text="Play GK Ninja"
+            android:textColor="@color/colorWhite" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/headerLayout"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/footer"
+        android:layout_below="@+id/rl_toolbar"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_label_game_rules"
+            style="@style/TextViewStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/d_20dp"
+            android:layout_marginTop="@dimen/d_14dp"
+            android:fontFamily="@font/poppins_medium"
+            android:text="@string/game_rules" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_rules"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/d_10dp" />
+
+        <TextView
+            android:id="@+id/tv_label_terms"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/d_20dp"
+            android:fontFamily="@font/poppins_italic"
+            android:text="* T &amp; C apply."
+            android:textColor="@color/colorGray"
+            android:textSize="@dimen/text_size_small" />
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/noResult"
+        android:text="No result found. Please try again later"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>

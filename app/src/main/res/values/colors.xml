@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#FFFFFF</color>
+    <color name="colorPrimaryDark">#FFFFFF</color>
+    <color name="colorAccent">#3C3C3C</color>
+    <color name="textColor">#737474</color>
+
+    <color name="color_unplayed">#323232</color>
+    <color name="color_buffered">#b2b2b2</color>
+    <color name="background">#F4F3F3</color>
+    <color name="bottom_active">#282C3F</color>
+    <color name="bottom_inactive">#737474</color>
+    <color name="mtrl_textinput_default_box_stroke_color">#ababab</color>
+    <color name="cardviewbackground">#FFFFFF</color>
+    <color name="textColorGame">#282C3F</color>
+    <color name="iconColor">#4d4b4d</color>
+    <color name="tabEvenBakgrnd">#FFFFFF</color>
+    <color name="tabOddBakgrnd">#e5e5e5</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="tabTextColor">#f15a22</color>
+    <color name="selecetdTabColor">#000000</color>
+    <color name="colorBlack">#3C3C3C</color>
+    <color name="colorHint">#BDBDBD</color>
+    <color name="colorScreenBG">#f1F1F1</color>
+    <color name="colorLightGray">#E9E9E9</color>
+    <color name="colorGray">#ababab</color>
+    <color name="colorRed">#FF4750</color>
+    <color name="colorGrayText">#727272</color>
+    <color name="colorGrayBorder">#D9D9D9</color>
+    <color name="colorPink">#FFF06292</color>
+    <color name="colorBlue">#6363ff</color>
+    <color name="colorSky">#D5E8FE</color>
+    <color name="showcase">#AA000000</color>
+    <color name="colorIconInactive">#737474</color>
+    <color name="colorIconActive">#282C3F</color>
+    <color name="colorIconActive_parent">#148323</color>
+    <color name="colorYellow">#ffa500</color>
+    <color name="colorOrange">#fb1f0b</color>
+    <color name="colorGreen">#148323</color>
+    <color name="colorNavyBlue">#00205f</color>
+    <color name="colorLightYellow">#ffe1aa</color>
+    <color name="gray">#4A4A4A</color>
+    <color name="orange">#ffa500</color>
+    <color name="green">#148323</color>
+    <color name="orange_dark">#f15a22</color>
+    <color name="light_yellow">#ffe1aa</color>
+    <color name="light_green">#def8e1</color>
+    <color name="light_gray">#F4F3F3</color>
+    <color name="option_green">#2A5D5B</color>
+    <color name="blue_bakground">#141A33</color>
+    <color name="foreground_clr">#B3000000</color>
+    <color name="settingiconColor">#737474</color>
+    <color name="red_active">#f44336</color>
+    <color name="purple_active">#9c27b0</color>
+    <color name="blue_active">#03a9f4</color>
+    <color name="green_active">#4caf50</color>
+    <color name="blue_grey_active">#607d8b</color>
+    <color name="yellow_active">#ffeb3b</color>
+    <color name="orange_active">#ff9800</color>
+    <color name="grey_active">#9e9e9e</color>
+
+    <color name="red_inactive">#e57373</color>
+    <color name="purple_inactive">#ba68c8</color>
+    <color name="blue_inactive">#64b5f6</color>
+    <color name="green_inactive">#81c784</color>
+    <color name="blue_grey_inactive">#90a4ae</color>
+    <color name="yellow_inactive">#fff176</color>
+    <color name="orange_inactive">#ffb74d</color>
+    <color name="gery_inactive">#e0e0e0</color>
+    <color name="red_bg_light">#ffebee</color>
+
+
+</resources>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3C3C3C</color>
+    <color name="colorPrimaryDark">#3C3C3C</color>
+    <color name="colorAccent">#3C3C3C</color>
+    <color name="textColor">#FFFFFF</color>
+    <color name="textColorGame">#FFFFFF</color>
+    <color name="iconColor">#FFFFFF</color>
+    <color name="settingiconColor">#FFFFFF</color>
+    <color name="gray">#dbd9d9</color>
+    <color name="tabTextColor">#ffffff</color>
+    <color name="tabEvenBakgrnd">#696969</color>
+    <color name="tabOddBakgrnd">#808080</color>
+    <color name="selecetdTabColor">#f15a22</color>
+    <color name="background">#000000</color>
+    <color name="cardviewbackground">#000000</color>
+</resources>

@@ -1,0 +1,83 @@
+{
+  "project_info": {
+    "project_number": "574523111549",
+    "firebase_url": "https://projects-270d9.firebaseio.com",
+    "project_id": "projects-270d9",
+    "storage_bucket": "projects-270d9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:574523111549:android:e5e77a13218bcf304d1914",
+        "android_client_info": {
+          "package_name": "com.careerlauncher.ai"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "574523111549-ns96totdq46e88fpai1dul4h0pu89m3e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCZxaLC9IeTLo2hKiMY7-VNGuWRQ1uEjic"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "574523111549-ns96totdq46e88fpai1dul4h0pu89m3e.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "574523111549-jprc0im1qf1t8l44186dad9iddbf76ft.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.careerlauncher.ai"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:574523111549:android:a2e4254eb15f34684d1914",
+        "android_client_info": {
+          "package_name": "com.careerlauncher.gkninja"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "574523111549-ns96totdq46e88fpai1dul4h0pu89m3e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCZxaLC9IeTLo2hKiMY7-VNGuWRQ1uEjic"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "574523111549-ns96totdq46e88fpai1dul4h0pu89m3e.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "574523111549-jprc0im1qf1t8l44186dad9iddbf76ft.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.careerlauncher.ai"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

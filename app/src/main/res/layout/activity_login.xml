@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+     <RelativeLayout
+         android:layout_width="match_parent"
+         android:background="@drawable/nin_splash"
+         android:foreground="@color/foreground_clr"
+         android:layout_height="match_parent"/>
+    <TextView
+        android:id="@+id/footer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="@font/poppins_light"
+        android:gravity="center_horizontal"
+        android:background="@color/foreground_clr"
+        android:padding="10dp"
+        android:text="Powered by CareerLauncher"
+        android:textColor="@color/colorWhite"
+        android:textSize="14sp" />
+
+    <LinearLayout
+        android:id="@+id/loginLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_margin="20dp"
+        android:background="@drawable/rectangle_background_gray"
+        android:orientation="vertical"
+        android:padding="@dimen/d_20dp"
+       >
+        <TextView
+            style="@style/TextViewStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_medium"
+            android:text="CL GK Ninja"
+            android:drawableTop="@drawable/clgklogo_small"
+            android:layout_gravity="center_horizontal"
+            android:textSize="@dimen/text_size_large"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/message"
+            style="@style/TextViewStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/d_10dp"
+            android:background="@drawable/rectangle_background_login_red"
+            android:ellipsize="end"
+            android:fontFamily="@font/poppins_medium"
+            android:padding="@dimen/d_10dp"
+            android:text="Someone is already loggedin into you account, please login again to access your account!"
+            android:textColor="#990000"
+            android:textSize="@dimen/text_size_normal"
+            android:visibility="gone" />
+        <RelativeLayout
+            android:id="@+id/logoutMessageLayout"
+            android:layout_width="match_parent"
+            android:visibility="gone"
+            android:background="@drawable/rectangle_background_login_red"
+            android:layout_height="wrap_content">
+            <TextView
+
+                style="@style/TextViewStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="@dimen/d_10dp"
+                android:ellipsize="end"
+                android:layout_marginTop="@dimen/d_5dp"
+                android:fontFamily="@font/poppins_medium"
+                android:padding="@dimen/d_10dp"
+                android:text="You have successfully logged out!"
+                android:textColor="#990000"
+                android:textSize="@dimen/text_size_normal"
+                android:visibility="visible" />
+            <ImageView
+                android:id="@+id/closeLogoutMessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/d_2dp"
+                android:visibility="gone"
+                android:layout_margin="@dimen/d_4dp"
+                android:background="@drawable/circle_shape_grey"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/ic_close_small" />
+        </RelativeLayout>
+
+        <TextView
+            style="@style/TextViewStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_medium"
+            android:text="@string/txt_sign_in"
+            android:textSize="@dimen/text_size_large"
+            android:textStyle="bold" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/et_user_email_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:boxStrokeColor="@color/colorGray"
+            android:textColorHint="@color/colorGray"
+            style="@style/MyDenseOutlined"
+            app:errorEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_user_email"
+                android:layout_width="match_parent"
+                android:imeOptions="actionNext"
+                android:textColor="@color/colorBlack"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/d_14sp"
+                android:inputType="textEmailAddress"
+                android:hint="Enter Username" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/et_password_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:boxStrokeColor="@color/colorGray"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@color/colorGray"
+            android:textColorHint="@color/colorGray"
+            style="@style/MyDenseOutlined"
+            app:errorEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_password"
+                android:layout_width="match_parent"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/d_14sp"
+                android:inputType="textPassword"
+                android:layout_height="wrap_content"
+                android:hint="Enter Password" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp">
+
+            <TextView
+                android:id="@+id/forgotUsernameLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:fontFamily="@font/poppins_medium"
+                android:text="@string/txt_forgot_username"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/d_14sp" />
+
+            <TextView
+                android:id="@+id/forgotPasswordLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_gravity="end"
+                android:fontFamily="@font/poppins_medium"
+                android:text="@string/txt_forgot_password"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/d_14sp" />
+
+        </FrameLayout>
+
+        <CheckBox
+            android:id="@+id/rememberMe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="-5dp"
+            android:layout_marginTop="@dimen/d_10dp"
+            android:buttonTint="@color/orange_dark"
+            android:fontFamily="@font/poppins_medium"
+            android:text="@string/txt_remember_me"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/text_size_small" />
+        <CheckBox
+            android:id="@+id/loginInWebBrowser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_marginStart="-5dp"
+            android:buttonTint="@color/textColor"
+            android:fontFamily="@font/poppins_medium"
+            android:text="Open App in Web Mode"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/text_size_small" />
+
+       <!-- <Button
+            android:id="@+id/btn_sign_in"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/d_20dp"
+            style="@style/Widget.MaterialComponents.Button.Icon"
+            app:background="@drawable/shape_rect_orange_fill"
+            android:fontFamily="@font/poppins_medium"
+            android:text="@string/txt_log_in"
+            android:textColor="@color/colorPrimary" />
+       -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_sign_in"
+            android:fontFamily="@font/poppins_medium"
+            app:elevation="5dp"
+            android:layout_marginTop="@dimen/d_5dp"
+            app:backgroundTint="@color/orange_dark"
+            app:cornerRadius="3dp"
+            android:textColor="@color/colorWhite"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="LOG IN" />
+        <TextView
+            android:id="@+id/createAccount"
+            style="@style/TextViewStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:visibility="gone"
+            android:fontFamily="@font/poppins_regular"
+            android:padding="@dimen/d_10dp"
+            android:layout_marginTop="@dimen/d_5dp"
+            android:text="@string/txt_create_an_account"
+            android:textColor="@color/orange_dark"
+            android:textSize="@dimen/text_size_normal" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/forgotLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:padding="@dimen/d_20dp">
+        <TextView
+            style="@style/TextViewStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_medium"
+            android:text="CL GK Ninja"
+            android:drawableTop="@drawable/clgklogo_small"
+            android:layout_gravity="center_horizontal"
+            android:textSize="@dimen/text_size_title"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/forgotHeader"
+            style="@style/TextViewStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_semibold"
+            android:text="Forgot Username"
+            android:textColor="@color/colorGrayText"
+            android:textSize="@dimen/text_size_title"
+           />
+
+        <TextView
+            style="@style/TextViewStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/d_5dp"
+            android:fontFamily="@font/poppins_medium"
+            android:textColor="@color/colorGrayText"
+            android:text="@string/forgot_text"
+            android:textSize="@dimen/d_16dp" />
+
+        <EditText
+            android:id="@+id/et_forgot_email"
+            style="@style/EditTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/d_10dp"
+            android:padding="@dimen/d_10dp"
+            android:background="@drawable/selector_edittext_create_account"
+            android:fontFamily="@font/poppins_medium"
+            android:hint="Email Id"
+            android:imeOptions="actionDone"
+            android:inputType="textEmailAddress" />
+        <TextView
+            style="@style/TextViewStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/d_5dp"
+            android:fontFamily="@font/poppins_semibold"
+            android:textColor="@color/colorGrayText"
+            android:text="OR"
+            android:layout_gravity="center_horizontal"
+            android:textSize="@dimen/text_size_title" />
+        <EditText
+            android:id="@+id/et_forgot_mobilenumber"
+            style="@style/EditTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/d_10dp"
+            android:padding="@dimen/d_10dp"
+            android:background="@drawable/selector_edittext_create_account"
+            android:fontFamily="@font/poppins_medium"
+            android:hint="Mobile number"
+            android:imeOptions="actionDone"
+            android:inputType="phone" />
+
+
+        <Button
+            android:id="@+id/btn_getpassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/d_20dp"
+            android:background="@drawable/shape_rect_orange_fill"
+            android:fontFamily="@font/poppins_medium"
+            android:text="Continue"
+            android:textColor="@color/colorPrimary" />
+        <TextView
+            style="@style/TextViewStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/poppins_italic"
+            android:textColor="@color/colorGrayText"
+            android:autoLink="email"
+
+            android:text="@string/help_id"
+            android:textSize="@dimen/d_12sp" />
+        <TextView
+            android:id="@+id/gotToLogin"
+            style="@style/TextViewStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:fontFamily="@font/poppins_regular"
+            android:layout_marginTop="@dimen/d_10dp"
+            android:padding="@dimen/d_10dp"
+            android:text="Go to Login page"
+            android:textColor="@color/orange_dark"
+            android:textSize="@dimen/text_size_normal" />
+        <TextView
+            android:id="@+id/chooseUserNameLabel"
+            style="@style/TextViewStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/d_10dp"
+            android:visibility="gone"
+            android:fontFamily="@font/poppins_regular"
+            android:text="Which one is your's Username?"
+            android:textSize="@dimen/text_size_normal" />
+        <RadioGroup
+            android:id="@+id/userNameGroup"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </RadioGroup>
+    </LinearLayout>
+
+</RelativeLayout>

@@ -188,8 +188,5 @@
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-    <include layout="@layout/layout_progressbar" />
-
-    <include layout="@layout/layout_progressbar" />
 
 </FrameLayout>

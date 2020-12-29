@@ -158,7 +158,7 @@
 
     <style name="YellowButtonStyle">
         <item name="android:textSize">@dimen/text_size_normal</item>
-        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textColor">@color/colorBlack</item>
         <item name="android:fontFamily">@font/poppins_regular</item>
         <item name="android:background">@drawable/shape_rect_yellow_fill</item>
     </style>

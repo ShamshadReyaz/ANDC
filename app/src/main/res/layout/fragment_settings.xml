@@ -255,7 +255,10 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/d_10dp">
+                    android:paddingLeft="@dimen/d_10dp"
+                    android:paddingRight="@dimen/d_10dp"
+                    android:paddingTop="@dimen/d_5dp"
+                    android:paddingBottom="@dimen/d_5dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -263,6 +266,7 @@
                         android:layout_alignParentLeft="true"
                         android:drawableLeft="@drawable/ic_sound"
                         android:drawablePadding="8dp"
+                        android:layout_centerVertical="true"
                         android:textColor="@color/textColor"
                         android:fontFamily="@font/poppins_regular"
                         android:gravity="center_vertical"
@@ -294,7 +298,11 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/d_10dp">
+                    android:paddingLeft="@dimen/d_10dp"
+                    android:paddingRight="@dimen/d_10dp"
+                    android:paddingTop="@dimen/d_5dp"
+                    android:paddingBottom="@dimen/d_5dp"
+                    >
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -302,6 +310,7 @@
                         android:layout_alignParentLeft="true"
                         android:drawableLeft="@drawable/ic_dark"
                         android:drawablePadding="8dp"
+                        android:layout_centerVertical="true"
                         android:fontFamily="@font/poppins_regular"
                         android:gravity="center_vertical"
                         android:text="Dark Mode"
@@ -333,7 +342,11 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/d_10dp">
+                    android:paddingLeft="@dimen/d_10dp"
+                    android:paddingRight="@dimen/d_10dp"
+                    android:paddingTop="@dimen/d_5dp"
+                    android:paddingBottom="@dimen/d_5dp"
+                    >
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -341,6 +354,7 @@
                         android:layout_alignParentLeft="true"
                         android:drawableLeft="@drawable/notifications"
                         android:drawablePadding="8dp"
+                        android:layout_centerVertical="true"
                         android:fontFamily="@font/poppins_regular"
                         android:gravity="center_vertical"
                         android:text="Notification"

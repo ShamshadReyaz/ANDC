@@ -8,13 +8,12 @@
 <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-    <com.facebook.drawee.view.SimpleDraweeView
+    <ImageView
         android:id="@+id/sdv_banner"
         android:foreground="@color/foreground_clr"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
-        android:scaleType="centerCrop"
         />
 <TextView
     android:id="@+id/label"

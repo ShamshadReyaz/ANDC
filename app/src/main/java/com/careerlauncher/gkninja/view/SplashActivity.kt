@@ -1,23 +1,21 @@
 package com.careerlauncher.gkninja.view
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.text.SpannableStringBuilder
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.os.postDelayed
-import androidx.core.text.inSpans
 import androidx.core.text.set
 import androidx.core.text.toSpannable
 import com.careerlauncher.gkninja.R
 import com.careerlauncher.gkninja.data.DataManager
 import com.careerlauncher.gkninja.data.preferences.PrefKeys
+import com.careerlauncher.gkninja.view.home.HomeActivity
+import com.careerlauncher.gkninja.view.login.LoginActivity
 import kotlinx.android.synthetic.main.activity_splash.*
 
 class SplashActivity : AppCompatActivity() {
@@ -50,6 +48,8 @@ class SplashActivity : AppCompatActivity() {
                 showHomeScreen()
             else
                 showLoginScreen()
+
+            finish()
 
         }, SPLASH_HOLD_TIME)
 

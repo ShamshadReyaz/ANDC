@@ -4,16 +4,7 @@
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
-        <item name="android:windowAnimationStyle">@style/YourAnimation.Activity</item>
-        <!-- Customize your theme here. -->
-    </style>
-    <style name="AppTheme_Normal" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
-        <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/colorWhite</item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
         <item name="android:windowAnimationStyle">@style/YourAnimation.Activity</item>
         <!-- Customize your theme here. -->

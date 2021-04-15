@@ -1,49 +1,218 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <include
-        android:id="@+id/rl_toolbar"
-        layout="@layout/include_layout_toolbar_home"
-         />
+    <TextView
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/light_gray"
+        android:elevation="10dp"
+        android:fontFamily="@font/poppins_semibold"
+        android:padding="@dimen/d_10dp"
+        android:text="@string/app_name"
+        android:textColor="@color/colorBlack"
+        android:textSize="@dimen/d_20sp" />
 
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_navigation"
+    <TextView
+        android:id="@+id/scan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_gravity="bottom"
-        android:background="@color/colorPrimary"
-        android:theme="@style/Widget.BottomNavigationView"
-        app:itemBackground="@color/selector_bottom_bakground_navigation_color"
-        app:itemIconTint="@color/selector_bottom_navigation_color"
-        app:itemTextColor="@color/selector_bottom_navigation_color"
-        app:labelVisibilityMode="labeled"
-        app:menu="@menu/menu_bottom_navigation" />
+        android:background="@color/light_gray"
+        android:fontFamily="@font/poppins_semibold"
+        android:gravity="center_horizontal"
+        android:padding="@dimen/d_10dp"
+        android:text="SCAN PERMIT"
+        android:textColor="@color/colorBlack"
+        android:textSize="@dimen/d_14sp" />
 
-
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/vp_container_home"
-        android:layout_width="match_parent"
-        android:visibility="gone"
-        android:layout_height="match_parent"
-        android:layout_above="@id/bottom_navigation"
-        android:layout_below="@id/rl_toolbar" />
-
-    <FrameLayout
-        android:id="@+id/fl_container_home"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/bottom_navigation"
-        android:layout_below="@id/rl_toolbar"
-         />
+        android:layout_above="@id/scan"
+        android:layout_below="@id/header">
 
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lot1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/scanhome" />
 
+        <LinearLayout
+            android:id="@+id/wrongLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_centerInParent="true"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:gravity="center_horizontal"
+                android:layout_height="wrap_content">
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/lot2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:lottie_autoPlay="true"
+                    app:lottie_rawRes="@raw/wronganimation" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:fontFamily="@font/poppins_semibold"
+                android:gravity="center_horizontal"
+                android:text="Sorry! Permit isn't valid"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/d_20sp" />
+        </LinearLayout>
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/correctLayout"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:gravity="center_horizontal"
+                    android:layout_height="wrap_content">
+
+                    <com.airbnb.lottie.LottieAnimationView
+                        android:id="@+id/lot3"
+                        android:layout_width="@dimen/d_200dp"
+                        android:layout_height="@dimen/d_200dp"
+                        app:lottie_autoPlay="true"
+                        app:lottie_rawRes="@raw/correctanimation" />
+
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:gravity="center_horizontal"
+                    android:text="Permit Scanned Successfully!"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/d_20sp" />
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:id="@+id/parentLayout"
+                        android:layout_width="match_parent"
+                        android:orientation="vertical"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:id="@+id/t2"
+                            android:layout_width="match_parent"
+                            android:padding="@dimen/d_10dp"
+                            android:text="PERMIT DETAILS"
+                            android:background="@color/colorBlack"
+                            android:fontFamily="@font/poppins_regular"
+                            android:textSize="@dimen/d_12sp"
+                            android:textColor="@color/colorWhite"
+                            android:layout_height="wrap_content"/>
+                        <LinearLayout
+                            android:id="@+id/l1"
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:padding="@dimen/d_10dp"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:text="START DATE:   "
+                                android:fontFamily="@font/poppins_semibold"
+                                android:textSize="@dimen/d_12sp"
+                                android:textColor="@color/colorBlack"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+                            <TextView
+                                android:id="@+id/startDate"
+                                android:text="ARRIVAL DATE: "
+                                android:fontFamily="@font/poppins_italic"
+                                android:textSize="@dimen/d_12sp"
+                                android:textColor="@color/colorBlack"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:id="@+id/l2"
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:paddingLeft="@dimen/d_10dp"
+                            android:paddingRight="@dimen/d_10dp"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:text="END DATE:   "
+                                android:fontFamily="@font/poppins_semibold"
+                                android:textSize="@dimen/d_12sp"
+                                android:textColor="@color/colorBlack"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+                            <TextView
+                                android:id="@+id/endDate"
+                                android:text="ARRIVAL DATE: "
+                                android:textColor="@color/colorBlack"
+                                android:fontFamily="@font/poppins_italic"
+                                android:textSize="@dimen/d_12sp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/t1"
+                            android:layout_width="match_parent"
+                            android:padding="@dimen/d_10dp"
+                            android:text="PASSENGER DETAILS"
+                            android:background="@color/colorBlack"
+                            android:fontFamily="@font/poppins_regular"
+                            android:textSize="@dimen/d_12sp"
+                            android:textColor="@color/colorWhite"
+                            android:layout_height="wrap_content"/>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/passengerList"
+                            android:layout_width="match_parent"
+                            android:layout_margin="@dimen/d_10dp"
+                            android:layout_height="wrap_content"/>
+                        <TextView
+                            android:id="@+id/t3"
+                            android:layout_width="match_parent"
+                            android:padding="@dimen/d_10dp"
+                            android:text="CIRCUIT DETAILS"
+                            android:background="@color/colorBlack"
+                            android:fontFamily="@font/poppins_regular"
+                            android:textSize="@dimen/d_12sp"
+                            android:textColor="@color/colorWhite"
+                            android:layout_height="wrap_content"/>
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/cktList"
+                            android:layout_width="match_parent"
+                            android:layout_margin="@dimen/d_10dp"
+                            android:layout_height="wrap_content"/>
+
+                    </LinearLayout>
+
+                </ScrollView>
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </RelativeLayout>
 </RelativeLayout>
-
-

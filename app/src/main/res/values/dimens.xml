@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <dimen name="design_bottom_navigation_text_size" tools:ignore="MissingDefaultResource" tools:override="true">
+    <dimen name="design_bottom_navigation_text_size" tools:override="true">
         8sp
     </dimen>
-    <dimen name="design_bottom_navigation_active_text_size" tools:ignore="MissingDefaultResource" tools:override="true">
+    <dimen name="design_bottom_navigation_active_text_size"  tools:override="true">
         10sp
     </dimen>
     <dimen name="design_navigation_separator_vertical_padding" tools:override="true">5dp</dimen>
+
     <dimen name="activityPadding">16dp</dimen>
     <dimen name="option_corner">9dp</dimen>
     <dimen name="placeholderImage">60dp</dimen>

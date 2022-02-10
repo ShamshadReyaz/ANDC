@@ -1,458 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-   android:id="@+id/rl_main"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rl_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-<RelativeLayout
-    android:id="@+id/topLayout2"
-    android:layout_width="match_parent"
-    android:orientation="horizontal"
-    android:background="@color/light_gray"
-    android:elevation="10dp"
-    android:padding="@dimen/d_10dp"
-    android:layout_height="wrap_content">
-    <TextView
-        android:id="@+id/header"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:fontFamily="@font/poppins_semibold"
-        android:text="@string/app_name"
-        android:layout_centerVertical="true"
-        android:textColor="@color/colorBlack"
-        android:textSize="@dimen/d_18sp" />
-    <ImageView
-        android:id="@+id/logout"
-        android:layout_alignParentRight="true"
-        android:src="@drawable/ic_log_out"
-        android:layout_centerVertical="true"
-        android:padding="@dimen/d_5dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-    <TextView
-        android:id="@+id/version"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/poppins_regular"
-        android:text="@string/app_name"
-        android:layout_toLeftOf="@id/logout"
-        android:includeFontPadding="false"
-        android:layout_centerVertical="true"
-        android:textColor="@color/colorBlack"
-        android:textSize="@dimen/d_14sp" />
 
-</RelativeLayout>
-    <LinearLayout
-        android:id="@+id/topLayout"
-        android:layout_below="@id/topLayout2"
-        android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:padding="@dimen/d_10dp"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:text="Select vehicle type"
-            android:fontFamily="@font/poppins_regular"
-            android:textSize="@dimen/d_14sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:background="@drawable/mybg"
-            android:layout_height="wrap_content">
-            <Spinner
-                android:id="@+id/vehicleDropdown"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:entries="@array/vehiclespinner"
-                android:fontFamily="@font/poppins_regular"
-                android:padding="@dimen/d_10dp"
-                android:textSize="10dp" />
-
-        </RelativeLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/bookinIdLayout"
-            android:layout_width="match_parent"
-            android:visibility="gone"
-            android:layout_marginTop="@dimen/d_5dp"
-            android:layout_height="wrap_content"
-            android:hint="Enter PNR">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/bookinId"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inputType="textCapCharacters"
-                android:imeOptions="actionDone"
-                 />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <Button
-            android:id="@+id/getBookinDetails"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:layout_marginTop="@dimen/d_10dp"
-            android:fontFamily="@font/poppins_semibold"
-            android:includeFontPadding="false"
-            android:text="GET BOOKING DETAILS" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/scanlayout"
-        android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:layout_alignParentBottom="true"
-        android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/scan"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:background="@color/light_gray"
-            android:fontFamily="@font/poppins_semibold"
-            android:gravity="center_horizontal"
-            android:padding="@dimen/d_10dp"
-            android:text="SCAN BOARDING PASS"
-            android:textColor="@color/colorBlack"
-            android:textSize="@dimen/d_14sp" />
-        <TextView
-            android:id="@+id/checkinPassengers"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:background="@color/colorGreen"
-            android:fontFamily="@font/poppins_semibold"
-            android:gravity="center_horizontal"
-            android:padding="@dimen/d_10dp"
-            android:text="CHECK IN"
-            android:visibility="gone"
-            android:textColor="@color/colorWhite"
-            android:textSize="@dimen/d_14sp" />
-
-    </LinearLayout>
     <RelativeLayout
+        android:id="@+id/topLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorSky"
+        android:elevation="10dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/d_10dp">
+
+        <TextView
+            android:id="@+id/header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:includeFontPadding="false"
+            android:fontFamily="@font/poppins_semibold"
+            android:text="@string/app_name"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/d_18sp" />
+
+        <ImageView
+            android:id="@+id/logout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:padding="@dimen/d_5dp"
+            android:src="@drawable/ic_log_out" />
+
+        <TextView
+            android:id="@+id/version"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/header"
+            android:layout_marginLeft="@dimen/d_5dp"
+            android:layout_toRightOf="@id/header"
+            android:fontFamily="@font/poppins_regular"
+            android:includeFontPadding="false"
+            android:text="@string/app_name"
+            android:textColor="@color/colorGray"
+            android:textSize="@dimen/d_10sp" />
+
+    </RelativeLayout>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="?android:attr/windowBackground"
+        app:itemIconTint="@color/selector_bottom_navigation_color"
+        app:itemTextAppearanceActive="@style/BottomNavigationView.Active"
+        app:itemTextAppearanceInactive="@style/BottomNavigationView"
+        app:itemTextColor="@color/selector_bottom_navigation_color"
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/bottom_nav_menu" />
+
+    <fragment
+        android:id="@+id/nav_host_fragment_activity_main"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/scanlayout"
-        android:layout_below="@id/topLayout2">
+        android:layout_above="@id/nav_view"
+        android:layout_below="@id/topLayout2"
+        app:defaultNavHost="true"
+        app:layout_constraintBottom_toTopOf="@id/nav_view"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navGraph="@navigation/mobile_navigation" />
 
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/lot1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            app:lottie_autoPlay="true"
-            app:lottie_loop="true"
-            app:lottie_rawRes="@raw/scanhome" />
 
-        <LinearLayout
-            android:id="@+id/wrongLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:layout_centerInParent="true"
-            android:orientation="vertical">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:gravity="center_horizontal"
-                android:layout_height="wrap_content">
-
-                <com.airbnb.lottie.LottieAnimationView
-                    android:id="@+id/lot2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:lottie_autoPlay="true"
-                    app:lottie_rawRes="@raw/wronganimation" />
-
-            </RelativeLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:fontFamily="@font/poppins_semibold"
-                android:gravity="center_horizontal"
-                android:text="Wrong code or not scanned correctly. Please focus camera properly &amp; scan again!"
-                android:textColor="@color/colorBlack"
-                android:textSize="@dimen/d_20sp" />
-        </LinearLayout>
-        <androidx.core.widget.NestedScrollView
-            android:id="@+id/correctLayout"
-            android:visibility="gone"
-            android:background="@color/background"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:gravity="center_horizontal"
-                    android:layout_height="wrap_content">
-
-                    <com.airbnb.lottie.LottieAnimationView
-                        android:id="@+id/lot3"
-                        android:layout_width="@dimen/d_200dp"
-                        android:layout_height="@dimen/d_200dp"
-                        app:lottie_autoPlay="true"
-                        app:lottie_rawRes="@raw/correctanimation" />
-
-                </RelativeLayout>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:fontFamily="@font/poppins_semibold"
-                    android:gravity="center_horizontal"
-                    android:text="Boarding Pass Scanned Successfully!"
-                    android:textColor="@color/colorBlack"
-                    android:textSize="@dimen/d_20sp" />
-                <ScrollView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <LinearLayout
-                        android:id="@+id/parentLayout"
-                        android:layout_width="match_parent"
-                        android:orientation="vertical"
-                        android:layout_height="wrap_content">
-                        <TextView
-                            android:id="@+id/t2"
-                            android:layout_width="match_parent"
-                            android:padding="@dimen/d_10dp"
-                            android:text="BOOKING DETAILS"
-                            android:background="@color/colorBlack"
-                            android:fontFamily="@font/poppins_regular"
-                            android:textSize="@dimen/d_12sp"
-                            android:textColor="@color/colorWhite"
-                            android:layout_height="wrap_content"/>
-                        <LinearLayout
-                            android:id="@+id/l0"
-                            android:orientation="horizontal"
-                            android:layout_width="match_parent"
-                            android:paddingLeft="@dimen/d_10dp"
-                            android:paddingRight="@dimen/d_10dp"
-                            android:paddingTop="@dimen/d_5dp"
-                            android:paddingBottom="@dimen/d_2dp"
-                            android:layout_height="wrap_content">
-                            <TextView
-                                android:text="PNR: "
-                                android:fontFamily="@font/poppins_semibold"
-                                android:textSize="@dimen/d_12sp"
-                                android:textColor="@color/colorBlack"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"/>
-                            <TextView
-                                android:id="@+id/bookingId"
-                                android:fontFamily="@font/poppins_italic"
-                                android:textSize="@dimen/d_12sp"
-                                android:textColor="@color/colorBlack"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"/>
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/l1"
-                            android:orientation="horizontal"
-                            android:layout_width="match_parent"
-                            android:paddingLeft="@dimen/d_10dp"
-                            android:paddingRight="@dimen/d_10dp"
-                            android:paddingBottom="@dimen/d_2dp"
-                            android:layout_height="wrap_content">
-                            <TextView
-                                android:text="TRAVEL DATE: "
-                                android:fontFamily="@font/poppins_semibold"
-                                android:textSize="@dimen/d_12sp"
-                                android:textColor="@color/colorBlack"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"/>
-                            <TextView
-                                android:id="@+id/startDate"
-                                android:text="ARRIVAL DATE: "
-                                android:fontFamily="@font/poppins_italic"
-                                android:textSize="@dimen/d_12sp"
-                                android:textColor="@color/colorBlack"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"/>
-
-                        </LinearLayout>
-                        <LinearLayout
-                            android:id="@+id/l2"
-                            android:orientation="horizontal"
-                            android:layout_width="match_parent"
-                            android:paddingLeft="@dimen/d_10dp"
-                            android:paddingRight="@dimen/d_10dp"
-                            android:paddingBottom="@dimen/d_2dp"
-                            android:layout_height="wrap_content">
-                            <TextView
-                                android:text="PRIMARY PASSENGER: "
-                                android:fontFamily="@font/poppins_semibold"
-                                android:textSize="@dimen/d_12sp"
-                                android:textColor="@color/colorBlack"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"/>
-                            <TextView
-                                android:id="@+id/endDate"
-                                android:text="ARRIVAL DATE: "
-                                android:textColor="@color/colorBlack"
-                                android:fontFamily="@font/poppins_italic"
-                                android:textSize="@dimen/d_12sp"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"/>
-
-                        </LinearLayout>
-                        <LinearLayout
-                            android:id="@+id/l3"
-                            android:orientation="horizontal"
-                            android:layout_width="match_parent"
-                            android:paddingLeft="@dimen/d_10dp"
-                            android:paddingRight="@dimen/d_10dp"
-                            android:paddingBottom="@dimen/d_2dp"
-                            android:layout_height="wrap_content">
-                            <TextView
-                                android:text="MOBILE: "
-                                android:fontFamily="@font/poppins_semibold"
-                                android:textSize="@dimen/d_12sp"
-                                android:textColor="@color/colorBlack"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"/>
-                            <TextView
-                                android:id="@+id/primaryMobile"
-                                android:textColor="@color/colorBlack"
-                                android:fontFamily="@font/poppins_italic"
-                                android:textSize="@dimen/d_12sp"
-                                android:inputType="phone"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"/>
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/l5"
-                            android:orientation="horizontal"
-                            android:layout_width="match_parent"
-                            android:paddingLeft="@dimen/d_10dp"
-                            android:paddingRight="@dimen/d_10dp"
-                            android:paddingBottom="@dimen/d_2dp"
-                            android:layout_height="wrap_content">
-                            <TextView
-                                android:text="SOURCE: "
-                                android:fontFamily="@font/poppins_semibold"
-                                android:textSize="@dimen/d_12sp"
-                                android:textColor="@color/colorBlack"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"/>
-                            <TextView
-                                android:id="@+id/source"
-                                android:textColor="@color/colorBlack"
-                                android:fontFamily="@font/poppins_italic"
-                                android:textSize="@dimen/d_12sp"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"/>
-
-                        </LinearLayout>
-                        <LinearLayout
-                            android:id="@+id/l6"
-                            android:orientation="horizontal"
-                            android:layout_width="match_parent"
-                            android:paddingLeft="@dimen/d_10dp"
-                            android:paddingRight="@dimen/d_10dp"
-                            android:paddingBottom="@dimen/d_2dp"
-                            android:layout_height="wrap_content">
-                            <TextView
-                                android:text="DESTINATION: "
-                                android:fontFamily="@font/poppins_semibold"
-                                android:textSize="@dimen/d_12sp"
-                                android:textColor="@color/colorBlack"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"/>
-                            <TextView
-                                android:id="@+id/destination"
-                                android:textColor="@color/colorBlack"
-                                android:fontFamily="@font/poppins_italic"
-                                android:textSize="@dimen/d_12sp"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"/>
-
-                        </LinearLayout>
-                        <LinearLayout
-                            android:id="@+id/l7"
-                            android:orientation="horizontal"
-                            android:layout_width="match_parent"
-                            android:paddingLeft="@dimen/d_10dp"
-                            android:paddingRight="@dimen/d_10dp"
-                            android:paddingBottom="@dimen/d_2dp"
-                            android:layout_height="wrap_content">
-                            <TextView
-                                android:text="FLIGHT TYPE: "
-                                android:fontFamily="@font/poppins_semibold"
-                                android:textSize="@dimen/d_12sp"
-                                android:textColor="@color/colorBlack"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"/>
-                            <TextView
-                                android:id="@+id/flightType"
-                                android:textColor="@color/colorBlack"
-                                android:fontFamily="@font/poppins_italic"
-                                android:textSize="@dimen/d_12sp"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"/>
-
-                        </LinearLayout>
-
-                        <TextView
-                            android:id="@+id/t1"
-                            android:layout_width="match_parent"
-                            android:padding="@dimen/d_10dp"
-                            android:text="PASSENGER DETAILS"
-                            android:background="@color/colorBlack"
-                            android:fontFamily="@font/poppins_regular"
-                            android:textSize="@dimen/d_12sp"
-                            android:textColor="@color/colorWhite"
-                            android:layout_height="wrap_content"/>
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/passengerList"
-                            android:layout_width="match_parent"
-                            android:layout_margin="@dimen/d_10dp"
-                            android:layout_height="wrap_content"/>
-                        <TextView
-                            android:id="@+id/t3"
-                            android:layout_width="match_parent"
-                            android:padding="@dimen/d_10dp"
-                            android:text="CIRCUIT DETAILS"
-                            android:background="@color/colorBlack"
-                            android:fontFamily="@font/poppins_regular"
-                            android:textSize="@dimen/d_12sp"
-                            android:visibility="gone"
-                            android:textColor="@color/colorWhite"
-                            android:layout_height="wrap_content"/>
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/cktList"
-                            android:layout_width="match_parent"
-                            android:layout_margin="@dimen/d_10dp"
-                            android:visibility="gone"
-                            android:layout_height="wrap_content"/>
-
-                    </LinearLayout>
-
-                </ScrollView>
-            </LinearLayout>
-
-        </androidx.core.widget.NestedScrollView>
-    </RelativeLayout>
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:backgroundTint="@color/theme_color"
         android:visibility="gone" />
 
 </RelativeLayout>

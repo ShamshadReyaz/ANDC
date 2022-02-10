@@ -166,7 +166,46 @@
       "client_info": {
         "mobilesdk_app_id": "1:604348534456:android:adb3d6cc76e3f6c5912e4d",
         "android_client_info": {
-          "package_name": "com.mobiquel.lehbookingscanner"
+          "package_name": "com.mobiquel.jammucablecar"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "604348534456-k7i246j87h1jaso59a0rcm4qivubv1ed.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBIWvgYTYXAYkt4loSGTvnqjFfFBYnj724"
+        },
+        {
+          "current_key": "AIzaSyDNCUwekBiuh79SXrG6j0XKWGL_3U4BqQ8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "604348534456-k7i246j87h1jaso59a0rcm4qivubv1ed.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "604348534456-mjn59tjss8degfeolt1rttjq88kf3dln.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mobiquel.ridesafe"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:604348534456:android:5e4fc324f99a4d29912e4d",
+        "android_client_info": {
+          "package_name": "com.mobiquel.ladakheye"
         }
       },
       "oauth_client": [
@@ -635,6 +674,45 @@
         "mobilesdk_app_id": "1:604348534456:android:ffeff4431fb1d9c0912e4d",
         "android_client_info": {
           "package_name": "com.mobiquel.speedcam"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "604348534456-k7i246j87h1jaso59a0rcm4qivubv1ed.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBIWvgYTYXAYkt4loSGTvnqjFfFBYnj724"
+        },
+        {
+          "current_key": "AIzaSyDNCUwekBiuh79SXrG6j0XKWGL_3U4BqQ8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "604348534456-k7i246j87h1jaso59a0rcm4qivubv1ed.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "604348534456-mjn59tjss8degfeolt1rttjq88kf3dln.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mobiquel.ridesafe"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:604348534456:android:dbac05cf9d68cb5f912e4d",
+        "android_client_info": {
+          "package_name": "com.mobiquel.srccapp"
         }
       },
       "oauth_client": [

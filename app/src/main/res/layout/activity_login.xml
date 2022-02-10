@@ -4,84 +4,187 @@
     android:id="@+id/rl_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/light_gray">
+    android:background="@color/colorSky">
 
-    <ImageView
-        android:id="@+id/img"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:adjustViewBounds="true" />
+        android:layout_centerInParent="true"
+        android:layout_margin="@dimen/d_16dp">
 
-    <TextView
-        android:id="@+id/footer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:background="@color/foreground_clr"
-        android:fontFamily="@font/poppins_light"
-        android:gravity="center_horizontal"
-        android:padding="10dp"
-        android:text="@string/footer"
-        android:textColor="@color/colorWhite"
-        android:textSize="10sp" />
-
-    <LinearLayout
-        android:id="@+id/loginLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/footer"
-        android:layout_below="@id/img"
-        android:layout_margin="@dimen/d_16dp"
-        android:gravity="center_vertical"
-        android:orientation="vertical"
-        android:padding="@dimen/d_16dp">
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/usernameLayout"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Enter Mobile Number">
+            android:layout_height="wrap_content">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/username"
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inputType="numberDecimal"
-                android:maxLength="10" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/d_50dp"
+                app:cardCornerRadius="@dimen/d_5dp"
+                app:cardElevation="@dimen/d_10dp">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/passwordLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/d_16dp"
-            android:hint="Enter Password"
-            app:passwordToggleEnabled="true">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rectangle_background_white"
+                    android:orientation="vertical"
+                    android:padding="@dimen/d_16dp">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/password"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inputType="textPassword" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="100dp"
 
-        </com.google.android.material.textfield.TextInputLayout>
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="@string/app_name"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/d_20sp" />
 
-        <Button
-            android:id="@+id/btnSignIn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/d_16dp"
-            android:fontFamily="@font/poppins_semibold"
-            android:includeFontPadding="false"
-            android:text="SIGN IN" />
-    </LinearLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/d_10dp"
+                        android:fontFamily="@font/poppins_medium"
+                        android:text="Select Usertype"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/d_14sp" />
+
+                    <RadioGroup
+                        android:id="@+id/userTypeGrp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/d_10dp"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/faculty"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.3"
+                            android:background="@drawable/custom_background_faculty"
+                            android:button="@android:color/transparent"
+                            android:fontFamily="@font/poppins_regular"
+                            android:includeFontPadding="false"
+                            android:minWidth="0dp"
+                            android:minHeight="0dp"
+                            android:padding="@dimen/d_10dp"
+                            android:text="Faculty"
+                            android:textColor="@drawable/custom_textcolor_radio"
+                            android:textSize="@dimen/d_10sp" />
+
+                        <RadioButton
+                            android:id="@+id/student"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.3"
+                            android:background="@drawable/custom_background_student"
+                            android:button="@android:color/transparent"
+                            android:fontFamily="@font/poppins_regular"
+                            android:includeFontPadding="false"
+                            android:minWidth="0dp"
+                            android:minHeight="0dp"
+                            android:padding="@dimen/d_10dp"
+                            android:text="Student"
+                            android:textColor="@drawable/custom_textcolor_radio"
+                            android:textSize="@dimen/d_10sp" />
+
+                        <RadioButton
+                            android:id="@+id/nonTeaching"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.4"
+                            android:background="@drawable/custom_background_nonte"
+                            android:button="@android:color/transparent"
+                            android:fontFamily="@font/poppins_regular"
+                            android:includeFontPadding="false"
+                            android:minWidth="0dp"
+                            android:minHeight="0dp"
+                            android:padding="@dimen/d_10dp"
+                            android:text="Non Teaching"
+                            android:textColor="@drawable/custom_textcolor_radio"
+                            android:textSize="@dimen/d_10sp" />
+
+                    </RadioGroup>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/usernameLayout"
+                        style="@style/MyDenseOutlined"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/d_10dp"
+                        android:hint="Enter Email ID"
+                        android:textColorHint="@color/colorGray"
+                        app:boxStrokeColor="@color/colorGray">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/username"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/poppins_regular"
+                            android:imeOptions="actionNext"
+                            android:inputType="textEmailAddress"
+                            android:textColor="@color/colorBlack"
+                            android:textSize="@dimen/d_14sp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/passwordLayout"
+                        style="@style/MyDenseOutlined"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/d_10dp"
+                        android:hint="Enter Password"
+                        android:textColorHint="@color/colorGray"
+                        app:boxStrokeColor="@color/colorGray"
+                        app:passwordToggleTint="@color/colorGray"
+                        app:passwordToggleEnabled="true">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/password"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/poppins_regular"
+                            android:imeOptions="actionDone"
+                            android:inputType="textPassword"
+                            android:textColor="@color/colorBlack"
+                            android:textSize="@dimen/d_14sp" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <Button
+                        android:id="@+id/btnSignIn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/d_10dp"
+                        android:background="@drawable/rectangle_background_red"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:includeFontPadding="false"
+                        android:text="SIGN IN"
+                        android:textColor="@color/colorWhite" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+        </FrameLayout>
+
+
+        <ImageView
+            android:id="@+id/img"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/logo_circel" />
+
+
+    </FrameLayout>
 
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:backgroundTint="@color/theme_color"
         android:visibility="gone" />
 
 </RelativeLayout>

@@ -38,6 +38,15 @@ interface APIInterface {
     @POST("getFacultyProfile")
     fun getFacultyProfile   (@FieldMap param:MutableMap<String, String>): Call<ResponseBody>
 
+    @FormUrlEncoded
+    @POST("getStudentDetailsByIdRollNo")
+    fun getStudentProfile   (@FieldMap param:MutableMap<String, String>): Call<ResponseBody>
+
+    @FormUrlEncoded
+    @POST("getNonTeachingStaffById")
+    fun getNonTeachingStaffById   (@FieldMap param:MutableMap<String, String>): Call<ResponseBody>
+
+
 
     @FormUrlEncoded
     @POST("checkSmartProfVersion")

@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/rl_main"
     android:layout_width="match_parent"
-    android:background="@color/white"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -17,9 +17,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="@dimen/d_10dp">
+            android:paddingLeft="@dimen/d_10dp"
+            android:paddingRight="@dimen/d_10dp"
+            android:paddingBottom="@dimen/d_10dp">
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/facultyNameTil"
                 style="@style/MyDenseOutlined"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -41,6 +44,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/empCodeTil"
                 style="@style/MyDenseOutlined"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -62,6 +66,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/designationTil"
                 style="@style/MyDenseOutlined"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -81,7 +86,9 @@
                     android:textColor="@color/colorBlack"
                     android:textSize="@dimen/d_14sp" />
             </com.google.android.material.textfield.TextInputLayout>
+
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/deptTil"
                 style="@style/MyDenseOutlined"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -101,7 +108,9 @@
                     android:textColor="@color/colorBlack"
                     android:textSize="@dimen/d_14sp" />
             </com.google.android.material.textfield.TextInputLayout>
+
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/mobileTil"
                 style="@style/MyDenseOutlined"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -121,7 +130,9 @@
                     android:textColor="@color/colorBlack"
                     android:textSize="@dimen/d_14sp" />
             </com.google.android.material.textfield.TextInputLayout>
+
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/emailTil"
                 style="@style/MyDenseOutlined"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -141,7 +152,9 @@
                     android:textColor="@color/colorBlack"
                     android:textSize="@dimen/d_14sp" />
             </com.google.android.material.textfield.TextInputLayout>
+
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/personalEmailTil"
                 style="@style/MyDenseOutlined"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -161,7 +174,9 @@
                     android:textColor="@color/colorBlack"
                     android:textSize="@dimen/d_14sp" />
             </com.google.android.material.textfield.TextInputLayout>
+
             <com.google.android.material.textfield.TextInputLayout
+               android:id="@+id/facultyTypeTil"
                 style="@style/MyDenseOutlined"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

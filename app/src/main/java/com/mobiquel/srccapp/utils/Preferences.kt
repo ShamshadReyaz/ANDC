@@ -35,6 +35,7 @@ class Preferences private constructor() {
     private val KEY_USERTYPE = "USERTYPE"
     private val KEY_EMAIL = "EMAIL"
     private val KEY_USER_ID = "USER_ID"
+    private val KEY_COLLEGE_ROLL_NO = "COLLEGE_ROLL_NO"
 
     var selectedQuestionId: String? = null
     var showGameRule: String? = null
@@ -58,6 +59,7 @@ class Preferences private constructor() {
     var userType: String? = null
     var email: String? = null
     var userId: String? = null
+    var collegeRollNo: String? = null
 
     var todayGkQsetId: String? = null
     var yesterdayGkQsetId: String? = null
@@ -93,6 +95,7 @@ class Preferences private constructor() {
         userType = preferences?.getString(KEY_USERTYPE, "")
         email = preferences?.getString(KEY_EMAIL, "")
         userId = preferences?.getString(KEY_USER_ID, "")
+        collegeRollNo = preferences?.getString(KEY_COLLEGE_ROLL_NO, "")
     }
 
     fun savePreferences(c: Context) {
@@ -113,6 +116,7 @@ class Preferences private constructor() {
         editor?.putString(KEY_USERTYPE, userType)
         editor?.putString(KEY_EMAIL, email)
         editor?.putString(KEY_USER_ID, userId)
+        editor?.putString(KEY_COLLEGE_ROLL_NO, collegeRollNo)
 
         editor?.putString(KEY_BASE_URL, baseUrl)
         editor?.putString(KEY_JSON_DATA, jsonData)

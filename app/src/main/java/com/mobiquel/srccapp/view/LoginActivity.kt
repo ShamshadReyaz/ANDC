@@ -45,6 +45,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
 
+/*
         binding.userTypeGrp.setOnCheckedChangeListener(object : RadioGroup.OnCheckedChangeListener {
             override fun onCheckedChanged(p0: RadioGroup?, p1: Int) {
                 val userType =
@@ -67,6 +68,7 @@ class LoginActivity : AppCompatActivity() {
         })
 
         binding.faculty.isChecked = true
+*/
 
 
     }
@@ -95,16 +97,9 @@ class LoginActivity : AppCompatActivity() {
                         else {
                             Preferences.instance!!.loadPreferences(this@LoginActivity)
                             Preferences.instance!!.isLoginDone = "1"
-                            var userType = ""
-                            if (resources.getResourceEntryName(binding.userTypeGrp.checkedRadioButtonId)
-                                    .equals("nonTeaching")
-                            )
-                                userType = "non-teaching"
-                            else
-                                userType =
-                                    resources.getResourceEntryName(binding.userTypeGrp.checkedRadioButtonId)
+
                             Preferences.instance!!.userType =
-                                userType
+                                "faculty"
                             Preferences.instance!!.email =
                                 binding.username.text.toString()
                             Preferences.instance!!.userId =
@@ -144,6 +139,16 @@ class LoginActivity : AppCompatActivity() {
                         else {
                             Preferences.instance!!.loadPreferences(this@LoginActivity)
                             Preferences.instance!!.isLoginDone = "1"
+
+                            Preferences.instance!!.userType =
+                                "student"
+                            Preferences.instance!!.email =
+                                binding.username.text.toString()
+                            Preferences.instance!!.userId =
+                                jsonobject.getJSONObject("responseObject").getString("id")
+                            Preferences.instance!!.collegeRollNo =
+                                jsonobject.getJSONObject("responseObject").getString("enrollmentNo")
+
                             Preferences.instance!!.savePreferences(this@LoginActivity)
                             showToast(jsonobject.getString("errorMessage"))
                             startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
@@ -178,6 +183,14 @@ class LoginActivity : AppCompatActivity() {
                         else {
                             Preferences.instance!!.loadPreferences(this@LoginActivity)
                             Preferences.instance!!.isLoginDone = "1"
+
+                            Preferences.instance!!.userType =
+                                "non-teaching"
+                            Preferences.instance!!.email =
+                                binding.username.text.toString()
+                            Preferences.instance!!.userId =
+                                jsonobject.getJSONObject("responseObject").getString("id")
+
                             Preferences.instance!!.savePreferences(this@LoginActivity)
                             showToast(jsonobject.getString("errorMessage"))
                             startActivity(Intent(this@LoginActivity, HomeActivity::class.java))

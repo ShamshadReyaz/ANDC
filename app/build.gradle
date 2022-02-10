@@ -31,14 +31,14 @@ android {
     useLibrary 'org.apache.http.legacy'
 
     defaultConfig {
+
         applicationId "com.mobiquel.srccapp"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 2
+        versionCode 3
         versionName "1.0"
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
-      //  testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
     }
 

@@ -40,6 +40,14 @@ class ApiManager private constructor() {
         return apiClient.getFacultyProfile(param)
     }
 
+    fun getStudentProfile(param:MutableMap<String, String>): Call<ResponseBody> {
+        return apiClient.getStudentProfile(param)
+    }
+
+    fun getNonTeachingStaffById(param:MutableMap<String, String>): Call<ResponseBody> {
+        return apiClient.getNonTeachingStaffById(param)
+    }
+
     fun checkSmartProfVersion(param:MutableMap<String, String>): Call<ResponseBody> {
         return apiClient.checkSmartProfVersion(param)
     }

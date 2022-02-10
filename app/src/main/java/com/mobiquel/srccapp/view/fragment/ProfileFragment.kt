@@ -6,11 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.mobiquel.srccapp.data.ApiManager
 import com.mobiquel.srccapp.utils.Preferences
 import com.mobiquel.srccapp.utils.showSnackBar
-import com.mobiquel.srccapp.view.adapter.NoticeListAdapter
 import okhttp3.ResponseBody
 import org.json.JSONObject
 import retrofit2.Call
@@ -30,8 +28,15 @@ class ProfileFragment : Fragment() {
     ): View? {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
 
+        Preferences!!.instance!!.loadPreferences(requireContext())
+        if (Preferences!!.instance!!.userType.equals("student"))
+            getStudentProfile()
+        else if (Preferences!!.instance!!.userType.equals("faculty"))
+            getFacultyProfile()
+        else
+            getNonTeachingStaff()
 
-        getFacultyProfile()
+
         return binding.root
     }
 
@@ -55,16 +60,32 @@ class ProfileFragment : Fragment() {
                             binding.rlMain
                         )
                     else {
-
-                        binding.facultyName.setText(jsonobject.getJSONObject("responseObject").getString("title")+" "+jsonobject.getJSONObject("responseObject").getString("name"))
-                        binding.employeeCode.setText(jsonobject.getJSONObject("responseObject").getString("employeeId"))
-                        binding.designation.setText(jsonobject.getJSONObject("responseObject").getString("designation"))
-                        binding.department.setText(jsonobject.getJSONObject("responseObject").getString("department"))
-                        binding.mobile.setText(jsonobject.getJSONObject("responseObject").getString("mobile"))
-                        binding.email.setText(jsonobject.getJSONObject("responseObject").getString("email"))
-                        binding.personalEmail.setText(jsonobject.getJSONObject("responseObject").getString("personalEmail"))
-                        binding.facultyType.setText(jsonobject.getJSONObject("responseObject").getString("type"))
-
+                        binding.facultyName.setText(
+                            jsonobject.getJSONObject("responseObject")
+                                .getString("title") + " " + jsonobject.getJSONObject("responseObject")
+                                .getString("name")
+                        )
+                        binding.employeeCode.setText(
+                            jsonobject.getJSONObject("responseObject").getString("employeeId")
+                        )
+                        binding.designation.setText(
+                            jsonobject.getJSONObject("responseObject").getString("designation")
+                        )
+                        binding.department.setText(
+                            jsonobject.getJSONObject("responseObject").getString("department")
+                        )
+                        binding.mobile.setText(
+                            jsonobject.getJSONObject("responseObject").getString("mobile")
+                        )
+                        binding.email.setText(
+                            jsonobject.getJSONObject("responseObject").getString("email")
+                        )
+                        binding.personalEmail.setText(
+                            jsonobject.getJSONObject("responseObject").getString("personalEmail")
+                        )
+                        binding.facultyType.setText(
+                            jsonobject.getJSONObject("responseObject").getString("type")
+                        )
                     }
                 } catch (e: Exception) {
                     e.printStackTrace()
@@ -79,6 +100,155 @@ class ProfileFragment : Fragment() {
 
         })
 
+    }
+
+    private fun getStudentProfile() {
+        binding.progressBar.visibility = View.VISIBLE
+        val data: MutableMap<String, String> = HashMap()
+        data["studentId"] = Preferences.instance!!.userId!!
+        data["collegeRollNo"] = Preferences.instance!!.collegeRollNo!!
+
+        val apiManager: ApiManager? = ApiManager.init()
+        apiManager!!.getStudentProfile(data).enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(
+                call: Call<ResponseBody>,
+                response: Response<ResponseBody>
+            ) {
+                binding.progressBar.visibility = View.GONE
+                try {
+                    val stringResponse = response.body()?.string()
+                    val jsonobject = JSONObject(stringResponse)
+                    if (jsonobject.getString("errorCode").equals("1"))
+                        context!!.showSnackBar(
+                            "Invalid Credentials! Please try again",
+                            binding.rlMain
+                        )
+                    else {
+                        binding.facultyName.setText(
+                            jsonobject.getJSONObject("responseObject")
+                                .getString("name")
+                        )
+                        binding.employeeCode.setText(
+                            jsonobject.getJSONObject("responseObject").getString("enrollmentNo")
+                        )
+                        binding.empCodeTil.hint = "College Roll No"
+                        binding.designationTil.hint = "Category"
+                        binding.deptTil.hint = "Programme"
+
+                        binding.designation.setText(
+                            jsonobject.getJSONObject("responseObject").getString("category")
+                        )
+
+                        binding.department.setText(
+                            jsonobject.getJSONObject("responseObject").getString("programName")
+                        )
+                        binding.mobile.setText(
+                            jsonobject.getJSONObject("responseObject").getString("mobile")
+                        )
+                        binding.email.setText(
+                            jsonobject.getJSONObject("responseObject").getString("email")
+                        )
+                        binding.personalEmail.setText(
+                            jsonobject.getJSONObject("responseObject").getString("personalEmail")
+                        )
+                        binding.facultyTypeTil.visibility=View.GONE
+                        binding.facultyType.setText(
+                            jsonobject.getJSONObject("responseObject").getString("admissionType")
+                        )
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                Log.e("DATA", "FAILURE")
+                binding.progressBar.visibility = View.GONE
+            }
+
+        })
+    }
+
+
+    private fun getNonTeachingStaff() {
+        binding.progressBar.visibility = View.VISIBLE
+        val data: MutableMap<String, String> = HashMap()
+        data["staffId"] = Preferences.instance!!.userId!!
+
+        val apiManager: ApiManager? = ApiManager.init()
+        apiManager!!.getNonTeachingStaffById(data).enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(
+                call: Call<ResponseBody>,
+                response: Response<ResponseBody>
+            ) {
+                binding.progressBar.visibility = View.GONE
+                try {
+                    val stringResponse = response.body()?.string()
+                    val jsonobject = JSONObject(stringResponse)
+                    if (jsonobject.getString("errorCode").equals("1"))
+                        context!!.showSnackBar(
+                            "Invalid Credentials! Please try again",
+                            binding.rlMain
+                        )
+                    else {
+                        binding.facultyName.setText(
+                            jsonobject.getJSONObject("responseObject")
+                                .getString("name")
+                        )
+                        binding.employeeCode.setText(
+                            jsonobject.getJSONObject("responseObject").getString("employeeId")
+                        )
+                        binding.designation.setText(
+                            jsonobject.getJSONObject("responseObject").getString("designation")
+                        )
+                        binding.department.setText(
+                            jsonobject.getJSONObject("responseObject").getString("department")
+                        )
+
+                        binding.mobile.setText(
+                            jsonobject.getJSONObject("responseObject").getString("mobile")
+                        )
+                        if (jsonobject.getJSONObject("responseObject").getString("mobile")
+                                .equals("")
+                        )
+                            binding.mobile.setText("N/A")
+                        else
+                            binding.mobile.setText(
+                                jsonobject.getJSONObject("responseObject").getString("mobile")
+                            )
+
+                        if (jsonobject.getJSONObject("responseObject").getString("personalEmail")
+                                .equals("")
+                        )
+                            binding.personalEmail.setText("N/A")
+                        else
+                            binding.personalEmail.setText(
+                                jsonobject.getJSONObject("responseObject")
+                                    .getString("personalEmail")
+                            )
+
+                        binding.email.setText(
+                            jsonobject.getJSONObject("responseObject").getString("email")
+                        )
+
+                        binding.facultyTypeTil.visibility = View.GONE
+                        binding.deptTil.visibility = View.GONE
+
+
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                Log.e("DATA", "FAILURE")
+                binding.progressBar.visibility = View.GONE
+            }
+
+        })
     }
 
 }

@@ -4,27 +4,22 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
-import androidx.navigation.ui.setupWithNavController
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.messaging.FirebaseMessaging
-import com.mobiquel.srccapp.data.ApiManager
+import com.mobiquel.srccapp.pojo.CheckVersionModel
 import com.mobiquel.srccapp.utils.Preferences
 import com.mobiquel.srccapp.utils.getAppVersion
 import com.mobiquel.srccapp.utils.showSnackBar
 import com.mobiquel.srccapp.utils.showToast
+import com.mobiquel.srccapp.view.fragment.NoticeFragment
+import com.mobiquel.srccapp.view.fragment.ProfileFragment
+import com.mobiquel.srccapp.view.viewmodel.APIViewModel
 import kotlinx.android.synthetic.main.activity_home.*
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import okhttp3.ResponseBody
 import org.json.JSONObject
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import srccapp.R
 import srccapp.databinding.ActivityHomeBinding
 
@@ -33,25 +28,67 @@ class HomeActivity : AppCompatActivity() {
     private var notificationId = ""
     var context: Context? = null
     private lateinit var binding: ActivityHomeBinding
-
+    private lateinit var apiViewModel: APIViewModel
+    val fragmentNoticeFragment=NoticeFragment()
+    val fragmentProfileFragment=ProfileFragment()
+    val fragmentSupportManager= supportFragmentManager
+    var active:Fragment=fragmentNoticeFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        Log.e("ON CREATE", "HOME")
+
         context = this@HomeActivity
+        apiViewModel = APIViewModel()
+        version.text = "Version: " + getAppVersion()
+        getNotificationId()
 
-        GlobalScope.launch {
-            version.text = "Version: " + getAppVersion()
-            getNotificationId()
+
+        fragmentSupportManager.beginTransaction().apply {
+            add(R.id.frameLayout, fragmentProfileFragment, "2")
+            hide(fragmentProfileFragment)
+            commit()
+        }
+
+        fragmentSupportManager.beginTransaction().apply {
+            add(R.id.frameLayout, fragmentNoticeFragment, "1")
+            commit()
+        }
 
 
-            val navView: BottomNavigationView = binding.navView
 
-            val navController = findNavController(R.id.nav_host_fragment_activity_main)
-            navView.setupWithNavController(navController)
 
+        binding.navView.setOnNavigationItemSelectedListener { it ->
+
+            when (it.itemId) {
+                R.id.navigation_notice -> {
+                    fragmentSupportManager.beginTransaction().apply {
+                        hide(active)
+                        show(fragmentNoticeFragment)
+                        commit()
+                    }
+
+                    active=fragmentNoticeFragment
+
+
+                    true
+                }
+
+                R.id.navigation_profile -> {
+                    fragmentSupportManager.beginTransaction().apply {
+                        hide(active)
+                        show(fragmentProfileFragment)
+                        commit()
+                    }
+                    active=fragmentProfileFragment
+
+                    true
+                }
+            }
+            true
         }
 
 
@@ -82,8 +119,6 @@ class HomeActivity : AppCompatActivity() {
             // Set other dialog properties
             alertDialog.setCancelable(true)
             alertDialog.show()
-
-
         }
 
     }
@@ -95,71 +130,52 @@ class HomeActivity : AppCompatActivity() {
                 Log.e("NOTIFICATION_ID", "Fetching FCM registration token failed", task.exception)
                 return@OnCompleteListener
             }
-
-            // Get new FCM registration token
             val token = task.result
             if (token != null) {
                 notificationId = token
-                checkSmartProfVersion()
-            }
+                var model = CheckVersionModel()
+                model.pushNotificationId = notificationId
+                model.userId = Preferences!!.instance!!.userId
+                model.userType = Preferences!!.instance!!.userType
+                apiViewModel!!.checkSmartProfVersion(model!!)?.observe(this, Observer {
+                    try {
+                        val stringResponse = it.data!!.string()
+                        val jsonobject = JSONObject(stringResponse)
+                        if (jsonobject.getString("errorCode").equals("1"))
+                            showSnackBar("Invalid Credentials! Please try again", binding.rlMain)
+                        else {
 
-        })
-    }
-
-
-    fun checkSmartProfVersion() {
-        Preferences.instance!!.loadPreferences(context!!)
-        val data: MutableMap<String, String> = HashMap()
-        data["userId"] = Preferences.instance!!.userId!!
-        data["userType"] = Preferences.instance!!.userType!!
-        data["os"] = "Android"
-        data["pushNotificationId"] = notificationId
-
-        val apiManager: ApiManager? = ApiManager.init()
-        apiManager!!.checkSmartProfVersion(data).enqueue(object : Callback<ResponseBody> {
-            override fun onResponse(
-                call: Call<ResponseBody>,
-                response: Response<ResponseBody>
-            ) {
-                binding.progressBar.visibility = View.GONE
-                try {
-                    val stringResponse = response.body()?.string()
-                    val jsonobject = JSONObject(stringResponse)
-                    if (jsonobject.getString("errorCode").equals("1"))
-                        showSnackBar("Invalid Credentials! Please try again", binding.rlMain)
-                    else {
-                        /*   var dataList = ArrayList<String>()
-                           for (i in 0 until jsonobject.getJSONArray("responseObject").length()) {
-                               dataList.add(
-                                   jsonobject.getJSONArray("responseObject").getJSONObject(i)
-                                       .toString()
-                               )
-                           }
-                           val mAdapter = NoticeListAdapter(this@HomeActivity, dataList)
-                           binding.listView.layoutManager = LinearLayoutManager(
-                               this@HomeActivity,
-                               LinearLayoutManager.VERTICAL,
-                               false
-                           )
-                           binding.listView.adapter = mAdapter
-
-                           if (dataList.size == 0)
-                               binding.noResult.visibility = View.VISIBLE
-   */
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
                     }
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
 
-            }
-
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                Log.e("DATA", "FAILURE")
-                binding.progressBar.visibility = View.GONE
+                })
             }
 
         })
 
     }
+
+    override fun onStart() {
+        super.onStart()
+        Log.e("START", "HOME")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.e("RESUME", "HOME")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.e("PAUSE", "HOME")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.e("STOP", "HOME")
+    }
+
 
 }

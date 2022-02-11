@@ -5,13 +5,13 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.RadioGroup
 import androidx.appcompat.app.AppCompatActivity
 import com.mobiquel.srccapp.data.ApiManager
 import com.mobiquel.srccapp.utils.Preferences
 import com.mobiquel.srccapp.utils.Security
 import com.mobiquel.srccapp.utils.showSnackBar
 import com.mobiquel.srccapp.utils.showToast
+import com.mobiquel.srccapp.view.viewmodel.APIViewModel
 import okhttp3.ResponseBody
 import org.json.JSONObject
 import retrofit2.Call
@@ -23,13 +23,17 @@ import srccapp.databinding.ActivityLoginBinding
 class LoginActivity : AppCompatActivity() {
     var context: Context? = null
     private lateinit var binding: ActivityLoginBinding
-
+    private lateinit var apiViewModel: APIViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
         context = this@LoginActivity
         binding.img.bringToFront()
+
+        apiViewModel = APIViewModel()
+
+
 
         binding.btnSignIn.setOnClickListener {
             if (binding.userTypeGrp.checkedRadioButtonId == -1)
@@ -39,7 +43,55 @@ class LoginActivity : AppCompatActivity() {
             else if (binding.password.text.toString().equals(""))
                 showSnackBar("Please enter Password!", binding.rlMain)
             else {
-                login()
+                //login()
+                    binding.progressBar.visibility=View.VISIBLE
+                var genderUserType =
+                    resources.getResourceEntryName(binding.userTypeGrp.checkedRadioButtonId) // "male"
+                if (genderUserType.equals("nonTeaching"))
+                    genderUserType = "non-teaching"
+
+                apiViewModel.login(
+                    genderUserType,
+                    binding.username.text.toString(),
+                    Security.encrypt(binding.password.text.toString())
+                )?.observe(this,
+                    androidx.lifecycle.Observer {
+                        binding.progressBar.visibility=View.GONE
+                        try {
+                            val stringResponse = it.data?.string()
+                            val jsonobject = JSONObject(stringResponse)
+                            if (jsonobject.getString("errorCode").equals("1"))
+                                showSnackBar(
+                                    "Invalid Credentials! Please try again",
+                                    binding.rlMain
+                                )
+                            else {
+                                Preferences.instance!!.loadPreferences(this@LoginActivity)
+                                Preferences.instance!!.isLoginDone = "1"
+
+                                Preferences.instance!!.userType =
+                                    genderUserType
+                                Preferences.instance!!.email =
+                                    binding.username.text.toString()
+                                Preferences.instance!!.userId =
+                                    jsonobject.getJSONObject("responseObject").getString("id")
+                                if (genderUserType.equals("student")) {
+                                    Preferences.instance!!.collegeRollNo =
+                                        jsonobject.getJSONObject("responseObject")
+                                            .getString("enrollmentNo")
+                                }
+
+                                Preferences.instance!!.savePreferences(this@LoginActivity)
+                                showToast(jsonobject.getString("errorMessage"))
+                                startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
+                                finish()
+
+                            }
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+                    })
+
             }
 
         }
@@ -104,6 +156,8 @@ class LoginActivity : AppCompatActivity() {
                                 binding.username.text.toString()
                             Preferences.instance!!.userId =
                                 jsonobject.getJSONObject("responseObject").getString("id")
+                            Preferences.instance!!.collegeRollNo =
+                                jsonobject.getJSONObject("responseObject").getString("enrollmentNo")
 
                             Preferences.instance!!.savePreferences(this@LoginActivity)
                             showToast(jsonobject.getString("errorMessage"))

@@ -1,5 +1,6 @@
 package com.mobiquel.srccapp.view.fragment
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -35,6 +36,8 @@ class ProfileFragment : Fragment() {
             getFacultyProfile()
         else
             getNonTeachingStaff()
+
+        Log.e("ON CREATE VIEW","PROFILE FRAGMENT")
 
 
         return binding.root
@@ -250,5 +253,31 @@ class ProfileFragment : Fragment() {
 
         })
     }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        Log.e("ATTACH","PROFILE FRAGMENT")
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        Log.e("CREATE","PROFILE FRAGMENT")
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        Log.e("ON ACTIVITY CREATED","PROFILE FRAGMENT")
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Log.e("START","PROFILE FRAGMENT")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.e("RESUME","PROFILE FRAGMENT")
+    }
+
 
 }

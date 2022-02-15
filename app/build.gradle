@@ -35,8 +35,8 @@ android {
         applicationId "com.mobiquel.srccapp"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 3
-        versionName "1.0"
+        versionCode 4
+        versionName "1.0.1"
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
 
@@ -48,7 +48,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug {
-            minifyEnabled true
+            debuggable true
+            proguardFiles getDefaultProguardFile('proguard-android.txt')
+            minifyEnabled false
         }
     }
     compileOptions {

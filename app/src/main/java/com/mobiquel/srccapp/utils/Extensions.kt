@@ -16,7 +16,7 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
-import srccapp.R
+import com.mobiquel.srccapp.R
 
 /**
  * Created by Arman Reyaz on 12/18/2020.

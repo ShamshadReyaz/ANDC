@@ -4,8 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.motion.widget.MotionLayout
+import com.mobiquel.srccapp.databinding.ActivitySplashBinding
 import com.mobiquel.srccapp.utils.Preferences
-import srccapp.databinding.ActivitySplashBinding
 
 class SplashActivity : AppCompatActivity() {
 

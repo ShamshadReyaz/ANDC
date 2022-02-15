@@ -7,23 +7,23 @@ import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.mobiquel.srccapp.data.ApiManager
+import com.mobiquel.srccapp.databinding.ActivityLoginBinding
 import com.mobiquel.srccapp.utils.Preferences
 import com.mobiquel.srccapp.utils.Security
 import com.mobiquel.srccapp.utils.showSnackBar
 import com.mobiquel.srccapp.utils.showToast
-import com.mobiquel.srccapp.view.viewmodel.APIViewModel
+import com.mobiquel.srccapp.view.viewmodel.LoginAPIViewModel
 import okhttp3.ResponseBody
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import srccapp.databinding.ActivityLoginBinding
 
 
 class LoginActivity : AppCompatActivity() {
     var context: Context? = null
     private lateinit var binding: ActivityLoginBinding
-    private lateinit var apiViewModel: APIViewModel
+    private lateinit var apiViewModel: LoginAPIViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
@@ -31,9 +31,7 @@ class LoginActivity : AppCompatActivity() {
         context = this@LoginActivity
         binding.img.bringToFront()
 
-        apiViewModel = APIViewModel()
-
-
+        apiViewModel = LoginAPIViewModel()
 
         binding.btnSignIn.setOnClickListener {
             if (binding.userTypeGrp.checkedRadioButtonId == -1)
@@ -43,7 +41,8 @@ class LoginActivity : AppCompatActivity() {
             else if (binding.password.text.toString().equals(""))
                 showSnackBar("Please enter Password!", binding.rlMain)
             else {
-                //login()
+                login()
+/*
                     binding.progressBar.visibility=View.VISIBLE
                 var genderUserType =
                     resources.getResourceEntryName(binding.userTypeGrp.checkedRadioButtonId) // "male"
@@ -91,6 +90,7 @@ class LoginActivity : AppCompatActivity() {
                             e.printStackTrace()
                         }
                     })
+*/
 
             }
 

@@ -4,45 +4,52 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
-import com.mobiquel.srccapp.pojo.CheckVersionModel
+import com.mobiquel.srccapp.R
+import com.mobiquel.srccapp.data.ApiManager
+import com.mobiquel.srccapp.databinding.ActivityHomeBinding
 import com.mobiquel.srccapp.utils.Preferences
 import com.mobiquel.srccapp.utils.getAppVersion
 import com.mobiquel.srccapp.utils.showSnackBar
 import com.mobiquel.srccapp.utils.showToast
 import com.mobiquel.srccapp.view.fragment.NoticeFragment
 import com.mobiquel.srccapp.view.fragment.ProfileFragment
-import com.mobiquel.srccapp.view.viewmodel.APIViewModel
+import com.mobiquel.srccapp.view.viewmodel.HomeAPIViewModel
 import kotlinx.android.synthetic.main.activity_home.*
+import okhttp3.ResponseBody
 import org.json.JSONObject
-import srccapp.R
-import srccapp.databinding.ActivityHomeBinding
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class HomeActivity : AppCompatActivity() {
     private var notificationId = ""
     var context: Context? = null
     private lateinit var binding: ActivityHomeBinding
-    private lateinit var apiViewModel: APIViewModel
-    val fragmentNoticeFragment=NoticeFragment()
-    val fragmentProfileFragment=ProfileFragment()
-    val fragmentSupportManager= supportFragmentManager
-    var active:Fragment=fragmentNoticeFragment
+    private lateinit var apiViewModel: HomeAPIViewModel
+    private val fragmentNoticeFragment = NoticeFragment()
+    private val fragmentProfileFragment = ProfileFragment()
+    private val fragmentSupportManager = supportFragmentManager
+    var active: Fragment = fragmentNoticeFragment
+    var editStatus = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
+
         Log.e("ON CREATE", "HOME")
 
         context = this@HomeActivity
-        apiViewModel = APIViewModel()
+        apiViewModel = HomeAPIViewModel()
         version.text = "Version: " + getAppVersion()
         getNotificationId()
 
@@ -58,9 +65,6 @@ class HomeActivity : AppCompatActivity() {
             commit()
         }
 
-
-
-
         binding.navView.setOnNavigationItemSelectedListener { it ->
 
             when (it.itemId) {
@@ -70,10 +74,8 @@ class HomeActivity : AppCompatActivity() {
                         show(fragmentNoticeFragment)
                         commit()
                     }
-
-                    active=fragmentNoticeFragment
-
-
+                    active = fragmentNoticeFragment
+                    binding.edit.visibility = View.GONE
                     true
                 }
 
@@ -83,8 +85,8 @@ class HomeActivity : AppCompatActivity() {
                         show(fragmentProfileFragment)
                         commit()
                     }
-                    active=fragmentProfileFragment
-
+                    active = fragmentProfileFragment
+                    binding.edit.visibility = View.VISIBLE
                     true
                 }
             }
@@ -92,6 +94,18 @@ class HomeActivity : AppCompatActivity() {
         }
 
 
+        edit.setOnClickListener {
+            if (editStatus == 0) {
+                fragmentProfileFragment.openEditMode()
+                edit.setImageResource(R.drawable.ic_done)
+                editStatus = 1
+            } else {
+                edit.setImageResource(R.drawable.ic_edit)
+                fragmentProfileFragment.updateProfileCheck()
+                editStatus = 0
+            }
+
+        }
         logout.setOnClickListener {
 
             val builder = AlertDialog.Builder(this)
@@ -133,7 +147,8 @@ class HomeActivity : AppCompatActivity() {
             val token = task.result
             if (token != null) {
                 notificationId = token
-                var model = CheckVersionModel()
+                checkSmartProfVersion()
+                /*var model = CheckVersionModel()
                 model.pushNotificationId = notificationId
                 model.userId = Preferences!!.instance!!.userId
                 model.userType = Preferences!!.instance!!.userType
@@ -150,7 +165,7 @@ class HomeActivity : AppCompatActivity() {
                         e.printStackTrace()
                     }
 
-                })
+                })*/
             }
 
         })
@@ -177,5 +192,42 @@ class HomeActivity : AppCompatActivity() {
         Log.e("STOP", "HOME")
     }
 
+    fun checkSmartProfVersion() {
+        Preferences.instance!!.loadPreferences(context!!)
+        val data: MutableMap<String, String> = HashMap()
+        data["userId"] = Preferences.instance!!.userId!!
+        data["userType"] = Preferences.instance!!.userType!!
+        data["os"] = "Android"
+        data["pushNotificationId"] = notificationId
+
+        val apiManager: ApiManager? = ApiManager.init()
+        apiManager!!.checkSmartProfVersion(data).enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(
+                call: Call<ResponseBody>,
+                response: Response<ResponseBody>
+            ) {
+                binding.progressBar.visibility = View.GONE
+                try {
+                    val stringResponse = response.body()?.string()
+                    val jsonobject = JSONObject(stringResponse)
+                    if (jsonobject.getString("errorCode").equals("1"))
+                        showSnackBar("Invalid Credentials! Please try again", binding.rlMain)
+                    else {
+
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                Log.e("DATA", "FAILURE")
+                binding.progressBar.visibility = View.GONE
+            }
+
+        })
+
+    }
 
 }

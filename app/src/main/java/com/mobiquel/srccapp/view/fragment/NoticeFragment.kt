@@ -10,18 +10,16 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mobiquel.srccapp.data.ApiManager
+import com.mobiquel.srccapp.databinding.FragmentNoticeBinding
 import com.mobiquel.srccapp.utils.Preferences
 import com.mobiquel.srccapp.utils.showSnackBar
 import com.mobiquel.srccapp.view.adapter.NoticeListAdapter
 import com.mobiquel.srccapp.view.viewmodel.APIViewModel
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import okhttp3.ResponseBody
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import srccapp.databinding.FragmentNoticeBinding
 
 class NoticeFragment : Fragment() {
 
@@ -35,61 +33,53 @@ class NoticeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentNoticeBinding.inflate(inflater, container, false)
-        apiViewModel = APIViewModel()
+       // apiViewModel = APIViewModel()
         Preferences!!.instance!!.loadPreferences(requireContext())
 
-        Log.e("ON CREATE VIEW","NOTICE FRAGMENT")
-       // GlobalScope.launch {
+        Log.e("ON CREATE VIEW", "NOTICE FRAGMENT")
 
-/*
-        checkIfFragmentAttached {
+       // binding.progressBar.visibility = View.VISIBLE
+        /*apiViewModel?.getNotices(
+            Preferences!!.instance!!.email!!,
+            Preferences!!.instance!!.userType!!
+        )?.observe(requireActivity(),
+            Observer {
 
-            binding.progressBar.visibility = View.VISIBLE
-            apiViewModel?.getNotices(
-                Preferences!!.instance!!.email!!,
-                Preferences!!.instance!!.userType!!
-            )?.observe(requireActivity(),
-                Observer {
-
-                    binding.progressBar.visibility = View.GONE
-                    try {
-                        val stringResponse = it!!.data!!.string()
-                        val jsonobject = JSONObject(stringResponse)
-                        if (jsonobject.getString("errorCode").equals("1"))
-                            requireContext().showSnackBar(
-                                "Invalid Credentials! Please try again",
-                                binding.rlMain
+                binding.progressBar.visibility = View.GONE
+                try {
+                    val stringResponse = it!!.data!!.string()
+                    val jsonobject = JSONObject(stringResponse)
+                    if (jsonobject.getString("errorCode").equals("1"))
+                        requireContext().showSnackBar(
+                            "Invalid Credentials! Please try again",
+                            binding.rlMain
+                        )
+                    else {
+                        var dataList = ArrayList<String>()
+                        for (i in 0 until jsonobject.getJSONArray("responseObject").length()) {
+                            dataList.add(
+                                jsonobject.getJSONArray("responseObject").getJSONObject(i)
+                                    .toString()
                             )
-                        else {
-                            var dataList = ArrayList<String>()
-                            for (i in 0 until jsonobject.getJSONArray("responseObject").length()) {
-                                dataList.add(
-                                    jsonobject.getJSONArray("responseObject").getJSONObject(i)
-                                        .toString()
-                                )
-                            }
-                            val mAdapter = NoticeListAdapter(requireContext(), dataList)
-                            binding.listView.layoutManager = LinearLayoutManager(
-                                context,
-                                LinearLayoutManager.VERTICAL,
-                                false
-                            )
-                            binding.listView.adapter = mAdapter
-
-                            if (dataList.size == 0)
-                                binding.noResult.visibility = View.VISIBLE
-
                         }
-                    } catch (e: Exception) {
-                        e.printStackTrace()
+                        val mAdapter = NoticeListAdapter(requireContext(), dataList)
+                        binding.listView.layoutManager = LinearLayoutManager(
+                            context,
+                            LinearLayoutManager.VERTICAL,
+                            false
+                        )
+                        binding.listView.adapter = mAdapter
+
+                        if (dataList.size == 0)
+                            binding.noResult.visibility = View.VISIBLE
+
                     }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
 
-                })
-
-        }
-*/
-
-        getNotices()
+            })*/
+           getNotices()
         return binding.root
     }
 
@@ -156,28 +146,28 @@ class NoticeFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        Log.e("ATTACH","NOTICE FRAGMENT")
+        Log.e("ATTACH", "NOTICE FRAGMENT")
         //getNotices()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.e("CREATE","NOTICE FRAGMENT")
+        Log.e("CREATE", "NOTICE FRAGMENT")
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        Log.e("ON ACTIVITY CREATED","NOTICE FRAGMENT")
+        Log.e("ON ACTIVITY CREATED", "NOTICE FRAGMENT")
     }
 
     override fun onStart() {
         super.onStart()
-        Log.e("START","NOTICE FRAGMENT")
+        Log.e("START", "NOTICE FRAGMENT")
     }
 
     override fun onResume() {
         super.onResume()
-        Log.e("RESUME","NOTICE FRAGMENT")
+        Log.e("RESUME", "NOTICE FRAGMENT")
     }
 
 

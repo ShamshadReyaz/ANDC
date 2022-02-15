@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.list_item_passenger.view.*
 import org.json.JSONObject
-import srccapp.R
+import com.mobiquel.srccapp.R
 
 
 /**

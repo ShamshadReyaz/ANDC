@@ -1,9 +1,9 @@
 package com.mobiquel.srccapp.pojo
 
 class ProfileRequestModel {
-    var facultyId: String? = null
-    var studentId: String? = null
-    var collegeRollNo: String? = null
-    var staffId: String? = null
-    var userType: String? = null
+    var facultyId: String? = ""
+    var studentId: String? = ""
+    var collegeRollNo: String? = ""
+    var staffId: String? = ""
+    var userType: String? = ""
 }

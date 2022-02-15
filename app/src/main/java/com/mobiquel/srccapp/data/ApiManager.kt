@@ -48,6 +48,12 @@ class ApiManager private constructor() {
         return apiClient.getNonTeachingStaffById(param)
     }
 
+    fun updateUserMobilePersonalEmail(param:MutableMap<String, String>): Call<ResponseBody> {
+        return apiClient.updateUserMobilePersonalEmail(param)
+    }
+
+
+
     fun checkSmartProfVersion(param:MutableMap<String, String>): Call<ResponseBody> {
         return apiClient.checkSmartProfVersion(param)
     }

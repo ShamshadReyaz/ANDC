@@ -22,3 +22,11 @@ fun Context.isValidEmail(input: String): Boolean {
     return input.matches("[a-zA-Z0-9._-]+@[a-zA-Z]+\\.+[a-zA-Z]+".toRegex())
 }
 
+fun Context.validatePhoneNumber(phoneNo: String): Boolean {
+    //validate phone numbers of format "1234567890"
+    return if (phoneNo.matches("\\d{10}".toRegex())) true else if (phoneNo.matches("\\d{3}[-\\.\\s]\\d{3}[-\\.\\s]\\d{4}".toRegex())) true else if (phoneNo.matches(
+            "\\d{3}-\\d{3}-\\d{4}\\s(x|(ext))\\d{3,5}".toRegex()
+        )
+    ) true else if (phoneNo.matches("\\(\\d{3}\\)-\\d{3}-\\d{4}".toRegex())) true else false
+}
+

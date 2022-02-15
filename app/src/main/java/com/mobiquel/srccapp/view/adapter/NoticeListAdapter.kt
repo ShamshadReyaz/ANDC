@@ -10,7 +10,7 @@ import com.bumptech.glide.Glide
 import com.mobiquel.srccapp.utils.redirectToWeb2
 import kotlinx.android.synthetic.main.list_item_notices.view.*
 import org.json.JSONObject
-import srccapp.R
+import com.mobiquel.srccapp.R
 
 
 /**

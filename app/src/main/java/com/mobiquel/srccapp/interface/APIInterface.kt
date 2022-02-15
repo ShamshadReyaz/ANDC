@@ -46,6 +46,11 @@ interface APIInterface {
     @POST("getNonTeachingStaffById")
     fun getNonTeachingStaffById   (@FieldMap param:MutableMap<String, String>): Call<ResponseBody>
 
+    @FormUrlEncoded
+    @POST("updateUserMobilePersonalEmail")
+    fun updateUserMobilePersonalEmail   (@FieldMap param:MutableMap<String, String>): Call<ResponseBody>
+
+
 
 
     @FormUrlEncoded

@@ -5,10 +5,8 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
+import com.mobiquel.srccapp.databinding.ActivitySplash2Binding
 import com.mobiquel.srccapp.utils.Preferences
-import srccapp.R
-import srccapp.databinding.ActivitySplash2Binding
-import srccapp.databinding.ActivitySplashBinding
 
 class SplashActivity2 : AppCompatActivity() {
 

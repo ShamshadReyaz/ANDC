@@ -34,6 +34,15 @@
             android:layout_centerVertical="true"
             android:padding="@dimen/d_5dp"
             android:src="@drawable/ic_log_out" />
+        <ImageView
+            android:id="@+id/edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:padding="@dimen/d_5dp"
+            android:visibility="gone"
+            android:layout_toLeftOf="@id/logout"
+            android:src="@drawable/ic_edit" />
 
         <TextView
             android:id="@+id/version"

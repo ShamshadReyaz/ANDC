@@ -13,7 +13,7 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.mobiquel.srccapp.view.HomeActivity
 import org.json.JSONObject
-import srccapp.R
+import com.mobiquel.srccapp.R
 
 /**
  * Created by Arman Reyaz on 6/17/2021.

@@ -109,6 +109,7 @@
                     android:textSize="@dimen/d_14sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/mobileTil"
                 style="@style/MyDenseOutlined"
@@ -130,6 +131,7 @@
                     android:textColor="@color/colorBlack"
                     android:textSize="@dimen/d_14sp" />
             </com.google.android.material.textfield.TextInputLayout>
+
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/emailTil"
@@ -176,7 +178,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-               android:id="@+id/facultyTypeTil"
+                android:id="@+id/facultyTypeTil"
                 style="@style/MyDenseOutlined"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -205,7 +205,14 @@ class ProfileFragment : Fragment() {
                             binding.rlMain
                         )
                     else {
-
+                        binding.facultyName.setText(jsonobject.getJSONObject("responseObject").getString("title")+" "+jsonobject.getJSONObject("responseObject").getString("name"))
+                        binding.employeeCode.setText(jsonobject.getJSONObject("responseObject").getString("employeeId"))
+                        binding.designation.setText(jsonobject.getJSONObject("responseObject").getString("designation"))
+                        binding.department.setText(jsonobject.getJSONObject("responseObject").getString("department"))
+                        binding.mobile.setText(jsonobject.getJSONObject("responseObject").getString("mobile"))
+                        binding.email.setText(jsonobject.getJSONObject("responseObject").getString("email"))
+                        binding.personalEmail.setText(jsonobject.getJSONObject("responseObject").getString("personalEmail"))
+                        binding.facultyType.setText(jsonobject.getJSONObject("responseObject").getString("type"))
                     }
                 } catch (e: Exception) {
                     e.printStackTrace()
@@ -313,7 +320,48 @@ class ProfileFragment : Fragment() {
                         )
                     else {
 
+                        binding.facultyName.setText(
+                            jsonobject.getJSONObject("responseObject")
+                                .getString("name")
+                        )
+                        binding.employeeCode.setText(
+                            jsonobject.getJSONObject("responseObject").getString("employeeId")
+                        )
+                        binding.designation.setText(
+                            jsonobject.getJSONObject("responseObject").getString("designation")
+                        )
+                        binding.department.setText(
+                            jsonobject.getJSONObject("responseObject").getString("department")
+                        )
 
+                        binding.mobile.setText(
+                            jsonobject.getJSONObject("responseObject").getString("mobile")
+                        )
+                        if (jsonobject.getJSONObject("responseObject").getString("mobile")
+                                .equals("")
+                        )
+                            binding.mobile.setText("N/A")
+                        else
+                            binding.mobile.setText(
+                                jsonobject.getJSONObject("responseObject").getString("mobile")
+                            )
+
+                        if (jsonobject.getJSONObject("responseObject").getString("personalEmail")
+                                .equals("")
+                        )
+                            binding.personalEmail.setText("N/A")
+                        else
+                            binding.personalEmail.setText(
+                                jsonobject.getJSONObject("responseObject")
+                                    .getString("personalEmail")
+                            )
+
+                        binding.email.setText(
+                            jsonobject.getJSONObject("responseObject").getString("email")
+                        )
+
+                        binding.facultyTypeTil.visibility = View.GONE
+                        binding.deptTil.visibility = View.GONE
                     }
                 } catch (e: Exception) {
                     e.printStackTrace()

@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.RadioGroup
 import androidx.appcompat.app.AppCompatActivity
 import com.mobiquel.srccapp.data.ApiManager
 import com.mobiquel.srccapp.databinding.ActivityLoginBinding
@@ -98,6 +99,7 @@ class LoginActivity : AppCompatActivity() {
 
 
 /*
+
         binding.userTypeGrp.setOnCheckedChangeListener(object : RadioGroup.OnCheckedChangeListener {
             override fun onCheckedChanged(p0: RadioGroup?, p1: Int) {
                 val userType =
@@ -121,6 +123,7 @@ class LoginActivity : AppCompatActivity() {
 
         binding.faculty.isChecked = true
 */
+
 
 
     }
@@ -156,9 +159,9 @@ class LoginActivity : AppCompatActivity() {
                                 binding.username.text.toString()
                             Preferences.instance!!.userId =
                                 jsonobject.getJSONObject("responseObject").getString("id")
-                            Preferences.instance!!.collegeRollNo =
+                         /*   Preferences.instance!!.collegeRollNo =
                                 jsonobject.getJSONObject("responseObject").getString("enrollmentNo")
-
+*/
                             Preferences.instance!!.savePreferences(this@LoginActivity)
                             showToast(jsonobject.getString("errorMessage"))
                             startActivity(Intent(this@LoginActivity, HomeActivity::class.java))

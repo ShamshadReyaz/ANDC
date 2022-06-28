@@ -22,6 +22,9 @@
         <entry key="..\:/Android Projects/SRCCApp/app/src/main/res/drawable/custom_background_nonte.xml" value="0.1805" />
         <entry key="..\:/Android Projects/SRCCApp/app/src/main/res/drawable/custom_background_student.xml" value="0.1805" />
         <entry key="..\:/Android Projects/SRCCApp/app/src/main/res/drawable/custom_textcolor_faculty.xml" value="0.1805" />
+        <entry key="..\:/Android Projects/SRCCApp/app/src/main/res/drawable/ic_baseline_add_24.xml" value="0.143" />
+        <entry key="..\:/Android Projects/SRCCApp/app/src/main/res/drawable/ic_date.xml" value="0.1" />
+        <entry key="..\:/Android Projects/SRCCApp/app/src/main/res/drawable/ic_date_2.xml" value="0.1" />
         <entry key="..\:/Android Projects/SRCCApp/app/src/main/res/drawable/ic_done.xml" value="0.1" />
         <entry key="..\:/Android Projects/SRCCApp/app/src/main/res/drawable/ic_edit.xml" value="0.1" />
         <entry key="..\:/Android Projects/SRCCApp/app/src/main/res/drawable/ic_edit_2.xml" value="0.1" />
@@ -30,6 +33,9 @@
         <entry key="..\:/Android Projects/SRCCApp/app/src/main/res/drawable/rectangle_background_faculty_0.xml" value="0.1805" />
         <entry key="..\:/Android Projects/SRCCApp/app/src/main/res/drawable/rectangle_background_faculty_1.xml" value="0.1805" />
         <entry key="..\:/Android Projects/SRCCApp/app/src/main/res/drawable/rectangle_background_gray_outline.xml" value="0.1805" />
+        <entry key="..\:/Android Projects/SRCCApp/app/src/main/res/drawable/rectangle_background_gray_outline_1.xml" value="0.1" />
+        <entry key="..\:/Android Projects/SRCCApp/app/src/main/res/drawable/rectangle_background_gray_outline_2.xml" value="0.1" />
+        <entry key="..\:/Android Projects/SRCCApp/app/src/main/res/drawable/rectangle_background_gray_outline_3.xml" value="0.1" />
         <entry key="..\:/Android Projects/SRCCApp/app/src/main/res/drawable/rectangle_background_nonte_0.xml" value="0.1805" />
         <entry key="..\:/Android Projects/SRCCApp/app/src/main/res/drawable/rectangle_background_nonte_1.xml" value="0.1805" />
         <entry key="..\:/Android Projects/SRCCApp/app/src/main/res/drawable/rectangle_background_red.xml" value="0.1805" />
@@ -42,8 +48,13 @@
         <entry key="..\:/Android Projects/SRCCApp/app/src/main/res/layout/activity_notice.xml" value="0.1796875" />
         <entry key="..\:/Android Projects/SRCCApp/app/src/main/res/layout/activity_splash.xml" value="0.1796875" />
         <entry key="..\:/Android Projects/SRCCApp/app/src/main/res/layout/activity_splash_2.xml" value="0.1082427536231884" />
+        <entry key="..\:/Android Projects/SRCCApp/app/src/main/res/layout/dialog_add_request.xml" value="0.1796875" />
+        <entry key="..\:/Android Projects/SRCCApp/app/src/main/res/layout/fragment_notice.xml" value="0.1796875" />
         <entry key="..\:/Android Projects/SRCCApp/app/src/main/res/layout/fragment_profile.xml" value="0.1796875" />
         <entry key="..\:/Android Projects/SRCCApp/app/src/main/res/layout/list_item_ckt.xml" value="0.1796875" />
+        <entry key="..\:/Android Projects/SRCCApp/app/src/main/res/layout/list_item_maintanance.xml" value="0.1796875" />
+        <entry key="..\:/Android Projects/SRCCApp/app/src/main/res/layout/list_item_notices.xml" value="0.1796875" />
+        <entry key="..\:/Android Projects/SRCCApp/app/src/main/res/layout/list_item_passenger.xml" value="0.1796875" />
         <entry key="..\:/Android Projects/SRCCApp/app/src/main/res/menu/bottom_nav_menu.xml" value="0.1796875" />
       </map>
     </option>

@@ -16,9 +16,6 @@ import java.util.concurrent.TimeUnit
 class ApiManager private constructor() {
     private val apiClient: APIInterface
 
-    fun getAppVersion(param:MutableMap<String, String>): Call<ResponseBody> {
-        return apiClient.getAppVersion(param)
-    }
     fun nonTeachingLogin(param:MutableMap<String, String>): Call<ResponseBody> {
         return apiClient.nonTeachingLogin(param)
     }
@@ -34,6 +31,13 @@ class ApiManager private constructor() {
 
     fun getNotices(param:MutableMap<String, String>): Call<ResponseBody> {
         return apiClient.getNotices(param)
+    }
+    fun getMyRequisitionsForMaintenance(param:MutableMap<String, String>): Call<ResponseBody> {
+        return apiClient.getMyRequisitionsForMaintenance(param)
+    }
+
+    fun addRequisitionForMaintenance(param:MutableMap<String, String>): Call<ResponseBody> {
+        return apiClient.addRequisitionForMaintenance(param)
     }
 
     fun getFacultyProfile(param:MutableMap<String, String>): Call<ResponseBody> {

@@ -1,11 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/rl_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:visibility="gone"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/poppins_semibold"
+        android:text="My Requisitions Maintenance" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/listView"
+        android:layout_below="@id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
@@ -17,9 +29,31 @@
         android:layout_margin="@dimen/d_20dp"
         android:fontFamily="@font/poppins_regular"
         android:letterSpacing="0.1"
-        android:text="No Result Found"
+        android:text="No Record Found"
         android:visibility="gone" />
 
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/addRequest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="10dp"
+        style="@style/CustomExtendedFloating"
+        android:text="ADD REQUEST"
+        android:minHeight="36dp"
+        app:icon="@drawable/ic_baseline_add_24"
+        app:iconTint="@color/colorWhite"
+        app:iconPadding="10dp"
+        android:textSize="@dimen/d_10sp"
+        android:insetLeft="0dp"
+        android:insetBottom="0dp"
+        android:visibility="gone"
+        android:insetTop="0dp"
+        android:insetRight="0dp"
+        android:textColor="@color/colorWhite"
+        app:backgroundTint="@color/colorRed"
+         />
 
     <ProgressBar
         android:id="@+id/progressBar"

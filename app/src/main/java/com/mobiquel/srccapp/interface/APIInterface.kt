@@ -14,9 +14,6 @@ interface APIInterface {
 
 
 
-    @FormUrlEncoded
-    @POST("getAppLatestVersion")
-    fun getAppVersion   (@FieldMap param:MutableMap<String, String>): Call<ResponseBody>
 
     @FormUrlEncoded
     @POST("nonTeachingLogin")
@@ -39,6 +36,15 @@ interface APIInterface {
     fun getFacultyProfile   (@FieldMap param:MutableMap<String, String>): Call<ResponseBody>
 
     @FormUrlEncoded
+    @POST("getMyRequisitionsForMaintenance")
+    fun getMyRequisitionsForMaintenance   (@FieldMap param:MutableMap<String, String>): Call<ResponseBody>
+
+    @FormUrlEncoded
+    @POST("addRequisitionForMaintenance")
+    fun addRequisitionForMaintenance   (@FieldMap param:MutableMap<String, String>): Call<ResponseBody>
+
+
+    @FormUrlEncoded
     @POST("getStudentDetailsByIdRollNo")
     fun getStudentProfile   (@FieldMap param:MutableMap<String, String>): Call<ResponseBody>
 
@@ -57,12 +63,5 @@ interface APIInterface {
     @POST("checkSmartProfVersion")
     fun checkSmartProfVersion   (@FieldMap param:MutableMap<String, String>): Call<ResponseBody>
 
-    @FormUrlEncoded
-    @POST("getArmyBookingByCode")
-    fun getArmyBookingByCode   (@FieldMap param:MutableMap<String, String>): Call<ResponseBody>
-
-    @FormUrlEncoded
-    @POST("checkInArmyPassengersForBookingWithoutToken")
-    fun checkInArmyPassengersForBookingWithoutToken   (@FieldMap param:MutableMap<String, String>): Call<ResponseBody>
 
 }

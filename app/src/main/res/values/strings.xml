@@ -12,9 +12,23 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
 
-    <string-array name="vehiclespinner">
-        <item>Airforce Plane</item>
-        <item>Helicopter</item>
+    <string-array name="reqcategory">
+        <item>[Not Selected]</item>
+        <item>Civil Maintenance</item>
+        <item>Electrical Maintenance</item>
+        <item>Water and Plumbing</item>
+        <item>Housekeeping &amp; Sewage</item>
+        <item>IT</item>
+        <item>Others</item>
+    </string-array>
+
+    <string-array name="loccategory">
+        <item>[Not Selected]</item>
+        <item>Sports</item>
+        <item>Boys Hostel</item>
+        <item>Girls Hostel</item>
+        <item>Staff Residence</item>
+        <item>Others</item>
     </string-array>
 
 </resources>

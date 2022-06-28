@@ -17,6 +17,7 @@ import com.mobiquel.srccapp.utils.Preferences
 import com.mobiquel.srccapp.utils.getAppVersion
 import com.mobiquel.srccapp.utils.showSnackBar
 import com.mobiquel.srccapp.utils.showToast
+import com.mobiquel.srccapp.view.fragment.MaintenanceFragment
 import com.mobiquel.srccapp.view.fragment.NoticeFragment
 import com.mobiquel.srccapp.view.fragment.ProfileFragment
 import com.mobiquel.srccapp.view.viewmodel.HomeAPIViewModel
@@ -35,6 +36,7 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var apiViewModel: HomeAPIViewModel
     private val fragmentNoticeFragment = NoticeFragment()
     private val fragmentProfileFragment = ProfileFragment()
+    private val maintenanceFragment = MaintenanceFragment()
     private val fragmentSupportManager = supportFragmentManager
     var active: Fragment = fragmentNoticeFragment
     var editStatus = 0
@@ -53,6 +55,12 @@ class HomeActivity : AppCompatActivity() {
         version.text = "Version: " + getAppVersion()
         getNotificationId()
 
+
+        fragmentSupportManager.beginTransaction().apply {
+            add(R.id.frameLayout, maintenanceFragment, "3")
+            hide(maintenanceFragment)
+            commit()
+        }
 
         fragmentSupportManager.beginTransaction().apply {
             add(R.id.frameLayout, fragmentProfileFragment, "2")
@@ -87,6 +95,16 @@ class HomeActivity : AppCompatActivity() {
                     }
                     active = fragmentProfileFragment
                     binding.edit.visibility = View.VISIBLE
+                    true
+                }
+                R.id.navigation_maintain -> {
+                    fragmentSupportManager.beginTransaction().apply {
+                        hide(active)
+                        show(maintenanceFragment)
+                        commit()
+                    }
+                    active = maintenanceFragment
+                    binding.edit.visibility = View.GONE
                     true
                 }
             }

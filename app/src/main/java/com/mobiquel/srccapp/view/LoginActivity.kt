@@ -34,6 +34,8 @@ class LoginActivity : AppCompatActivity() {
 
         apiViewModel = LoginAPIViewModel()
 
+        binding.username.setText("ruchi.kaushik@srcc.edu")
+
         binding.btnSignIn.setOnClickListener {
             if (binding.userTypeGrp.checkedRadioButtonId == -1)
                 showSnackBar("Please select user type!", binding.rlMain)

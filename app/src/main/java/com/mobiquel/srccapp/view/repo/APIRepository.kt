@@ -128,7 +128,45 @@ object APIRepository {
         })
         return this.serviceSetterGetter
     }
+    fun getMaintenanceRequests(model: ProfileRequestModel): SingleLiveEvent<Resource<ResponseBody>> {
 
+        val data: MutableMap<String, String> = HashMap()
+        data["staffId"] = model.staffId!!
+        data["studentId"] = model.studentId!!
+        data["collegeRollNo"] = model.collegeRollNo!!
+        data["facultyId"] = model.facultyId!!
+        data["facultyId"] = model.facultyId!!
+        var call: Call<ResponseBody>? = null
+
+        if (model.userType!!.equals("faculty"))
+            call = RetrofitClient.providesApiService.getMyRequisitionsForMaintenance(data)
+        else if (model.userType!!.equals("student"))
+            call = RetrofitClient.providesApiService.getStudentProfile(data)
+        else if (model.userType!!.equals("non-teaching"))
+            call = RetrofitClient.providesApiService.getNonTeachingStaffById(data)
+        call?.enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(
+                call: Call<ResponseBody>,
+                response: Response<ResponseBody>
+            ) {
+                if (response.isSuccessful)
+                    this@APIRepository.serviceSetterGetter.value = Resource.success(response.body())
+                else
+                    this@APIRepository.serviceSetterGetter.value =
+                        Resource.error("Something Went Wrong! Please try again later", null)
+
+
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                this@APIRepository.serviceSetterGetter.value =
+                    Resource.error("Internet not available! Please try again later", null)
+            }
+
+
+        })
+        return this.serviceSetterGetter
+    }
     fun checkSmartProfVersion(model: CheckVersionModel): SingleLiveEvent<Resource<ResponseBody>> {
 
         val data: MutableMap<String, String> = HashMap()

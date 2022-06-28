@@ -36,5 +36,8 @@
         <item name="android:textSize">12sp</item>
         <item name="android:fontFamily">@font/poppins_semibold</item>
     </style>
-
+    <style name="CustomExtendedFloating"  parent="Widget.MaterialComponents.ExtendedFloatingActionButton.Icon">
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/poppins_semibold</item>
+    </style>
 </resources>

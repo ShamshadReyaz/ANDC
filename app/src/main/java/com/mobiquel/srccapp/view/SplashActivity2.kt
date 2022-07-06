@@ -29,12 +29,12 @@ class SplashActivity2 : AppCompatActivity() {
 
     }
 
-    fun showHomeScreen() {
+    private fun showHomeScreen() {
         startActivity(Intent(this, HomeActivity::class.java))
         finish()
     }
 
-    fun showLoginScreen() {
+    private fun showLoginScreen() {
         startActivity(Intent(this, LoginActivity::class.java))
         finish()
     }

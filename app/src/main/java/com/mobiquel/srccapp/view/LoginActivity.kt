@@ -44,7 +44,7 @@ class LoginActivity : AppCompatActivity() {
             else if (binding.password.text.toString().equals(""))
                 showSnackBar("Please enter Password!", binding.rlMain)
             else {
-                login()
+                viewModelLogin()
 /*
                     binding.progressBar.visibility=View.VISIBLE
                 var genderUserType =
@@ -52,47 +52,7 @@ class LoginActivity : AppCompatActivity() {
                 if (genderUserType.equals("nonTeaching"))
                     genderUserType = "non-teaching"
 
-                apiViewModel.login(
-                    genderUserType,
-                    binding.username.text.toString(),
-                    Security.encrypt(binding.password.text.toString())
-                )?.observe(this,
-                    androidx.lifecycle.Observer {
-                        binding.progressBar.visibility=View.GONE
-                        try {
-                            val stringResponse = it.data?.string()
-                            val jsonobject = JSONObject(stringResponse)
-                            if (jsonobject.getString("errorCode").equals("1"))
-                                showSnackBar(
-                                    "Invalid Credentials! Please try again",
-                                    binding.rlMain
-                                )
-                            else {
-                                Preferences.instance!!.loadPreferences(this@LoginActivity)
-                                Preferences.instance!!.isLoginDone = "1"
 
-                                Preferences.instance!!.userType =
-                                    genderUserType
-                                Preferences.instance!!.email =
-                                    binding.username.text.toString()
-                                Preferences.instance!!.userId =
-                                    jsonobject.getJSONObject("responseObject").getString("id")
-                                if (genderUserType.equals("student")) {
-                                    Preferences.instance!!.collegeRollNo =
-                                        jsonobject.getJSONObject("responseObject")
-                                            .getString("enrollmentNo")
-                                }
-
-                                Preferences.instance!!.savePreferences(this@LoginActivity)
-                                showToast(jsonobject.getString("errorMessage"))
-                                startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
-                                finish()
-
-                            }
-                        } catch (e: Exception) {
-                            e.printStackTrace()
-                        }
-                    })
 */
 
             }
@@ -100,9 +60,9 @@ class LoginActivity : AppCompatActivity() {
         }
 
 
-/*
 
-        binding.userTypeGrp.setOnCheckedChangeListener(object : RadioGroup.OnCheckedChangeListener {
+
+     /*   binding.userTypeGrp.setOnCheckedChangeListener(object : RadioGroup.OnCheckedChangeListener {
             override fun onCheckedChanged(p0: RadioGroup?, p1: Int) {
                 val userType =
                     resources.getResourceEntryName(p1) // "male"
@@ -122,15 +82,15 @@ class LoginActivity : AppCompatActivity() {
             }
 
         })
-
-        binding.faculty.isChecked = true
 */
+        binding.faculty.isChecked = true
+
 
 
 
     }
 
-    fun login() {
+    private fun login() {
         binding.progressBar.visibility = View.VISIBLE
         val data: MutableMap<String, String> = HashMap()
         data["email"] = binding.username.text.toString()
@@ -183,7 +143,8 @@ class LoginActivity : AppCompatActivity() {
 
             })
 
-        } else if (genderUserType.equals("student")) {
+        }
+        else if (genderUserType.equals("student")) {
             apiManager!!.studentLogin(data).enqueue(object : Callback<ResponseBody> {
                 override fun onResponse(
                     call: Call<ResponseBody>,
@@ -227,7 +188,8 @@ class LoginActivity : AppCompatActivity() {
 
             })
 
-        } else {
+        }
+        else {
             apiManager!!.nonTeachingLogin(data).enqueue(object : Callback<ResponseBody> {
                 override fun onResponse(
                     call: Call<ResponseBody>,
@@ -272,7 +234,86 @@ class LoginActivity : AppCompatActivity() {
         }
 
     }
+ private fun viewModelLogin(){
+     binding.progressBar.visibility=View.VISIBLE
+     val genderUserType =
+         resources.getResourceEntryName(binding.userTypeGrp.checkedRadioButtonId) // "male"
 
+     apiViewModel.login(
+         genderUserType,
+         binding.username.text.toString(),
+         Security.encrypt(binding.password.text.toString())
+     )?.observe(this,
+         androidx.lifecycle.Observer {
+             binding.progressBar.visibility=View.GONE
+             try {
+                 val stringResponse = it.data?.string()
+                 val jsonobject = JSONObject(stringResponse)
+                 if (jsonobject.getString("errorCode").equals("1"))
+                     showSnackBar(
+                         "Invalid Credentials! Please try again",
+                         binding.rlMain
+                     )
+                 else {
+                     if (genderUserType.equals("faculty")) {
+                         Preferences.instance!!.loadPreferences(this@LoginActivity)
+                         Preferences.instance!!.isLoginDone = "1"
+
+                         Preferences.instance!!.userType =
+                             "faculty"
+                         Preferences.instance!!.email =
+                             binding.username.text.toString()
+                         Preferences.instance!!.userId =
+                             jsonobject.getJSONObject("responseObject").getString("id")
+                         /*   Preferences.instance!!.collegeRollNo =
+                                jsonobject.getJSONObject("responseObject").getString("enrollmentNo")
+*/
+                         Preferences.instance!!.savePreferences(this@LoginActivity)
+                         showToast(jsonobject.getString("errorMessage"))
+                         startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
+                         finish()
+                     }
+                     else if (genderUserType.equals("student")) {
+                         Preferences.instance!!.loadPreferences(this@LoginActivity)
+                         Preferences.instance!!.isLoginDone = "1"
+
+                         Preferences.instance!!.userType =
+                             "student"
+                         Preferences.instance!!.email =
+                             binding.username.text.toString()
+                         Preferences.instance!!.userId =
+                             jsonobject.getJSONObject("responseObject").getString("id")
+                         Preferences.instance!!.collegeRollNo =
+                             jsonobject.getJSONObject("responseObject").getString("enrollmentNo")
+
+                         Preferences.instance!!.savePreferences(this@LoginActivity)
+                         showToast(jsonobject.getString("errorMessage"))
+                         startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
+                         finish()
+                     }
+                     else{
+                         Preferences.instance!!.loadPreferences(this@LoginActivity)
+                         Preferences.instance!!.isLoginDone = "1"
+
+                         Preferences.instance!!.userType =
+                             "non-teaching"
+                         Preferences.instance!!.email =
+                             binding.username.text.toString()
+                         Preferences.instance!!.userId =
+                             jsonobject.getJSONObject("responseObject").getString("id")
+
+                         Preferences.instance!!.savePreferences(this@LoginActivity)
+                         showToast(jsonobject.getString("errorMessage"))
+                         startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
+                         finish()
+                     }
+                 }
+
+             } catch (e: Exception) {
+                 e.printStackTrace()
+             }
+         })
+ }
 
 }
 

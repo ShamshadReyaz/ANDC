@@ -56,20 +56,18 @@ class HomeActivity : AppCompatActivity() {
         getNotificationId()
 
 
-        fragmentSupportManager.beginTransaction().apply {
+       /* fragmentSupportManager.beginTransaction().apply {
             add(R.id.frameLayout, maintenanceFragment, "3")
-            hide(maintenanceFragment)
             commit()
         }
 
         fragmentSupportManager.beginTransaction().apply {
             add(R.id.frameLayout, fragmentProfileFragment, "2")
-            hide(fragmentProfileFragment)
             commit()
-        }
+        }*/
 
         fragmentSupportManager.beginTransaction().apply {
-            add(R.id.frameLayout, fragmentNoticeFragment, "1")
+            add(R.id.frameLayout, fragmentNoticeFragment,"1")
             commit()
         }
 
@@ -78,8 +76,7 @@ class HomeActivity : AppCompatActivity() {
             when (it.itemId) {
                 R.id.navigation_notice -> {
                     fragmentSupportManager.beginTransaction().apply {
-                        hide(active)
-                        show(fragmentNoticeFragment)
+                        replace(R.id.frameLayout,fragmentNoticeFragment)
                         commit()
                     }
                     active = fragmentNoticeFragment
@@ -89,8 +86,7 @@ class HomeActivity : AppCompatActivity() {
 
                 R.id.navigation_profile -> {
                     fragmentSupportManager.beginTransaction().apply {
-                        hide(active)
-                        show(fragmentProfileFragment)
+                        replace(R.id.frameLayout,fragmentProfileFragment)
                         commit()
                     }
                     active = fragmentProfileFragment
@@ -99,8 +95,7 @@ class HomeActivity : AppCompatActivity() {
                 }
                 R.id.navigation_maintain -> {
                     fragmentSupportManager.beginTransaction().apply {
-                        hide(active)
-                        show(maintenanceFragment)
+                        replace(R.id.frameLayout,maintenanceFragment)
                         commit()
                     }
                     active = maintenanceFragment

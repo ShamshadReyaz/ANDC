@@ -1,6 +1,6 @@
-package com.mobiquel.lehpermit.data
+package com.mobiquel.srccapp.data
 
-import com.mobiquel.srccapp.`interface`.APIInterface
+import com.mobiquel.srccapp.appinterface.APIInterface
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -8,7 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitClient {
 
-    val retrofitClient: Retrofit.Builder by lazy {
+    private val retrofitClient: Retrofit.Builder by lazy {
 
         val levelType = HttpLoggingInterceptor.Level.BODY
         val logging = HttpLoggingInterceptor()

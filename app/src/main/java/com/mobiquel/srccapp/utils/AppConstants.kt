@@ -53,4 +53,5 @@ object AppConstants {
     const val MESSAGE_EXIT_POPUP = "Are you sure that you want to exit the test?"
     const val PLAY_STORE_URL =
         "https://play.google.com/store/apps/details?id=com.careerlauncher.gkninja"
+    const val BASE_URL = "http://139.59.93.96:8080/RollCallSRCC/rest/service/"
 }

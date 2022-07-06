@@ -1,4 +1,4 @@
-package com.mobiquel.srccapp.`interface`
+package com.mobiquel.srccapp.appinterface
 
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -55,9 +55,6 @@ interface APIInterface {
     @FormUrlEncoded
     @POST("updateUserMobilePersonalEmail")
     fun updateUserMobilePersonalEmail   (@FieldMap param:MutableMap<String, String>): Call<ResponseBody>
-
-
-
 
     @FormUrlEncoded
     @POST("checkSmartProfVersion")

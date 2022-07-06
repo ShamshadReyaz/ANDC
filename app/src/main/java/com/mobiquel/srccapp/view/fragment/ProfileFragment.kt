@@ -7,12 +7,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.mobiquel.srccapp.data.ApiManager
 import com.mobiquel.srccapp.databinding.FragmentProfileBinding
+import com.mobiquel.srccapp.pojo.ProfileRequestModel
 import com.mobiquel.srccapp.utils.Preferences
 import com.mobiquel.srccapp.utils.isValidEmail
 import com.mobiquel.srccapp.utils.showSnackBar
 import com.mobiquel.srccapp.utils.validatePhoneNumber
+import com.mobiquel.srccapp.view.viewmodel.APIViewModel
 import com.mobiquel.srccapp.view.viewmodel.APIViewModel2
 import okhttp3.ResponseBody
 import org.json.JSONObject
@@ -24,7 +29,7 @@ class ProfileFragment : Fragment() {
 
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
-    private lateinit var apiViewModel: APIViewModel2
+    private val apiViewModel: APIViewModel2 by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,27 +37,30 @@ class ProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
-        //  apiViewModel = APIViewModel2()
+        //apiViewModel = ViewModelProviders.of(this).get(APIViewModel2::class.java)
 
         Preferences!!.instance!!.loadPreferences(requireContext())
-        //  var model = ProfileRequestModel()
+          var model = ProfileRequestModel()
 
         if (Preferences!!.instance!!.userType.equals("student")) {
-            //model.studentId = Preferences.instance!!.userId!!
-            //model.collegeRollNo = Preferences.instance!!.collegeRollNo!!
-            getStudentProfile()
+            model.studentId = Preferences.instance!!.userId!!
+            model.collegeRollNo = Preferences.instance!!.collegeRollNo!!
+            model.userType="student"
+            //getStudentProfile()
         } else if (Preferences!!.instance!!.userType.equals("faculty")) {
-            getFacultyProfile()
-            //model.facultyId=Preferences.instance!!.userId!!
+            //getFacultyProfile()
+            model.facultyId=Preferences.instance!!.userId!!
+            model.userType="faculty"
         } else {
-            getNonTeachingStaff()
-            //model.staffId=Preferences.instance!!.userId!!
+            //getNonTeachingStaff()
+            model.staffId=Preferences.instance!!.userId!!
+            model.userType="nonteaching"
         }
 
 
-        /*  binding.progressBar.visibility = View.VISIBLE
+          binding.progressBar.visibility = View.VISIBLE
 
-          apiViewModel?.getProfile(model)?.observe(requireActivity(), Observer {
+          apiViewModel?.getProfile(model)?.observe(this, Observer {
 
               binding.progressBar.visibility = View.GONE
               try {
@@ -97,35 +105,16 @@ class ProfileFragment : Fragment() {
                           binding.facultyType.setText(
                               jsonobject.getJSONObject("responseObject").getString("admissionType")
                           )
-
                       }
                       else if (Preferences!!.instance!!.userType.equals("faculty")) {
-                          binding.facultyName.setText(
-                              jsonobject.getJSONObject("responseObject")
-                                  .getString("title") + " " + jsonobject.getJSONObject("responseObject")
-                                  .getString("name")
-                          )
-                          binding.employeeCode.setText(
-                              jsonobject.getJSONObject("responseObject").getString("employeeId")
-                          )
-                          binding.designation.setText(
-                              jsonobject.getJSONObject("responseObject").getString("designation")
-                          )
-                          binding.department.setText(
-                              jsonobject.getJSONObject("responseObject").getString("department")
-                          )
-                          binding.mobile.setText(
-                              jsonobject.getJSONObject("responseObject").getString("mobile")
-                          )
-                          binding.email.setText(
-                              jsonobject.getJSONObject("responseObject").getString("email")
-                          )
-                          binding.personalEmail.setText(
-                              jsonobject.getJSONObject("responseObject").getString("personalEmail")
-                          )
-                          binding.facultyType.setText(
-                              jsonobject.getJSONObject("responseObject").getString("type")
-                          )
+                          binding.facultyName.setText(jsonobject.getJSONObject("responseObject").getString("title")+" "+jsonobject.getJSONObject("responseObject").getString("name"))
+                          binding.employeeCode.setText(jsonobject.getJSONObject("responseObject").getString("employeeId"))
+                          binding.designation.setText(jsonobject.getJSONObject("responseObject").getString("designation"))
+                          binding.department.setText(jsonobject.getJSONObject("responseObject").getString("department"))
+                          binding.mobile.setText(jsonobject.getJSONObject("responseObject").getString("mobile"))
+                          binding.email.setText(jsonobject.getJSONObject("responseObject").getString("email"))
+                          binding.personalEmail.setText(jsonobject.getJSONObject("responseObject").getString("personalEmail"))
+                          binding.facultyType.setText(jsonobject.getJSONObject("responseObject").getString("type"))
                       }
                       else {
                           binding.facultyName.setText(
@@ -170,7 +159,6 @@ class ProfileFragment : Fragment() {
 
                           binding.facultyTypeTil.visibility = View.GONE
                           binding.deptTil.visibility = View.GONE
-
                       }
 
                   }
@@ -179,7 +167,7 @@ class ProfileFragment : Fragment() {
               }
           })
 
-        */  Log.e("ON CREATE VIEW", "PROFILE FRAGMENT")
+          Log.e("ON CREATE VIEW", "PROFILE FRAGMENT")
 
 
         return binding.root

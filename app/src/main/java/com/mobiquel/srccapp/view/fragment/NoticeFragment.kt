@@ -7,7 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mobiquel.srccapp.data.ApiManager
 import com.mobiquel.srccapp.databinding.FragmentNoticeBinding
@@ -25,7 +27,7 @@ class NoticeFragment : Fragment() {
 
     private var _binding: FragmentNoticeBinding? = null
     private val binding get() = _binding!!
-    private lateinit var apiViewModel: APIViewModel
+    private val apiViewModel: APIViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,16 +35,16 @@ class NoticeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentNoticeBinding.inflate(inflater, container, false)
-       // apiViewModel = APIViewModel()
+        //apiViewModel = ViewModelProviders.of(this).get(APIViewModel::class.java)
         Preferences!!.instance!!.loadPreferences(requireContext())
 
         Log.e("ON CREATE VIEW", "NOTICE FRAGMENT")
 
-       // binding.progressBar.visibility = View.VISIBLE
-        /*apiViewModel?.getNotices(
+        binding.progressBar.visibility = View.VISIBLE
+       /* apiViewModel?.getNotices(
             Preferences!!.instance!!.email!!,
             Preferences!!.instance!!.userType!!
-        )?.observe(requireActivity(),
+        )?.observe(this,
             Observer {
 
                 binding.progressBar.visibility = View.GONE
@@ -55,6 +57,7 @@ class NoticeFragment : Fragment() {
                             binding.rlMain
                         )
                     else {
+
                         var dataList = ArrayList<String>()
                         for (i in 0 until jsonobject.getJSONArray("responseObject").length()) {
                             dataList.add(

@@ -2,7 +2,7 @@ package com.mobiquel.srccapp.view.repo
 
 import androidx.lifecycle.MutableLiveData
 import com.mobiquel.lehpermit.data.Resource
-import com.mobiquel.lehpermit.data.RetrofitClient
+import com.mobiquel.srccapp.data.RetrofitClient
 import com.mobiquel.srccapp.pojo.CheckVersionModel
 import com.mobiquel.srccapp.pojo.ProfileRequestModel
 import com.mobiquel.srccapp.utils.SingleLiveEvent
@@ -64,7 +64,7 @@ object APIRepository {
             call = RetrofitClient.providesApiService.facultyLoginUpdated(data)
         else if (userType.equals("student"))
             call = RetrofitClient.providesApiService.studentLogin(data)
-        else if (userType.equals("non-teaching"))
+        else
             call = RetrofitClient.providesApiService.nonTeachingLogin(data)
 
         call?.enqueue(object : Callback<ResponseBody> {
@@ -103,7 +103,7 @@ object APIRepository {
             call = RetrofitClient.providesApiService.getFacultyProfile(data)
         else if (model.userType!!.equals("student"))
             call = RetrofitClient.providesApiService.getStudentProfile(data)
-        else if (model.userType!!.equals("non-teaching"))
+        else
             call = RetrofitClient.providesApiService.getNonTeachingStaffById(data)
         call?.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(

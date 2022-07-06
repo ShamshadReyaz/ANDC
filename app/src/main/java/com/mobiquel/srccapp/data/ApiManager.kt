@@ -1,6 +1,6 @@
 package com.mobiquel.srccapp.data
 
-import com.mobiquel.srccapp.`interface`.APIInterface
+import com.mobiquel.srccapp.appinterface.APIInterface
 import okhttp3.OkHttpClient
 import okhttp3.ResponseBody
 import okhttp3.logging.HttpLoggingInterceptor
@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit
  * on 2/3/19.
  */
 class ApiManager private constructor() {
-    private val apiClient: APIInterface
+    private val apiClient: APIInterface = retrofitService
 
     fun nonTeachingLogin(param:MutableMap<String, String>): Call<ResponseBody> {
         return apiClient.nonTeachingLogin(param)
@@ -104,7 +104,4 @@ class ApiManager private constructor() {
 
     }
 
-    init {
-        apiClient = retrofitService
-    }
 }

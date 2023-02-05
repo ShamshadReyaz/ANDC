@@ -34,7 +34,7 @@ class LoginActivity : AppCompatActivity() {
 
         apiViewModel = LoginAPIViewModel()
 
-        binding.username.setText("ruchi.kaushik@srcc.edu")
+        //binding.username.setText("ruchi.kaushik@srcc.edu")
 
         binding.btnSignIn.setOnClickListener {
             if (binding.userTypeGrp.checkedRadioButtonId == -1)
@@ -44,7 +44,8 @@ class LoginActivity : AppCompatActivity() {
             else if (binding.password.text.toString().equals(""))
                 showSnackBar("Please enter Password!", binding.rlMain)
             else {
-                viewModelLogin()
+               // viewModelLogin()
+                login()
 /*
                     binding.progressBar.visibility=View.VISIBLE
                 var genderUserType =
@@ -59,10 +60,7 @@ class LoginActivity : AppCompatActivity() {
 
         }
 
-
-
-
-     /*   binding.userTypeGrp.setOnCheckedChangeListener(object : RadioGroup.OnCheckedChangeListener {
+       /*binding.userTypeGrp.setOnCheckedChangeListener(object : RadioGroup.OnCheckedChangeListener {
             override fun onCheckedChanged(p0: RadioGroup?, p1: Int) {
                 val userType =
                     resources.getResourceEntryName(p1) // "male"
@@ -271,7 +269,7 @@ class LoginActivity : AppCompatActivity() {
                          Preferences.instance!!.savePreferences(this@LoginActivity)
                          showToast(jsonobject.getString("errorMessage"))
                          startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
-                         finish()
+
                      }
                      else if (genderUserType.equals("student")) {
                          Preferences.instance!!.loadPreferences(this@LoginActivity)
@@ -289,7 +287,7 @@ class LoginActivity : AppCompatActivity() {
                          Preferences.instance!!.savePreferences(this@LoginActivity)
                          showToast(jsonobject.getString("errorMessage"))
                          startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
-                         finish()
+
                      }
                      else{
                          Preferences.instance!!.loadPreferences(this@LoginActivity)
@@ -305,8 +303,11 @@ class LoginActivity : AppCompatActivity() {
                          Preferences.instance!!.savePreferences(this@LoginActivity)
                          showToast(jsonobject.getString("errorMessage"))
                          startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
-                         finish()
+
                      }
+                     finish()
+
+
                  }
 
              } catch (e: Exception) {
@@ -314,6 +315,12 @@ class LoginActivity : AppCompatActivity() {
              }
          })
  }
+
+    override fun onDestroy() {
+        Log.e("DESTRO","DESTRO")
+        super.onDestroy()
+    }
+
 
 }
 

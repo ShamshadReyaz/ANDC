@@ -14,9 +14,10 @@ class APIViewModel3 : ViewModel() {
 
 
     fun getMaintenance(
-        model: ProfileRequestModel
+        userId: String,
+        userType: String
     ): SingleLiveEvent<Resource<ResponseBody>>? {
-        uploadData = APIRepository.getMaintenanceRequests(model)
+        uploadData = APIRepository.getMaintenanceRequests(userId,userType)
         return uploadData
     }
 

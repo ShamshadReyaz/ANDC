@@ -8,21 +8,15 @@ import com.mobiquel.srccapp.utils.SingleLiveEvent
 import com.mobiquel.srccapp.view.repo.APIRepository
 import okhttp3.ResponseBody
 
-class APIViewModel2 : ViewModel() {
+class APIViewModel4 : ViewModel() {
 
     var uploadData = SingleLiveEvent<Resource<ResponseBody>>()
 
 
-    fun getProfile(
-        model: ProfileRequestModel
-    ): SingleLiveEvent<Resource<ResponseBody>>? {
-        uploadData = APIRepository.getProfile(model)
-        return uploadData
-    }
     fun getWifiData(
-        model: ProfileRequestModel
+        rollNo: String
     ): SingleLiveEvent<Resource<ResponseBody>>? {
-        uploadData = APIRepository.getProfile(model)
+        uploadData = APIRepository.getWifiData(rollNo)
         return uploadData
     }
 

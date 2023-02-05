@@ -1,10 +1,9 @@
 package com.mobiquel.srccapp.appinterface
 
+import com.mobiquel.srccapp.pojo.DostToenModel
 import okhttp3.ResponseBody
 import retrofit2.Call
-import retrofit2.http.FieldMap
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.POST
+import retrofit2.http.*
 
 
 /**
@@ -40,6 +39,10 @@ interface APIInterface {
     fun getMyRequisitionsForMaintenance   (@FieldMap param:MutableMap<String, String>): Call<ResponseBody>
 
     @FormUrlEncoded
+    @POST("getStudentWiFiCredentialRecord")
+    fun getStudentWiFiCredentialRecord   (@FieldMap param:MutableMap<String, String>): Call<ResponseBody>
+
+    @FormUrlEncoded
     @POST("addRequisitionForMaintenance")
     fun addRequisitionForMaintenance   (@FieldMap param:MutableMap<String, String>): Call<ResponseBody>
 
@@ -59,6 +62,10 @@ interface APIInterface {
     @FormUrlEncoded
     @POST("checkSmartProfVersion")
     fun checkSmartProfVersion   (@FieldMap param:MutableMap<String, String>): Call<ResponseBody>
+
+    @Headers("Content-Type: application/json")
+    @POST()
+    fun getYourDostToken   (@Url url:String, @Body data:DostToenModel): Call<ResponseBody>
 
 
 }

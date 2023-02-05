@@ -6,4 +6,5 @@ class ProfileRequestModel {
     var collegeRollNo: String? = ""
     var staffId: String? = ""
     var userType: String? = ""
+    var rollNo: String? = ""
 }

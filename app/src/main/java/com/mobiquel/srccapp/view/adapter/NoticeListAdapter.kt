@@ -11,6 +11,7 @@ import com.mobiquel.srccapp.utils.redirectToWeb2
 import kotlinx.android.synthetic.main.list_item_notices.view.*
 import org.json.JSONObject
 import com.mobiquel.srccapp.R
+import com.mobiquel.srccapp.utils.showImagePopup
 
 
 /**
@@ -53,6 +54,9 @@ class NoticeListAdapter(
                     itemView.img.visibility = View.VISIBLE
                     Glide.with(context).load(jsonObject.getString("photoURL")).into(itemView.img);
 
+                }
+                itemView.img.setOnClickListener {
+                    context.showImagePopup(jsonObject.getString("photoURL"))
                 }
                 if (jsonObject.getString("attachmentURL").equals(""))
                     itemView.t3.visibility = View.GONE

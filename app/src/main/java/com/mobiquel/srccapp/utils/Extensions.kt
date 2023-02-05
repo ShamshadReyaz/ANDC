@@ -2,6 +2,7 @@ package com.mobiquel.srccapp.utils
 
 import android.Manifest
 import android.app.Activity
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -9,8 +10,12 @@ import android.net.Uri
 import android.os.Build
 import android.provider.Settings
 import android.telephony.TelephonyManager
+import android.view.Gravity
 import android.view.View
+import android.view.Window
+import android.webkit.WebView
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
@@ -76,7 +81,7 @@ fun Context.redirectToWeb2(link: String) {
 }
 fun Context.getDeviceId(): String {
     var deviceId = ""
-    if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.Q){
+  /*  if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.Q){
         deviceId=Settings.Secure.getString(this.contentResolver,
             Settings.Secure.ANDROID_ID)
     }
@@ -109,7 +114,36 @@ fun Context.getDeviceId(): String {
 
         }
     }
+  */
     return deviceId
+}
+
+fun Context.showImagePopup(imageurl:String) {
+
+    var dialog = Dialog(this)
+    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+    dialog.setCancelable(true)
+    dialog.setContentView(R.layout.dialog_webview)
+    dialog.window!!.setDimAmount(0.5f)
+    dialog.window!!.setBackgroundDrawable(null)
+    dialog.window!!.getAttributes().windowAnimations = R.style.DialogBounceAnimation
+    dialog.window!!.setLayout(
+        LinearLayout.LayoutParams.MATCH_PARENT,
+        LinearLayout.LayoutParams.MATCH_PARENT
+    )
+    dialog.window!!.setGravity(Gravity.CENTER)
+    val cancel = dialog.findViewById<ImageView>(R.id.cancel)
+    val webview = dialog.findViewById<WebView>(R.id.webview)
+    webview.settings.builtInZoomControls=true
+    webview.settings.displayZoomControls=false
+    webview.settings.useWideViewPort=true
+    webview.setInitialScale(1)
+    webview.loadUrl(imageurl)
+    cancel.setOnClickListener {
+        dialog.cancel()
+    }
+
+    dialog.show()
 }
 
 

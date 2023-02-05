@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rl_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/d_10dp"
+        app:cardCornerRadius="@dimen/d_5dp"
+        app:cardElevation="@dimen/d_10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/d_10dp"
+            android:paddingRight="@dimen/d_10dp"
+            android:paddingBottom="@dimen/d_10dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/d_10dp">
+
+                <ImageView
+                    android:id="@+id/copy1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="5dp"
+                    android:src="@drawable/ic_baseline_content_copy_24" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textIl1"
+                    style="@style/MyDenseOutlined"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@id/copy1"
+                    android:hint="Roll Number"
+                    android:textColorHint="@color/colorGray"
+                    app:boxStrokeColor="@color/colorGray">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/rollNumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:enabled="true"
+                        android:fontFamily="@font/poppins_regular"
+                        android:imeOptions="actionNext"
+                        android:inputType="textEmailAddress"
+                        android:textColor="@color/colorBlack"
+                        android:textIsSelectable="true"
+                        android:textSize="@dimen/d_14sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/d_10dp">
+
+                <ImageView
+                    android:id="@+id/copy2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="5dp"
+                    android:src="@drawable/ic_baseline_content_copy_24" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textIl2"
+                    style="@style/MyDenseOutlined"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@id/copy2"
+                    android:hint="Wifi ID"
+
+                    android:textColorHint="@color/colorGray"
+                    app:boxStrokeColor="@color/colorGray">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/wifiId"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:enabled="true"
+                        android:fontFamily="@font/poppins_regular"
+                        android:imeOptions="actionNext"
+                        android:inputType="textEmailAddress"
+                        android:textColor="@color/colorBlack"
+                        android:textIsSelectable="true"
+                        android:textSize="@dimen/d_14sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/d_10dp">
+
+                <ImageView
+                    android:id="@+id/copy3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="5dp"
+                    android:src="@drawable/ic_baseline_content_copy_24" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textIl3"
+                    style="@style/MyDenseOutlined"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@id/copy3"
+                    android:hint="Password"
+
+                    android:textColorHint="@color/colorGray"
+                    app:boxStrokeColor="@color/colorGray">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/password"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:enabled="true"
+                        android:fontFamily="@font/poppins_regular"
+                        android:imeOptions="actionNext"
+                        android:inputType="textEmailAddress"
+                        android:textColor="@color/colorBlack"
+                        android:textIsSelectable="true"
+                        android:textSize="@dimen/d_14sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </RelativeLayout>
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:backgroundTint="@color/theme_color"
+        android:visibility="gone" />
+
+</RelativeLayout>

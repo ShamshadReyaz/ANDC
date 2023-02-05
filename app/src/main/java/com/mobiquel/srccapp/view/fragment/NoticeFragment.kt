@@ -27,7 +27,7 @@ class NoticeFragment : Fragment() {
 
     private var _binding: FragmentNoticeBinding? = null
     private val binding get() = _binding!!
-    private val apiViewModel: APIViewModel by viewModels()
+    private var apiViewModel: APIViewModel?=null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,13 +35,19 @@ class NoticeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentNoticeBinding.inflate(inflater, container, false)
-        //apiViewModel = ViewModelProviders.of(this).get(APIViewModel::class.java)
+        apiViewModel = ViewModelProviders.of(this).get(APIViewModel::class.java)
+
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         Preferences!!.instance!!.loadPreferences(requireContext())
 
         Log.e("ON CREATE VIEW", "NOTICE FRAGMENT")
 
         binding.progressBar.visibility = View.VISIBLE
-       /* apiViewModel?.getNotices(
+        apiViewModel?.getNotices(
             Preferences!!.instance!!.email!!,
             Preferences!!.instance!!.userType!!
         )?.observe(this,
@@ -81,11 +87,9 @@ class NoticeFragment : Fragment() {
                     e.printStackTrace()
                 }
 
-            })*/
-           getNotices()
-        return binding.root
+            })
+        // getNotices()
     }
-
     fun checkIfFragmentAttached(operation: Context.() -> Unit) {
         if (isAdded && context != null) {
             operation(requireContext())

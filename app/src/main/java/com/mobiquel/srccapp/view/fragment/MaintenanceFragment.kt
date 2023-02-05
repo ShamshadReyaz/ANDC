@@ -8,6 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.mobiquel.srccapp.R
@@ -17,6 +20,7 @@ import com.mobiquel.srccapp.utils.Preferences
 import com.mobiquel.srccapp.utils.showSnackBar
 import com.mobiquel.srccapp.utils.showToast
 import com.mobiquel.srccapp.view.adapter.MaintanceListAdapter
+import com.mobiquel.srccapp.view.adapter.NoticeListAdapter
 import com.mobiquel.srccapp.view.viewmodel.APIViewModel3
 import okhttp3.ResponseBody
 import org.json.JSONObject
@@ -28,7 +32,7 @@ class MaintenanceFragment : Fragment() {
 
     private var _binding: FragmentNoticeBinding? = null
     private val binding get() = _binding!!
-    private lateinit var apiViewModel: APIViewModel3
+    private var apiViewModel: APIViewModel3?=null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,16 +40,24 @@ class MaintenanceFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentNoticeBinding.inflate(inflater, container, false)
-        //  apiViewModel = APIViewModel2()
+         apiViewModel = ViewModelProviders.of(this).get(APIViewModel3::class.java)
+
+
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         binding.title.visibility = View.VISIBLE
         binding.addRequest.visibility = View.VISIBLE
         binding.addRequest.setOnClickListener {
             showAddDialog()
         }
-        getMaintenanceRequest()
-        return binding.root
-    }
 
+       getMainData()
+
+        //getMaintenanceRequest()
+    }
     fun getMaintenanceRequest() {
         binding.progressBar.visibility = View.VISIBLE
         val data: MutableMap<String, String> = HashMap()
@@ -226,7 +238,7 @@ class MaintenanceFragment : Fragment() {
                         binding.rlMain
                     )
                     if (jsonobject.getString("errorCode").equals("0"))
-                        getMaintenanceRequest()
+                        getMainData()
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
@@ -240,5 +252,48 @@ class MaintenanceFragment : Fragment() {
 
         })
 
+    }
+
+    fun getMainData(){
+        apiViewModel?.getMaintenance(
+            Preferences!!.instance!!.userId!!,
+            Preferences!!.instance!!.userType!!
+        )?.observe(this,
+            Observer {
+
+                binding.progressBar.visibility = View.GONE
+                try {
+                    val stringResponse = it!!.data!!.string()
+                    val jsonobject = JSONObject(stringResponse)
+                    if (jsonobject.getString("errorCode").equals("1"))
+                        requireContext().showSnackBar(
+                            "Invalid Credentials! Please try again",
+                            binding.rlMain
+                        )
+                    else {
+                        var dataList = ArrayList<String>()
+                        for (i in 0 until jsonobject.getJSONArray("responseObject").length()) {
+                            dataList.add(
+                                jsonobject.getJSONArray("responseObject").getJSONObject(i)
+                                    .toString()
+                            )
+                        }
+                        val mAdapter = MaintanceListAdapter(requireContext(), dataList)
+                        binding.listView.layoutManager = LinearLayoutManager(
+                            context,
+                            LinearLayoutManager.VERTICAL,
+                            false
+                        )
+                        binding.listView.adapter = mAdapter
+
+                        if (dataList.size == 0)
+                            binding.noResult.visibility = View.VISIBLE
+
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+
+            })
     }
 }

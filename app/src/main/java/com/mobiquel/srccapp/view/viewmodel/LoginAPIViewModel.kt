@@ -1,5 +1,6 @@
 package com.mobiquel.srccapp.view.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.mobiquel.lehpermit.data.Resource
 import com.mobiquel.srccapp.pojo.CheckVersionModel
@@ -27,6 +28,11 @@ class LoginAPIViewModel : ViewModel() {
     ): SingleLiveEvent<Resource<ResponseBody>>? {
         uploadData = APIRepository.checkSmartProfVersion(model)
         return uploadData
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        Log.e("CLEARED","VIEWMDOEL")
     }
 
 

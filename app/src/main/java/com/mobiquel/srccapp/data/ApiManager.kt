@@ -1,6 +1,7 @@
 package com.mobiquel.srccapp.data
 
 import com.mobiquel.srccapp.appinterface.APIInterface
+import com.mobiquel.srccapp.pojo.DostToenModel
 import okhttp3.OkHttpClient
 import okhttp3.ResponseBody
 import okhttp3.logging.HttpLoggingInterceptor
@@ -60,6 +61,10 @@ class ApiManager private constructor() {
 
     fun checkSmartProfVersion(param:MutableMap<String, String>): Call<ResponseBody> {
         return apiClient.checkSmartProfVersion(param)
+    }
+
+    fun getYourDostToken(param:DostToenModel): Call<ResponseBody> {
+        return apiClient.getYourDostToken("https://yourdost.com/zion/v2/users/sso/token",param)
     }
 
 

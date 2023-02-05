@@ -15,5 +15,10 @@
         android:id="@+id/navigation_maintain"
         android:icon="@drawable/ic_baseline_settings_24"
         android:title="MAINTENANCE" />
+    <item
+        android:id="@+id/navigation_wifi_tab"
+        android:visible="false"
+        android:icon="@drawable/ic_baseline_wifi_password_24"
+        android:title="WIFI" />
 
 </menu>

@@ -39,8 +39,14 @@ class ProfileFragment : Fragment() {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
         //apiViewModel = ViewModelProviders.of(this).get(APIViewModel2::class.java)
 
+
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         Preferences!!.instance!!.loadPreferences(requireContext())
-          var model = ProfileRequestModel()
+        var model = ProfileRequestModel()
 
         if (Preferences!!.instance!!.userType.equals("student")) {
             model.studentId = Preferences.instance!!.userId!!
@@ -58,121 +64,119 @@ class ProfileFragment : Fragment() {
         }
 
 
-          binding.progressBar.visibility = View.VISIBLE
+        binding.progressBar.visibility = View.VISIBLE
 
-          apiViewModel?.getProfile(model)?.observe(this, Observer {
+        apiViewModel?.getProfile(model)?.observe(this, Observer {
 
-              binding.progressBar.visibility = View.GONE
-              try {
-                  val stringResponse = it!!.data!!.string()
-                  val jsonobject = JSONObject(stringResponse)
-                  if (jsonobject.getString("errorCode").equals("1"))
-                      requireContext().showSnackBar(
-                          "Invalid Credentials! Please try again",
-                          binding.rlMain
-                      )
-                  else {
+            binding.progressBar.visibility = View.GONE
+            try {
+                val stringResponse = it!!.data!!.string()
+                val jsonobject = JSONObject(stringResponse)
+                if (jsonobject.getString("errorCode").equals("1"))
+                    requireContext().showSnackBar(
+                        "Invalid Credentials! Please try again",
+                        binding.rlMain
+                    )
+                else {
 
-                      if (Preferences!!.instance!!.userType.equals("student")) {
-                          binding.facultyName.setText(
-                              jsonobject.getJSONObject("responseObject")
-                                  .getString("name")
-                          )
-                          binding.employeeCode.setText(
-                              jsonobject.getJSONObject("responseObject").getString("enrollmentNo")
-                          )
-                          binding.empCodeTil.hint = "College Roll No"
-                          binding.designationTil.hint = "Category"
-                          binding.deptTil.hint = "Programme"
+                    if (Preferences!!.instance!!.userType.equals("student")) {
+                        binding.facultyName.setText(
+                            jsonobject.getJSONObject("responseObject")
+                                .getString("name")
+                        )
+                        binding.employeeCode.setText(
+                            jsonobject.getJSONObject("responseObject").getString("enrollmentNo")
+                        )
+                        binding.empCodeTil.hint = "College Roll No"
+                        binding.designationTil.hint = "Category"
+                        binding.deptTil.hint = "Programme"
 
-                          binding.designation.setText(
-                              jsonobject.getJSONObject("responseObject").getString("category")
-                          )
+                        binding.designation.setText(
+                            jsonobject.getJSONObject("responseObject").getString("category")
+                        )
 
-                          binding.department.setText(
-                              jsonobject.getJSONObject("responseObject").getString("programName")
-                          )
-                          binding.mobile.setText(
-                              jsonobject.getJSONObject("responseObject").getString("mobile")
-                          )
-                          binding.email.setText(
-                              jsonobject.getJSONObject("responseObject").getString("email")
-                          )
-                          binding.personalEmail.setText(
-                              jsonobject.getJSONObject("responseObject").getString("personalEmail")
-                          )
-                          binding.facultyTypeTil.visibility = View.GONE
-                          binding.facultyType.setText(
-                              jsonobject.getJSONObject("responseObject").getString("admissionType")
-                          )
-                      }
-                      else if (Preferences!!.instance!!.userType.equals("faculty")) {
-                          binding.facultyName.setText(jsonobject.getJSONObject("responseObject").getString("title")+" "+jsonobject.getJSONObject("responseObject").getString("name"))
-                          binding.employeeCode.setText(jsonobject.getJSONObject("responseObject").getString("employeeId"))
-                          binding.designation.setText(jsonobject.getJSONObject("responseObject").getString("designation"))
-                          binding.department.setText(jsonobject.getJSONObject("responseObject").getString("department"))
-                          binding.mobile.setText(jsonobject.getJSONObject("responseObject").getString("mobile"))
-                          binding.email.setText(jsonobject.getJSONObject("responseObject").getString("email"))
-                          binding.personalEmail.setText(jsonobject.getJSONObject("responseObject").getString("personalEmail"))
-                          binding.facultyType.setText(jsonobject.getJSONObject("responseObject").getString("type"))
-                      }
-                      else {
-                          binding.facultyName.setText(
-                              jsonobject.getJSONObject("responseObject")
-                                  .getString("name")
-                          )
-                          binding.employeeCode.setText(
-                              jsonobject.getJSONObject("responseObject").getString("employeeId")
-                          )
-                          binding.designation.setText(
-                              jsonobject.getJSONObject("responseObject").getString("designation")
-                          )
-                          binding.department.setText(
-                              jsonobject.getJSONObject("responseObject").getString("department")
-                          )
+                        binding.department.setText(
+                            jsonobject.getJSONObject("responseObject").getString("programName")
+                        )
+                        binding.mobile.setText(
+                            jsonobject.getJSONObject("responseObject").getString("mobile")
+                        )
+                        binding.email.setText(
+                            jsonobject.getJSONObject("responseObject").getString("email")
+                        )
+                        binding.personalEmail.setText(
+                            jsonobject.getJSONObject("responseObject").getString("personalEmail")
+                        )
+                        binding.facultyTypeTil.visibility = View.GONE
+                        binding.facultyType.setText(
+                            jsonobject.getJSONObject("responseObject").getString("admissionType")
+                        )
+                    }
+                    else if (Preferences!!.instance!!.userType.equals("faculty")) {
+                        binding.facultyName.setText(jsonobject.getJSONObject("responseObject").getString("title")+" "+jsonobject.getJSONObject("responseObject").getString("name"))
+                        binding.employeeCode.setText(jsonobject.getJSONObject("responseObject").getString("employeeId"))
+                        binding.designation.setText(jsonobject.getJSONObject("responseObject").getString("designation"))
+                        binding.department.setText(jsonobject.getJSONObject("responseObject").getString("department"))
+                        binding.mobile.setText(jsonobject.getJSONObject("responseObject").getString("mobile"))
+                        binding.email.setText(jsonobject.getJSONObject("responseObject").getString("email"))
+                        binding.personalEmail.setText(jsonobject.getJSONObject("responseObject").getString("personalEmail"))
+                        binding.facultyType.setText(jsonobject.getJSONObject("responseObject").getString("type"))
+                    }
+                    else {
+                        binding.facultyName.setText(
+                            jsonobject.getJSONObject("responseObject")
+                                .getString("name")
+                        )
+                        binding.employeeCode.setText(
+                            jsonobject.getJSONObject("responseObject").getString("employeeId")
+                        )
+                        binding.designation.setText(
+                            jsonobject.getJSONObject("responseObject").getString("designation")
+                        )
+                        binding.department.setText(
+                            jsonobject.getJSONObject("responseObject").getString("department")
+                        )
 
-                          binding.mobile.setText(
-                              jsonobject.getJSONObject("responseObject").getString("mobile")
-                          )
-                          if (jsonobject.getJSONObject("responseObject").getString("mobile")
-                                  .equals("")
-                          )
-                              binding.mobile.setText("N/A")
-                          else
-                              binding.mobile.setText(
-                                  jsonobject.getJSONObject("responseObject").getString("mobile")
-                              )
+                        binding.mobile.setText(
+                            jsonobject.getJSONObject("responseObject").getString("mobile")
+                        )
+                        if (jsonobject.getJSONObject("responseObject").getString("mobile")
+                                .equals("")
+                        )
+                            binding.mobile.setText("N/A")
+                        else
+                            binding.mobile.setText(
+                                jsonobject.getJSONObject("responseObject").getString("mobile")
+                            )
 
-                          if (jsonobject.getJSONObject("responseObject").getString("personalEmail")
-                                  .equals("")
-                          )
-                              binding.personalEmail.setText("N/A")
-                          else
-                              binding.personalEmail.setText(
-                                  jsonobject.getJSONObject("responseObject")
-                                      .getString("personalEmail")
-                              )
+                        if (jsonobject.getJSONObject("responseObject").getString("personalEmail")
+                                .equals("")
+                        )
+                            binding.personalEmail.setText("N/A")
+                        else
+                            binding.personalEmail.setText(
+                                jsonobject.getJSONObject("responseObject")
+                                    .getString("personalEmail")
+                            )
 
-                          binding.email.setText(
-                              jsonobject.getJSONObject("responseObject").getString("email")
-                          )
+                        binding.email.setText(
+                            jsonobject.getJSONObject("responseObject").getString("email")
+                        )
 
-                          binding.facultyTypeTil.visibility = View.GONE
-                          binding.deptTil.visibility = View.GONE
-                      }
+                        binding.facultyTypeTil.visibility = View.GONE
+                        binding.deptTil.visibility = View.GONE
+                    }
 
-                  }
-              } catch (e: Exception) {
-                  e.printStackTrace()
-              }
-          })
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        })
 
-          Log.e("ON CREATE VIEW", "PROFILE FRAGMENT")
+        Log.e("ON CREATE VIEW", "PROFILE FRAGMENT")
 
 
-        return binding.root
     }
-
     private fun getFacultyProfile() {
         binding.progressBar.visibility = View.VISIBLE
         val data: MutableMap<String, String> = HashMap()

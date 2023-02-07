@@ -52,7 +52,7 @@
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@id/edit"
             android:padding="@dimen/d_5dp"
-            android:src="@drawable/yourdost_small" />
+            android:src="@drawable/ic_yourdost_new" />
 
         <TextView
             android:id="@+id/version"

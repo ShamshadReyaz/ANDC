@@ -52,7 +52,7 @@
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@id/edit"
             android:padding="@dimen/d_5dp"
-            android:src="@drawable/ic_customer_service_headset_svgrepo_com" />
+            android:src="@drawable/yourdost_small" />
 
         <TextView
             android:id="@+id/version"

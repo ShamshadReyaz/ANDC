@@ -27,10 +27,13 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_margin="@dimen/d_20dp"
-        android:fontFamily="@font/poppins_regular"
+        android:fontFamily="@font/poppins_light"
+        android:textSize="12sp"
+        android:textColor="@color/gray"
         android:letterSpacing="0.1"
+        android:visibility="gone"
         android:text="No Record Found"
-        android:visibility="gone" />
+        />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/addRequest"

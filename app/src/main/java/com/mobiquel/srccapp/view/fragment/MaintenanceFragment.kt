@@ -288,6 +288,8 @@ class MaintenanceFragment : Fragment() {
 
                         if (dataList.size == 0)
                             binding.noResult.visibility = View.VISIBLE
+                        else
+                            binding.noResult.visibility = View.GONE
 
                     }
                 } catch (e: Exception) {

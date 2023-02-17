@@ -42,17 +42,22 @@ class MaintanceListAdapter(
         var currentPosition: Int = 0
         fun setData(rankModel: String?, pos: Int) {
             rankModel?.let {
-                val jsonObject = JSONObject(levelList.get(pos))
-                itemView.reqId.setText("#"+jsonObject.getString("requisitionNo"))
-                itemView.category.setText("Category: "+jsonObject.getString("requsitionCategory"))
-                itemView.location.setText("Location: "+jsonObject.getString("location"))
-                itemView.description.setText(jsonObject.getString("description"))
-                itemView.createdOn.setText(jsonObject.getString("requisitionDateTime"))
+                try {
+                    val jsonObject = JSONObject(levelList.get(pos))
+                    itemView.reqId.setText("#"+jsonObject.getString("requisitionNo"))
+                    itemView.category.setText("Category: "+jsonObject.getString("requsitionCategory"))
+                    itemView.location.setText("Location: "+jsonObject.getString("location"))
+                    itemView.description.setText("Description:\n"+jsonObject.getString("description"))
+                    itemView.createdOn.setText(jsonObject.getString("requisitionDateTime"))
 
-                if(jsonObject.getString("isSOSMarked").equals("T"))
-                    itemView.sos.visibility=View.VISIBLE
-                else
-                    itemView.sos.visibility=View.GONE
+                    if(jsonObject.getString("isSOSMarked").equals("T"))
+                        itemView.sos.visibility=View.VISIBLE
+                    else
+                        itemView.sos.visibility=View.GONE
+
+                }catch (e:Exception){
+
+                }
 
             }
 

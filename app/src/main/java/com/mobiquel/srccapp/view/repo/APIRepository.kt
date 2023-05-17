@@ -18,6 +18,8 @@ object APIRepository {
 
     var serviceSetterGetterNew = MutableLiveData<Resource<ResponseBody>>()
     var serviceSetterGetter = SingleLiveEvent<Resource<ResponseBody>>()
+    var serviceSetterGetter1 = MutableLiveData<Resource<ResponseBody>>()
+    var serviceSetterGetter2 = MutableLiveData<Resource<ResponseBody>>()
 
     fun getNotices(email: String, userType: String): SingleLiveEvent<Resource<ResponseBody>> {
 
@@ -165,7 +167,7 @@ object APIRepository {
 
     fun getWifiData(
         rollNUmber: String
-    ): SingleLiveEvent<Resource<ResponseBody>> {
+    ): MutableLiveData<Resource<ResponseBody>> {
 
         val data: MutableMap<String, String> = HashMap()
         data["rollNo"] = rollNUmber
@@ -177,22 +179,53 @@ object APIRepository {
                 response: Response<ResponseBody>
             ) {
                 if (response.isSuccessful)
-                    this@APIRepository.serviceSetterGetter.value = Resource.success(response.body())
+                    this@APIRepository.serviceSetterGetter1.value = Resource.success(response.body())
                 else
-                    this@APIRepository.serviceSetterGetter.value =
+                    this@APIRepository.serviceSetterGetter1.value =
                         Resource.error("Something Went Wrong! Please try again later", null)
 
 
             }
 
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                this@APIRepository.serviceSetterGetter.value =
+                this@APIRepository.serviceSetterGetter1.value =
                     Resource.error("Internet not available! Please try again later", null)
             }
 
 
         })
-        return this.serviceSetterGetter
+        return this.serviceSetterGetter1
+    }
+    fun getMsData(
+        email: String
+    ): MutableLiveData<Resource<ResponseBody>> {
+
+        val data: MutableMap<String, String> = HashMap()
+        data["email"] = email
+        var call: Call<ResponseBody>? = null
+        call = RetrofitClient.providesApiService.getMSTeamsPasswordForEmail(data)
+        call?.enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(
+                call: Call<ResponseBody>,
+                response: Response<ResponseBody>
+            ) {
+                if (response.isSuccessful)
+                    this@APIRepository.serviceSetterGetter2.value = Resource.success(response.body())
+                else
+                    this@APIRepository.serviceSetterGetter2.value =
+                        Resource.error("Something Went Wrong! Please try again later", null)
+
+
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                this@APIRepository.serviceSetterGetter2.value =
+                    Resource.error("Internet not available! Please try again later", null)
+            }
+
+
+        })
+        return this.serviceSetterGetter2
     }
 
     fun checkSmartProfVersion(model: CheckVersionModel): SingleLiveEvent<Resource<ResponseBody>> {

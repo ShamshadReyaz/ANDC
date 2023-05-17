@@ -48,7 +48,7 @@ class SingleLiveEvent<T> : MutableLiveData<T>() {
 
     @MainThread
     override fun removeObserver(observer: Observer<in T>) {
-        super.removeObserver(observer)
+        //super.removeObserver(observer)
     }
     companion object {
 

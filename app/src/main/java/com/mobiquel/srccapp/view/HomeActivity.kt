@@ -72,6 +72,7 @@ class HomeActivity : AppCompatActivity() {
 
             when (it.itemId) {
                 R.id.navigation_notice -> {
+
                     fragmentSupportManager.beginTransaction().apply {
                         replace(R.id.frameLayout, fragmentNoticeFragment, "1")
                             .addToBackStack("1")

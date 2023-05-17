@@ -18,7 +18,7 @@
     <item
         android:id="@+id/navigation_wifi_tab"
         android:visible="false"
-        android:icon="@drawable/ic_baseline_wifi_password_24"
-        android:title="WIFI" />
+        android:icon="@drawable/baseline_password_24"
+        android:title="CREDENTIALS" />
 
 </menu>

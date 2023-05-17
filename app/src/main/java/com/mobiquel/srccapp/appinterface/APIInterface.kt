@@ -43,6 +43,10 @@ interface APIInterface {
     fun getStudentWiFiCredentialRecord   (@FieldMap param:MutableMap<String, String>): Call<ResponseBody>
 
     @FormUrlEncoded
+    @POST("getMSTeamsPasswordForEmail")
+    fun getMSTeamsPasswordForEmail   (@FieldMap param:MutableMap<String, String>): Call<ResponseBody>
+
+    @FormUrlEncoded
     @POST("addRequisitionForMaintenance")
     fun addRequisitionForMaintenance   (@FieldMap param:MutableMap<String, String>): Call<ResponseBody>
 

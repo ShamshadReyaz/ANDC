@@ -15,6 +15,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.mobiquel.srccapp.databinding.FragmentWifiBinding
 import com.mobiquel.srccapp.utils.Preferences
+import com.mobiquel.srccapp.utils.Security
 import com.mobiquel.srccapp.utils.showSnackBar
 import com.mobiquel.srccapp.utils.showToast
 import com.mobiquel.srccapp.view.viewmodel.APIViewModel4
@@ -44,8 +45,9 @@ class WifiFragment : Fragment() {
         Preferences!!.instance!!.loadPreferences(requireContext())
 
         binding.progressBar.visibility = View.VISIBLE
-
-        apiViewModel?.getWifiData(Preferences.instance!!.collegeRollNo!!)?.observe(this, Observer {
+        apiViewModel.getWifiData(Preferences.instance!!.collegeRollNo!!)
+        apiViewModel.getMsData(Preferences.instance!!.email!!)
+        apiViewModel?.returnWifiData()?.observe(viewLifecycleOwner, Observer {
 
             binding.progressBar.visibility = View.GONE
             try {
@@ -73,6 +75,30 @@ class WifiFragment : Fragment() {
             }
         })
 
+        apiViewModel?.returnMsData()?.observe(viewLifecycleOwner, Observer {
+
+            binding.progressBar.visibility = View.GONE
+            try {
+                val stringResponse = it!!.data!!.string()
+                val jsonobject = JSONObject(stringResponse)
+                if (jsonobject.getString("errorCode").equals("1"))
+                    requireContext().showSnackBar(
+                        "Invalid Credentials! Please try again",
+                        binding.rlMain
+                    )
+                else {
+                    binding.email.setText(
+                        Preferences.instance!!.email!!
+                    )
+                    binding.passwordMs.setText(
+                        Security.decrypt(jsonobject.getString("responseObject"))
+                    )
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        })
+
         Log.e("ON CREATE VIEW", "PROFILE FRAGMENT")
 
        /* binding.textIl1.setOnClickListener {
@@ -84,25 +110,22 @@ class WifiFragment : Fragment() {
 
         }*/
         binding.copy1.setOnClickListener {
-            val manager = requireContext().getSystemService(CLIPBOARD_SERVICE) as ClipboardManager?
-            val clipData = ClipData.newPlainText("text", binding.rollNumber.getText())
-            manager!!.setPrimaryClip(clipData)
-            requireContext().showToast("Text Copied")
-
+                copyText(binding.rollNumber.text.toString())
         }
         binding.copy2.setOnClickListener {
-            val manager = requireContext().getSystemService(CLIPBOARD_SERVICE) as ClipboardManager?
-            val clipData = ClipData.newPlainText("text", binding.wifiId.getText())
-            manager!!.setPrimaryClip(clipData)
-            requireContext().showToast("Text Copied")
-
+            copyText(binding.wifiId.text.toString())
         }
         binding.copy3.setOnClickListener {
-            val manager = requireContext().getSystemService(CLIPBOARD_SERVICE) as ClipboardManager?
-            val clipData = ClipData.newPlainText("text", binding.password.getText())
-            manager!!.setPrimaryClip(clipData)
-            requireContext().showToast("Text Copied")
-
+            copyText(binding.password.text.toString())
+        }
+        binding.copy4.setOnClickListener {
+            copyText(binding.url.text.toString())
+        }
+        binding.copy5.setOnClickListener {
+            copyText(binding.email.text.toString())
+        }
+        binding.copy6.setOnClickListener {
+            copyText(binding.passwordMs.text.toString())
         }
     }
 
@@ -130,6 +153,13 @@ class WifiFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         Log.e("RESUME", "PROFILE FRAGMENT")
+    }
+
+    fun copyText(data:String){
+        val manager = requireContext().getSystemService(CLIPBOARD_SERVICE) as ClipboardManager?
+        val clipData = ClipData.newPlainText("text", data)
+        manager!!.setPrimaryClip(clipData)
+        requireContext().showToast("Text Copied")
     }
 
 

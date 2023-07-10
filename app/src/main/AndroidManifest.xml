@@ -25,6 +25,7 @@
             </intent-filter>
         </activity>
         <activity android:name="com.mobiquel.srccapp.view.HomeActivity" />
+        <activity android:name="com.mobiquel.srccapp.view.FacultyHomeActivity" />
 
         <service
             android:name="com.mobiquel.srccapp.firebaseservices.MyFirebaseMessagingService"

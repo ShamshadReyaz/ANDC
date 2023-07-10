@@ -115,6 +115,9 @@ class LoginActivity : AppCompatActivity() {
 
                             Preferences.instance!!.userType =
                                 "faculty"
+                            Preferences.instance!!.userName =
+                                jsonobject.getJSONObject("responseObject").getString("name")
+
                             Preferences.instance!!.email =
                                 binding.username.text.toString()
                             Preferences.instance!!.userId =
@@ -124,7 +127,7 @@ class LoginActivity : AppCompatActivity() {
 */
                             Preferences.instance!!.savePreferences(this@LoginActivity)
                             showToast(jsonobject.getString("errorMessage"))
-                            startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
+                            startActivity(Intent(this@LoginActivity, FacultyHomeActivity::class.java))
                             finish()
 
                         }
@@ -164,6 +167,9 @@ class LoginActivity : AppCompatActivity() {
                                 binding.username.text.toString()
                             Preferences.instance!!.userId =
                                 jsonobject.getJSONObject("responseObject").getString("id")
+                            Preferences.instance!!.userName =
+                                jsonobject.getJSONObject("responseObject").getString("name")
+
                             Preferences.instance!!.collegeRollNo =
                                 jsonobject.getJSONObject("responseObject").getString("enrollmentNo")
 
@@ -205,6 +211,9 @@ class LoginActivity : AppCompatActivity() {
 
                             Preferences.instance!!.userType =
                                 "non-teaching"
+                            Preferences.instance!!.userName =
+                                jsonobject.getJSONObject("responseObject").getString("name")
+
                             Preferences.instance!!.email =
                                 binding.username.text.toString()
                             Preferences.instance!!.userId =
@@ -212,7 +221,7 @@ class LoginActivity : AppCompatActivity() {
 
                             Preferences.instance!!.savePreferences(this@LoginActivity)
                             showToast(jsonobject.getString("errorMessage"))
-                            startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
+                            startActivity(Intent(this@LoginActivity, FacultyHomeActivity::class.java))
                             finish()
 
                         }

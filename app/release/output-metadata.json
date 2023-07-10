@@ -4,14 +4,14 @@
     "type": "APK",
     "kind": "Directory"
   },
-  "applicationId": "com.mobiquel.lehpermit",
+  "applicationId": "com.mobiquel.srccapp",
   "variantName": "processReleaseResources",
   "elements": [
     {
       "type": "SINGLE",
       "filters": [],
-      "versionCode": 1,
-      "versionName": "1.0",
+      "versionCode": 23,
+      "versionName": "1.0.7",
       "outputFile": "app-release.apk"
     }
   ]

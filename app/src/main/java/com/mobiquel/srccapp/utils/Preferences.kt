@@ -34,6 +34,7 @@ class Preferences private constructor() {
 
     private val KEY_USERTYPE = "USERTYPE"
     private val KEY_EMAIL = "EMAIL"
+    private val KEY_USER_NAME = "NAME"
     private val KEY_USER_ID = "USER_ID"
     private val KEY_COLLEGE_ROLL_NO = "COLLEGE_ROLL_NO"
 
@@ -59,6 +60,7 @@ class Preferences private constructor() {
     var userType: String? = null
     var email: String? = null
     var userId: String? = null
+    var userName: String? = null
     var collegeRollNo: String? = null
 
     var todayGkQsetId: String? = null
@@ -93,6 +95,7 @@ class Preferences private constructor() {
         gender = preferences?.getString(KEY_GENDER, "")
 
         userType = preferences?.getString(KEY_USERTYPE, "")
+        userName = preferences?.getString(KEY_USER_NAME, "")
         email = preferences?.getString(KEY_EMAIL, "")
         userId = preferences?.getString(KEY_USER_ID, "")
         collegeRollNo = preferences?.getString(KEY_COLLEGE_ROLL_NO, "")
@@ -115,6 +118,7 @@ class Preferences private constructor() {
 
         editor?.putString(KEY_USERTYPE, userType)
         editor?.putString(KEY_EMAIL, email)
+        editor?.putString(KEY_USER_NAME, userName)
         editor?.putString(KEY_USER_ID, userId)
         editor?.putString(KEY_COLLEGE_ROLL_NO, collegeRollNo)
 

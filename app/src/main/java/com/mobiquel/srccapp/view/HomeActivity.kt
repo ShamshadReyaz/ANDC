@@ -28,12 +28,13 @@ import retrofit2.Response
 
 
 class HomeActivity : AppCompatActivity() {
-    private var dostTokenResponse: String?=null
+    private var dostTokenResponse: String? = null
     private var notificationId = ""
     var context: Context? = null
     private lateinit var binding: ActivityHomeBinding
     private lateinit var apiViewModel: HomeAPIViewModel
     private val fragmentNoticeFragment = NoticeFragment()
+    private val fragmentStudentHomeFragment = StudentHomeFragment()
     private val fragmentProfileFragment = ProfileFragment()
     private val maintenanceFragment = MaintenanceFragment()
     private val wifiFragment = WifiFragment()
@@ -64,58 +65,10 @@ class HomeActivity : AppCompatActivity() {
         }
 
         fragmentSupportManager.beginTransaction().apply {
-            add(R.id.frameLayout, fragmentNoticeFragment, "1")
+            add(R.id.frameLayout, fragmentStudentHomeFragment, "0")
             commit()
         }
 
-        binding.navView.setOnNavigationItemSelectedListener { it ->
-
-            when (it.itemId) {
-                R.id.navigation_notice -> {
-
-                    fragmentSupportManager.beginTransaction().apply {
-                        replace(R.id.frameLayout, fragmentNoticeFragment, "1")
-                            .addToBackStack("1")
-                        commit()
-                    }
-                    active = fragmentNoticeFragment
-                    binding.edit.visibility = View.GONE
-                    true
-                }
-
-                R.id.navigation_profile -> {
-                    fragmentSupportManager.beginTransaction().apply {
-                        replace(R.id.frameLayout, fragmentProfileFragment, "2")
-                            .addToBackStack("2")
-                        commit()
-                    }
-                    active = fragmentProfileFragment
-                    binding.edit.visibility = View.VISIBLE
-                    true
-                }
-                R.id.navigation_maintain -> {
-                    fragmentSupportManager.beginTransaction().apply {
-                        replace(R.id.frameLayout, maintenanceFragment, "3")
-                            .addToBackStack("3")
-                        commit()
-                    }
-                    active = maintenanceFragment
-                    binding.edit.visibility = View.GONE
-                    true
-                }
-                R.id.navigation_wifi_tab -> {
-                    fragmentSupportManager.beginTransaction().apply {
-                        replace(R.id.frameLayout, wifiFragment, "4")
-                            .addToBackStack("4")
-                        commit()
-                    }
-                    active = wifiFragment
-                    binding.edit.visibility = View.GONE
-                    true
-                }
-            }
-            true
-        }
 
 
         edit.setOnClickListener {
@@ -131,20 +84,7 @@ class HomeActivity : AppCompatActivity() {
 
         }
         counsellingPage.setOnClickListener {
-           /* val bundle=Bundle()
-            bundle.putString("TOKEN",dostTokenResponse)
-            webViewFragment.arguments=bundle
-            fragmentSupportManager.beginTransaction().apply {
-                replace(R.id.frameLayout, webViewFragment, "5")
-                    .addToBackStack("5")
-                commit()
-            }
-            active = webViewFragment
-            binding.edit.visibility = View.GONE
-            binding.counsellingPage.visibility = View.GONE
-            binding.navView.visibility = View.GONE
-           */
-        redirectToWeb2("https://yourdost.com/login/sso?token="+dostTokenResponse)
+            redirectToWeb2("https://yourdost.com/login/sso?token=" + dostTokenResponse)
 
         }
         logout.setOnClickListener {
@@ -258,9 +198,9 @@ class HomeActivity : AppCompatActivity() {
 
     fun getYourDostToken() {
         Preferences.instance!!.loadPreferences(context!!)
-        val dostTokenModel=DostToenModel()
-        dostTokenModel.email=Preferences.instance!!.email!!
-        dostTokenModel.organizationID=56
+        val dostTokenModel = DostToenModel()
+        dostTokenModel.email = Preferences.instance!!.email!!
+        dostTokenModel.organizationID = 56
 
         val apiManager: ApiManager? = ApiManager.init()
         apiManager!!.getYourDostToken(dostTokenModel).enqueue(object : Callback<ResponseBody> {
@@ -268,15 +208,14 @@ class HomeActivity : AppCompatActivity() {
                 call: Call<ResponseBody>,
                 response: Response<ResponseBody>
             ) {
-                    binding.progressBar.visibility = View.GONE
-                    try {
-                        dostTokenResponse = response.body()?.string()
-                        Log.e("RESPO_DOST",dostTokenResponse!!)
-                    }catch (e:Exception){
-                        e.printStackTrace()
-                    }
+                binding.progressBar.visibility = View.GONE
+                try {
+                    dostTokenResponse = response.body()?.string()
+                    Log.e("RESPO_DOST", dostTokenResponse!!)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
 
-                    
 
             }
 
@@ -288,6 +227,7 @@ class HomeActivity : AppCompatActivity() {
         })
 
     }
+
     override fun onBackPressed() {
         //super.onBackPressed()
         goToHomePage()
@@ -295,21 +235,60 @@ class HomeActivity : AppCompatActivity() {
     }
 
     fun goToHomePage() {
-        val f0: WebViewragment? =
-            supportFragmentManager.findFragmentByTag("5") as WebViewragment?
-        if (f0 != null && f0.isVisible) {
-            if (fragmentSupportManager.backStackEntryCount > 0)
-            {
-                //getSupportFragmentManager().beginTransaction().remove(f0).commit();
-                fragmentSupportManager.popBackStackImmediate("5",FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        val f0: StudentHomeFragment? =
+            supportFragmentManager.findFragmentByTag("0") as StudentHomeFragment?
+        if (f0 != null && !f0.isVisible) {
+
+            fragmentSupportManager.beginTransaction().apply {
+                replace(R.id.frameLayout, fragmentStudentHomeFragment, "0")
+                    .addToBackStack("0")
+                commit()
             }
             binding.edit.visibility = View.GONE
-            binding.counsellingPage.visibility = View.VISIBLE
-            binding.navView.visibility = View.VISIBLE
         } else
             finish()
 
 
     }
+
+    fun redirectToFragment(type: String) {
+        when (type) {
+            "notice" -> {
+                fragmentSupportManager.beginTransaction().apply {
+                    replace(R.id.frameLayout, fragmentNoticeFragment, "1")
+                        .addToBackStack("1")
+                    commit()
+                }
+                binding.edit.visibility = View.GONE
+            }
+            "profile"-> {
+                fragmentSupportManager.beginTransaction().apply {
+                    replace(R.id.frameLayout, fragmentProfileFragment, "2")
+                        .addToBackStack("2")
+                    commit()
+                }
+                binding.edit.visibility = View.VISIBLE
+            }
+            "maintenance" -> {
+                fragmentSupportManager.beginTransaction().apply {
+                    replace(R.id.frameLayout, maintenanceFragment, "3")
+                        .addToBackStack("3")
+                    commit()
+                }
+                binding.edit.visibility = View.GONE
+            }
+            "wifi"-> {
+                fragmentSupportManager.beginTransaction().apply {
+                    replace(R.id.frameLayout, wifiFragment, "4")
+                        .addToBackStack("4")
+                    commit()
+                }
+                binding.edit.visibility = View.GONE
+            }
+
+        }
+
+    }
+
 
 }

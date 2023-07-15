@@ -1,30 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/rl_main"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_margin="@dimen/d_20dp"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/r1"
+            android:layout_width="60dp"
+            android:layout_alignParentRight="true"
+            android:layout_height="60dp">
+            <ImageView
+                android:id="@+id/myprofile"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/rectangle_background_yellow"
+                android:src="@drawable/profile_1"
+                android:padding="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </RelativeLayout>
+        <LinearLayout
+            android:id="@+id/l1"
+            android:baselineAligned="true"
+            android:layout_alignBaseline="@id/r1"
+            android:layout_width="wrap_content"
+            android:orientation="vertical"
+            android:gravity="bottom"
+
+            android:layout_centerVertical="true"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/datetoday"
+                android:textColor="#666666"
+                android:text="13 July 2023"
+                android:textSize="@dimen/d_14dp"
+                android:gravity="left"
+                android:includeFontPadding="false"
+                android:fontFamily="@font/poppins_semibold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/hilabel"
+                android:textColor="#000000"
+                android:text="Hi, Welcome"
+                android:textSize="22dp"
+                android:gravity="left"
+                android:textStyle="bold"
+                android:includeFontPadding="false"
+                android:fontFamily="@font/poppins_bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </RelativeLayout>
     <LinearLayout
-        android:layout_centerInParent="true"
-        android:layout_margin="@dimen/d_10dp"
+        android:layout_margin="10dp"
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/title"
-            android:textColor="@color/black"
-            android:textSize="@dimen/d_20sp"
-            android:gravity="center_horizontal"
-            android:fontFamily="@font/poppins_semibold"
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="180dp">
+
+            <com.mobiquel.srccapp.utils.autoscrollviewpager.AutoScrollViewPager
+                android:id="@+id/vp_banner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
+                android:id="@+id/dots_indicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="150dp"
+                android:layout_marginBottom="20dp"
+                app:dotsColor="@color/bottom_active"
+                app:dotsCornerRadius="8dp"
+                app:dotsSize="8dp"
+                app:dotsSpacing="4dp"
+                app:dotsStrokeColor="@color/colorGrayBorder"
+                app:dotsStrokeWidth="1dp"
+                app:progressMode="false" />
+        </RelativeLayout>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/listOfBtns"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </LinearLayout>
 
 
-</RelativeLayout>
+</LinearLayout>

@@ -20,6 +20,7 @@ import com.mobiquel.srccapp.databinding.FragmentNoticeBinding
 import com.mobiquel.srccapp.databinding.FragmentStudentHomeBinding
 import com.mobiquel.srccapp.pojo.ButtonModel
 import com.mobiquel.srccapp.utils.Preferences
+import com.mobiquel.srccapp.utils.autoscrollviewpager.BannerPagerAdapter
 import com.mobiquel.srccapp.utils.showSnackBar
 import com.mobiquel.srccapp.view.HomeActivity
 import com.mobiquel.srccapp.view.adapter.ButtonListAdapter
@@ -30,6 +31,9 @@ import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class StudentHomeFragment : Fragment() {
 
@@ -46,24 +50,46 @@ class StudentHomeFragment : Fragment() {
         _binding = FragmentStudentHomeBinding.inflate(inflater, container, false)
         apiViewModel = ViewModelProviders.of(this).get(APIViewModel::class.java)
         listOfBtns= ArrayList()
-        listOfBtns!!.add(ButtonModel("Notice", R.drawable.ic_notice_faculty,"notice"))
-        listOfBtns!!.add(ButtonModel("Profile", R.drawable.ic_profile_stu,"profile"))
-        listOfBtns!!.add(ButtonModel("Maintenance", R.drawable.ic_maintenance_stu,"maintenance"))
-        listOfBtns!!.add(ButtonModel("Wifi", R.drawable.ic_credentials,"wifi"))
-        listOfBtns!!.add(ButtonModel("Academics", R.drawable.ic_academic_details,"academics"))
-        listOfBtns!!.add(ButtonModel("Assessment", R.drawable.ic_assessment,"assessment"))
-        listOfBtns!!.add(ButtonModel("Attendance", R.drawable.ic_attendance_stu,"attendance"))
-        listOfBtns!!.add(ButtonModel("Student", R.drawable.ic_student,"student"))
+        listOfBtns!!.add(ButtonModel("Academic Details", R.drawable.academic_1,"academics"))
+        listOfBtns!!.add(ButtonModel("Attendance", R.drawable.attendance_2,"attendance"))
+        listOfBtns!!.add(ButtonModel("IA Record", R.drawable.record_3,"record"))
 
-        binding.title.text= HtmlCompat.fromHtml("Hi, <font  color=#FF4750>"+Preferences.instance!!.userName+"</font>\nWelcome to SRCC App.", HtmlCompat.FROM_HTML_MODE_LEGACY)
+        listOfBtns!!.add(ButtonModel("Notice", R.drawable.notice_4,"notice"))
+        listOfBtns!!.add(ButtonModel("Maintenance", R.drawable.maintence_5,"maintenance"))
+        listOfBtns!!.add(ButtonModel("Credentials", R.drawable.credentials_6,"wifi"))
+
+        binding.myprofile.setOnClickListener {
+            (requireActivity() as HomeActivity).redirectToFragment("profile")
+        }
+        /*listOfBtns!!.add(ButtonModel("Profile", R.drawable.ic_profile_stu,"profile"))
+        listOfBtns!!.add(ButtonModel("Assessment", R.drawable.ic_assessment,"assessment"))
+        listOfBtns!!.add(ButtonModel("Student", R.drawable.ic_student,"student"))
+*/
+       // binding.title.text= HtmlCompat.fromHtml("Hi, <font  color=#FF4750>"+Preferences.instance!!.userName+"</font>\nWelcome to SRCC App.", HtmlCompat.FROM_HTML_MODE_LEGACY)
         val adapter=ButtonListAdapter(requireActivity(),listOfBtns!!,object : RecyclerItemClickListener{
             override fun onRecyclerItemClicked(position: Int) {
                 (activity!! as HomeActivity).redirectToFragment(listOfBtns!!.get(position).type!!)
             }
 
         })
-        binding.listOfBtns.layoutManager=GridLayoutManager(requireActivity(),2)
+        val sdf = SimpleDateFormat("dd MMM yyyy")
+        val currentDate = sdf.format(Date())
+        binding.datetoday.setText(currentDate)
+        binding.listOfBtns.layoutManager=GridLayoutManager(requireActivity(),3)
         binding.listOfBtns.adapter=adapter
+
+        var bannerList=ArrayList<Int>()
+        bannerList.add(R.drawable.sluder_stu_1)
+        bannerList.add(R.drawable.sluder_stu_1)
+        val pagerAdapter = BannerPagerAdapter(bannerList)
+
+        binding.vpBanner!!.startAutoScroll()
+        binding.vpBanner!!.setInterval(3000)
+        binding.vpBanner!!.setCycle(true)
+        binding.vpBanner!!.setStopScrollWhenTouch(true)
+
+        binding.vpBanner!!.setAdapter(pagerAdapter)
+        binding.dotsIndicator!!.setViewPager(binding.vpBanner)
         return binding.root
     }
 

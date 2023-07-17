@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_margin="@dimen/d_5dp"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="3dp"
+        app:cardCornerRadius="10dp"
         >
         <RelativeLayout
             android:layout_width="match_parent"
@@ -20,8 +20,7 @@
                 android:id="@+id/sdv_banner"
                 android:layout_width="match_parent"
                 android:layout_height="170dp"
-                android:scaleType="centerCrop"
-
+                android:scaleType="fitXY"
                 android:adjustViewBounds="true"
                 android:background="@color/white"
                 />

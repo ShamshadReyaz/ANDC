@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.mobiquel.srccapp.databinding.ActivitySplash2Binding
 import com.mobiquel.srccapp.utils.Preferences
@@ -30,8 +31,18 @@ class SplashActivity2 : AppCompatActivity() {
     }
 
     private fun showHomeScreen() {
-        startActivity(Intent(this, HomeActivity::class.java))
-        finish()
+
+            Preferences.instance!!.loadPreferences(this@SplashActivity2)
+            Log.e("PREF",Preferences.instance?.userType!!)
+            if (Preferences.instance?.userType.equals("faculty") || Preferences.instance?.userType.equals("non-teaching")) {
+                startActivity(Intent(this, FacultyHomeActivity::class.java))
+                finish()
+            } else {
+                startActivity(Intent(this, HomeActivity::class.java))
+                finish()
+
+            }
+
     }
 
     private fun showLoginScreen() {

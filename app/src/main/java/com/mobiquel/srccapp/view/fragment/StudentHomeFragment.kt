@@ -65,7 +65,11 @@ class StudentHomeFragment : Fragment() {
         listOfBtns!!.add(ButtonModel("Assessment", R.drawable.ic_assessment,"assessment"))
         listOfBtns!!.add(ButtonModel("Student", R.drawable.ic_student,"student"))
 */
-       // binding.title.text= HtmlCompat.fromHtml("Hi, <font  color=#FF4750>"+Preferences.instance!!.userName+"</font>\nWelcome to SRCC App.", HtmlCompat.FROM_HTML_MODE_LEGACY)
+        val nameSplit=Preferences.instance!!.userName!!.split(" ")
+        if(nameSplit.size>0){
+            binding.hilabel.text= "Hi ${nameSplit.get(0)}, Welcome"
+        }
+
         val adapter=ButtonListAdapter(requireActivity(),listOfBtns!!,object : RecyclerItemClickListener{
             override fun onRecyclerItemClicked(position: Int) {
                 (activity!! as HomeActivity).redirectToFragment(listOfBtns!!.get(position).type!!)
@@ -79,8 +83,8 @@ class StudentHomeFragment : Fragment() {
         binding.listOfBtns.adapter=adapter
 
         var bannerList=ArrayList<Int>()
-        bannerList.add(R.drawable.sluder_stu_1)
-        bannerList.add(R.drawable.sluder_stu_1)
+        bannerList.add(R.drawable.banner_1_1)
+        bannerList.add(R.drawable.banner_2_2)
         val pagerAdapter = BannerPagerAdapter(bannerList)
 
         binding.vpBanner!!.startAutoScroll()

@@ -2,6 +2,7 @@ package com.mobiquel.srccapp.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.motion.widget.MotionLayout
 import com.mobiquel.srccapp.databinding.ActivitySplashBinding
@@ -54,8 +55,17 @@ class SplashActivity : AppCompatActivity() {
 
 
     fun showHomeScreen() {
-        startActivity(Intent(this, HomeActivity::class.java))
-        finish()
+        Preferences.instance!!.loadPreferences(this@SplashActivity)
+        Log.e("PREF",Preferences.instance?.userType!!)
+        if (Preferences.instance?.userType.equals("faculty") || Preferences.instance?.userType.equals("non-teaching")) {
+            startActivity(Intent(this, FacultyHomeActivity::class.java))
+            finish()
+        } else {
+            startActivity(Intent(this, HomeActivity::class.java))
+            finish()
+
+        }
+
     }
 
     fun showLoginScreen() {

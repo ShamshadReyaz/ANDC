@@ -236,8 +236,8 @@ class FacultyHomeActivity : AppCompatActivity() {
 
 
     fun goToHomePage() {
-        val f0: StudentHomeFragment? =
-            supportFragmentManager.findFragmentByTag("0") as StudentHomeFragment?
+        val f0: FacultyHomeFragment? =
+            supportFragmentManager.findFragmentByTag("0") as FacultyHomeFragment?
         if (f0 != null && !f0.isVisible) {
 
             fragmentSupportManager.beginTransaction().apply {

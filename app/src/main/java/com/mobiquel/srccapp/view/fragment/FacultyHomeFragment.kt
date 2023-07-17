@@ -69,9 +69,21 @@ class FacultyHomeFragment : Fragment() {
         binding.listOfBtns.layoutManager=GridLayoutManager(requireActivity(),3)
         binding.listOfBtns.adapter=adapter
 
+        val nameSplit=Preferences.instance!!.userName!!.split(" ")
+        Log.e("NAME SLPIT",nameSplit.toString())
+        Log.e("NAME SLPIT SIZE",nameSplit.size.toString())
+        Log.e("NAME SLPIT SIZE",nameSplit.get(0))
+        Log.e("NAME SLPIT SIZE",nameSplit.get(1))
+        if(nameSplit.size>1){
+            binding.hilabel.text= "Hi ${nameSplit.get(0)} ${nameSplit.get(1)}, Welcome"
+        }
+        else  if(nameSplit.size>0){
+            binding.hilabel.text= "Hi ${nameSplit.get(0)}, Welcome"
+        }
+
+
         var bannerList=ArrayList<Int>()
-        bannerList.add(R.drawable.sluder_stu_1)
-        bannerList.add(R.drawable.sluder_stu_1)
+        bannerList.add(R.drawable.banner_3_3)
         val pagerAdapter = BannerPagerAdapter(bannerList)
 
         binding.vpBanner!!.startAutoScroll()
@@ -81,6 +93,7 @@ class FacultyHomeFragment : Fragment() {
 
         binding.vpBanner!!.setAdapter(pagerAdapter)
         binding.dotsIndicator!!.setViewPager(binding.vpBanner)
+        binding.dotsIndicator.visibility=View.GONE
 
         val sdf = SimpleDateFormat("dd MMM yyyy")
         val currentDate = sdf.format(Date())

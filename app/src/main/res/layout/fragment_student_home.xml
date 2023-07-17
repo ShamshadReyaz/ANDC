@@ -9,7 +9,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:orientation="horizontal"
-        android:layout_margin="@dimen/d_20dp"
+        android:layout_margin="15dp"
         android:layout_height="wrap_content">
 
         <RelativeLayout
@@ -28,6 +28,9 @@
         </RelativeLayout>
         <LinearLayout
             android:id="@+id/l1"
+            android:layout_toLeftOf="@id/r1"
+            android:layout_alignParentLeft="true"
+            android:layout_marginRight="5dp"
             android:baselineAligned="true"
             android:layout_alignBaseline="@id/r1"
             android:layout_width="wrap_content"
@@ -50,7 +53,7 @@
                 android:id="@+id/hilabel"
                 android:textColor="#000000"
                 android:text="Hi, Welcome"
-                android:textSize="22dp"
+                android:textSize="20dp"
                 android:gravity="left"
                 android:textStyle="bold"
                 android:includeFontPadding="false"

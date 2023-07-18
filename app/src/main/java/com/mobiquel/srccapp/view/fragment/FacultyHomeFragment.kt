@@ -51,7 +51,7 @@ class FacultyHomeFragment : Fragment() {
         _binding = FragmentStudentHomeBinding.inflate(inflater, container, false)
         apiViewModel = ViewModelProviders.of(this).get(APIViewModel::class.java)
         listOfBtns= ArrayList()
-        listOfBtns!!.add(ButtonModel("Attendance", R.drawable.attendance_3,"attendance"))
+        listOfBtns!!.add(ButtonModel("Attendance", R.drawable.attendance_3,""))
         listOfBtns!!.add(ButtonModel("Notice", R.drawable.notice_4,"notice"))
        // listOfBtns!!.add(ButtonModel("Profile", R.drawable.ic_profile_stu,"profile"))
         listOfBtns!!.add(ButtonModel("Maintenance", R.drawable.maintence_5,"maintenance"))
@@ -75,7 +75,7 @@ class FacultyHomeFragment : Fragment() {
         Log.e("NAME SLPIT SIZE",nameSplit.get(0))
         Log.e("NAME SLPIT SIZE",nameSplit.get(1))
         if(nameSplit.size>1){
-            binding.hilabel.text= "Hi ${nameSplit.get(0)} ${nameSplit.get(1)}, Welcome"
+            binding.hilabel.text= "Hi ${nameSplit.get(0)} ${nameSplit.get(1)}, welcome"
         }
         else  if(nameSplit.size>0){
             binding.hilabel.text= "Hi ${nameSplit.get(0)}, Welcome"

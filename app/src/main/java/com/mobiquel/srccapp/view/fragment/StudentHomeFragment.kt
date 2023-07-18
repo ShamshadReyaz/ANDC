@@ -51,8 +51,8 @@ class StudentHomeFragment : Fragment() {
         apiViewModel = ViewModelProviders.of(this).get(APIViewModel::class.java)
         listOfBtns= ArrayList()
         listOfBtns!!.add(ButtonModel("Academic Details", R.drawable.academic_1,"academics"))
-        listOfBtns!!.add(ButtonModel("Attendance", R.drawable.attendance_2,"attendance"))
-        listOfBtns!!.add(ButtonModel("IA Record", R.drawable.record_3,"record"))
+        listOfBtns!!.add(ButtonModel("Attendance", R.drawable.attendance_2,""))
+        listOfBtns!!.add(ButtonModel("IA Record", R.drawable.record_3,""))
 
         listOfBtns!!.add(ButtonModel("Notice", R.drawable.notice_4,"notice"))
         listOfBtns!!.add(ButtonModel("Maintenance", R.drawable.maintence_5,"maintenance"))
@@ -67,7 +67,7 @@ class StudentHomeFragment : Fragment() {
 */
         val nameSplit=Preferences.instance!!.userName!!.split(" ")
         if(nameSplit.size>0){
-            binding.hilabel.text= "Hi ${nameSplit.get(0)}, Welcome"
+            binding.hilabel.text= "Hi ${nameSplit.get(0)}, welcome"
         }
 
         val adapter=ButtonListAdapter(requireActivity(),listOfBtns!!,object : RecyclerItemClickListener{

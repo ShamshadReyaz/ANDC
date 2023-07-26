@@ -50,9 +50,9 @@ class StudentHomeFragment : Fragment() {
         _binding = FragmentStudentHomeBinding.inflate(inflater, container, false)
         apiViewModel = ViewModelProviders.of(this).get(APIViewModel::class.java)
         listOfBtns= ArrayList()
-        listOfBtns!!.add(ButtonModel("Academic Details", R.drawable.academic_1,"academics"))
-        listOfBtns!!.add(ButtonModel("Attendance", R.drawable.attendance_2,""))
-        listOfBtns!!.add(ButtonModel("IA Record", R.drawable.record_3,""))
+        //listOfBtns!!.add(ButtonModel("Academic Details", R.drawable.academic_1,"academics"))
+        //listOfBtns!!.add(ButtonModel("Attendance", R.drawable.attendance_2,""))
+        //listOfBtns!!.add(ButtonModel("IA Record", R.drawable.record_3,""))
 
         listOfBtns!!.add(ButtonModel("Notice", R.drawable.notice_4,"notice"))
         listOfBtns!!.add(ButtonModel("Maintenance", R.drawable.maintence_5,"maintenance"))

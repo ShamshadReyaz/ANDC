@@ -67,6 +67,18 @@ interface APIInterface {
     @POST("checkSmartProfVersion")
     fun checkSmartProfVersion   (@FieldMap param:MutableMap<String, String>): Call<ResponseBody>
 
+    @FormUrlEncoded
+    @POST("getVirtualClassForFaculty")
+    fun getVirtualClassForFaculty   (@FieldMap param:MutableMap<String, String>): Call<ResponseBody>
+
+    @FormUrlEncoded
+    @POST("getPapersForFacultyByVirtualGroup")
+    fun getPapersForFacultyByVirtualGroup   (@FieldMap param:MutableMap<String, String>): Call<ResponseBody>
+
+    @FormUrlEncoded
+    @POST("getVirtualClassForAttendanceForDates")
+    fun getVirtualClassForAttendanceForDates   (@FieldMap param:MutableMap<String, String>): Call<ResponseBody>
+
     @Headers("Content-Type: application/json")
     @POST()
     fun getYourDostToken   (@Url url:String, @Body data:DostToenModel): Call<ResponseBody>

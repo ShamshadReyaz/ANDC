@@ -1,20 +1,25 @@
 package com.mobiquel.srccapp.view
 
+import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.FirebaseApp
 import com.google.firebase.messaging.FirebaseMessaging
 import com.mobiquel.srccapp.R
 import com.mobiquel.srccapp.data.ApiManager
+import com.mobiquel.srccapp.data.NameIdPojo
 import com.mobiquel.srccapp.databinding.ActivityHomeBinding
 import com.mobiquel.srccapp.databinding.ActivityHomeFacultyBinding
 import com.mobiquel.srccapp.pojo.DostToenModel
@@ -27,10 +32,14 @@ import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 
 class FacultyHomeActivity : AppCompatActivity() {
-    private var dostTokenResponse: String?=null
+    private var dostTokenResponse: String? = null
     private var notificationId = ""
     var context: Context? = null
     private lateinit var binding: ActivityHomeFacultyBinding
@@ -47,6 +56,17 @@ class FacultyHomeActivity : AppCompatActivity() {
     var editStatus = 0
     var hashMap: HashMap<String, Int>? = HashMap()
 
+    private var listOfGroupName = ArrayList<String>()
+    private var listOfGroupId = ArrayList<NameIdPojo>()
+
+    private var listOfPaperName = ArrayList<String>()
+    private var listOfPaperId = ArrayList<NameIdPojo>()
+    private var paperAdapter: ArrayAdapter<String>? = null
+
+    var datePickerDialog: DatePickerDialog? = null
+    var cal = Calendar.getInstance()
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeFacultyBinding.inflate(layoutInflater)
@@ -61,6 +81,7 @@ class FacultyHomeActivity : AppCompatActivity() {
         apiViewModel = HomeAPIViewModel()
         version.text = "Version: " + getAppVersion()
         getNotificationId()
+        getGroup()
         getYourDostToken()
 
 
@@ -84,7 +105,7 @@ class FacultyHomeActivity : AppCompatActivity() {
         }
         counsellingPage.setOnClickListener {
 
-        redirectToWeb2("https://yourdost.com/login/sso?token="+dostTokenResponse)
+            redirectToWeb2("https://yourdost.com/login/sso?token=" + dostTokenResponse)
 
         }
         logout.setOnClickListener {
@@ -198,9 +219,9 @@ class FacultyHomeActivity : AppCompatActivity() {
 
     fun getYourDostToken() {
         Preferences.instance!!.loadPreferences(context!!)
-        val dostTokenModel=DostToenModel()
-        dostTokenModel.email=Preferences.instance!!.email!!
-        dostTokenModel.organizationID=56
+        val dostTokenModel = DostToenModel()
+        dostTokenModel.email = Preferences.instance!!.email!!
+        dostTokenModel.organizationID = 56
 
         val apiManager: ApiManager? = ApiManager.init()
         apiManager!!.getYourDostToken(dostTokenModel).enqueue(object : Callback<ResponseBody> {
@@ -208,15 +229,14 @@ class FacultyHomeActivity : AppCompatActivity() {
                 call: Call<ResponseBody>,
                 response: Response<ResponseBody>
             ) {
-                    binding.progressBar.visibility = View.GONE
-                    try {
-                        dostTokenResponse = response.body()?.string()
-                        Log.e("RESPO_DOST",dostTokenResponse!!)
-                    }catch (e:Exception){
-                        e.printStackTrace()
-                    }
+                binding.progressBar.visibility = View.GONE
+                try {
+                    dostTokenResponse = response.body()?.string()
+                    Log.e("RESPO_DOST", dostTokenResponse!!)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
 
-                    
 
             }
 
@@ -228,12 +248,12 @@ class FacultyHomeActivity : AppCompatActivity() {
         })
 
     }
+
     override fun onBackPressed() {
         //super.onBackPressed()
         goToHomePage()
 
     }
-
 
 
     fun goToHomePage() {
@@ -263,7 +283,7 @@ class FacultyHomeActivity : AppCompatActivity() {
                 }
                 binding.edit.visibility = View.GONE
             }
-            "profile"-> {
+            "profile" -> {
                 fragmentSupportManager.beginTransaction().apply {
                     replace(R.id.frameLayout, fragmentProfileFragment, "2")
                         .addToBackStack("2")
@@ -279,12 +299,205 @@ class FacultyHomeActivity : AppCompatActivity() {
                 }
                 binding.edit.visibility = View.GONE
             }
-            ""->{
-                Toast.makeText(this@FacultyHomeActivity,"Coming Soon!",Toast.LENGTH_SHORT).show()
+            "attendance" -> {
+                /* fragmentSupportManager.beginTransaction().apply {
+                     replace(R.id.frameLayout, maintenanceFragment, "3")
+                         .addToBackStack("3")
+                     commit()
+                 }
+                 binding.edit.visibility = View.GONE*/
+                showPaperGroupDialog()
+            }
+            "" -> {
+                Toast.makeText(this@FacultyHomeActivity, "Coming Soon!", Toast.LENGTH_SHORT).show()
             }
 
         }
 
     }
 
+    fun showPaperGroupDialog() {
+        try {
+            val dialogView: View = View.inflate(this, R.layout.dialog_paper_group_date, null)
+            val dialog = BottomSheetDialog(this)
+
+            var group =
+                dialogView.findViewById<AutoCompleteTextView>(R.id.group)
+            var paper =
+                dialogView.findViewById<AutoCompleteTextView>(R.id.paper)
+            var dateOfAttendance =
+                dialogView.findViewById<EditText>(R.id.dateOfAttendance)
+            var dateOfAttendancelay =
+                dialogView.findViewById<TextInputLayout>(R.id.dateOfAttendanceLayout)
+            var proceed =
+                dialogView.findViewById<TextView>(R.id.proceed)
+            var groupAdapter =
+                ArrayAdapter(
+                    this,
+                    R.layout.list_item_dropdown,
+                    listOfGroupName!!
+                )
+            paperAdapter =
+                ArrayAdapter(
+                    this,
+                    R.layout.list_item_dropdown,
+                    listOfPaperName!!
+                )
+            group.setAdapter(groupAdapter)
+            paper.setAdapter(paperAdapter)
+
+            group.setOnItemClickListener(object : AdapterView.OnItemClickListener {
+                override fun onItemClick(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    val modelClass = listOfGroupId!!.find { it.name.equals(group.text.toString()) }
+                    getPaper(modelClass!!.id)
+                }
+
+            })
+            val dateSetListener =
+                DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                    cal.set(Calendar.YEAR, year)
+                    cal.set(Calendar.MONTH, monthOfYear)
+                    cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                    val myFormat = "dd MMMM,yyyy" +
+                            "" // mention the format you need
+                    val sdf = SimpleDateFormat(myFormat, Locale.US)
+                    dateOfAttendance.setText(sdf.format(cal.time))
+                }
+            dateOfAttendance.setOnClickListener {
+                cal = Calendar.getInstance()
+                datePickerDialog = DatePickerDialog(
+                    this,
+                    dateSetListener,
+                    // set DatePickerDialog to point to today's date when it loads up
+                    cal.get(Calendar.YEAR),
+                    cal.get(Calendar.MONTH),
+                    cal.get(Calendar.DAY_OF_MONTH)
+                )
+                datePickerDialog!!.show();
+            }
+            proceed.setOnClickListener {
+                val grpId = listOfGroupId!!.find { it.name.equals(group.text.toString()) }!!.id
+                val paperId = listOfPaperId!!.find { it.name.equals(paper.text.toString()) }!!.id
+
+            }
+
+            dialog!!.setContentView(dialogView)
+            dialog!!.setCancelable(true)
+            dialog!!.window?.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
+                ?.setBackgroundResource(android.R.color.transparent)
+            dialog!!.show()
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    fun getGroup() {
+        Preferences.instance!!.loadPreferences(context!!)
+        val data: MutableMap<String, String> = HashMap()
+        data["facultyId"] = Preferences.instance!!.userId!!
+        val apiManager: ApiManager? = ApiManager.init()
+        apiManager!!.getVirtualClassForFaculty(data).enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(
+                call: Call<ResponseBody>,
+                response: Response<ResponseBody>
+            ) {
+                binding.progressBar.visibility = View.GONE
+                try {
+                    val stringResponse = response.body()?.string()
+                    val jsonobject = JSONObject(stringResponse)
+                    if (jsonobject.getString("errorCode").equals("0")) {
+
+                        val grpJsonArray = jsonobject.getJSONArray("responseObject")
+                        for (i in 0..grpJsonArray.length()) {
+                            listOfGroupId.add(
+                                NameIdPojo(
+                                    grpJsonArray.getJSONObject(i).getString("virtualGroupName"),
+                                    grpJsonArray.getJSONObject(i).getString("virtualGroupId")
+                                )
+                            )
+                            listOfGroupName.add(
+                                grpJsonArray.getJSONObject(i).getString("virtualGroupName")
+                            )
+                        }
+
+                    } else if (jsonobject.getString("errorCode").equals("1"))
+                        showSnackBar("Invalid Credentials! Please try again", binding.rlMain)
+                    else {
+
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                Log.e("DATA", "FAILURE")
+                binding.progressBar.visibility = View.GONE
+            }
+
+        })
+
+    }
+
+    fun getPaper(virtualGroupId: String) {
+        Preferences.instance!!.loadPreferences(context!!)
+        val data: MutableMap<String, String> = HashMap()
+        data["facultyId"] = Preferences.instance!!.userId!!
+        data["virtualGroupId"] = virtualGroupId
+
+        val apiManager: ApiManager? = ApiManager.init()
+        apiManager!!.getPapersForFacultyByVirtualGroup(data)
+            .enqueue(object : Callback<ResponseBody> {
+                override fun onResponse(
+                    call: Call<ResponseBody>,
+                    response: Response<ResponseBody>
+                ) {
+                    binding.progressBar.visibility = View.GONE
+                    try {
+                        val stringResponse = response.body()?.string()
+                        val jsonobject = JSONObject(stringResponse)
+                        listOfPaperId.clear()
+                        listOfPaperName.clear()
+                        if (jsonobject.getString("errorCode").equals("0")) {
+
+                            val grpJsonArray = jsonobject.getJSONArray("responseObject")
+                            for (i in 0..grpJsonArray.length()) {
+                                listOfPaperId.add(
+                                    NameIdPojo(
+                                        grpJsonArray.getJSONObject(i).getString("subject"),
+                                        grpJsonArray.getJSONObject(i).getString("paperId")
+                                    )
+                                )
+                                listOfPaperName.add(
+                                    grpJsonArray.getJSONObject(i).getString("subject")
+                                )
+
+                            }
+                            paperAdapter!!.notifyDataSetChanged()
+
+                        } else if (jsonobject.getString("errorCode").equals("1"))
+                            showSnackBar("Invalid Credentials! Please try again", binding.rlMain)
+                        else {
+
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+
+                }
+
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                    Log.e("DATA", "FAILURE")
+                    binding.progressBar.visibility = View.GONE
+                }
+
+            })
+
+    }
 }

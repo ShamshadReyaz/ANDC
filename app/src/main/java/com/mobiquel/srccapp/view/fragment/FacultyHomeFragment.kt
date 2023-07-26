@@ -51,10 +51,18 @@ class FacultyHomeFragment : Fragment() {
         _binding = FragmentStudentHomeBinding.inflate(inflater, container, false)
         apiViewModel = ViewModelProviders.of(this).get(APIViewModel::class.java)
         listOfBtns= ArrayList()
-        listOfBtns!!.add(ButtonModel("Attendance", R.drawable.attendance_3,""))
-        listOfBtns!!.add(ButtonModel("Notice", R.drawable.notice_4,"notice"))
-       // listOfBtns!!.add(ButtonModel("Profile", R.drawable.ic_profile_stu,"profile"))
-        listOfBtns!!.add(ButtonModel("Maintenance", R.drawable.maintence_5,"maintenance"))
+        if(Preferences.instance?.userType.equals("faculty")){
+            listOfBtns!!.add(ButtonModel("Notice", R.drawable.notice_4,"notice"))
+            listOfBtns!!.add(ButtonModel("Attendance", R.drawable.attendance_3,"attendance"))
+            listOfBtns!!.add(ButtonModel("Maintenance", R.drawable.maintence_5,"maintenance"))
+        }
+        else{
+            listOfBtns!!.add(ButtonModel("Notice", R.drawable.notice_4,"notice"))
+            // listOfBtns!!.add(ButtonModel("Profile", R.drawable.ic_profile_stu,"profile"))
+            listOfBtns!!.add(ButtonModel("Maintenance", R.drawable.maintence_5,"maintenance"))
+
+        }
+        //listOfBtns!!.add(ButtonModel("Attendance", R.drawable.attendance_3,""))
 
         //binding.title.text= HtmlCompat.fromHtml("Hi, <font  color=#FF4750>"+Preferences.instance!!.userName+"</font>\nWelcome to SRCC App.", HtmlCompat.FROM_HTML_MODE_LEGACY)
         val adapter=ButtonListAdapter(requireActivity(),listOfBtns!!,object : RecyclerItemClickListener{

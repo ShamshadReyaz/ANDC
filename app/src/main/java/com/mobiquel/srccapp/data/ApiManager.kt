@@ -63,6 +63,20 @@ class ApiManager private constructor() {
         return apiClient.checkSmartProfVersion(param)
     }
 
+    fun getVirtualClassForFaculty(param:MutableMap<String, String>): Call<ResponseBody> {
+        return apiClient.getVirtualClassForFaculty(param)
+    }
+
+    fun getPapersForFacultyByVirtualGroup(param:MutableMap<String, String>): Call<ResponseBody> {
+        return apiClient.getPapersForFacultyByVirtualGroup(param)
+    }
+
+    fun getVirtualClassForAttendanceForDates(param:MutableMap<String, String>): Call<ResponseBody> {
+        return apiClient.getVirtualClassForAttendanceForDates(param)
+    }
+
+
+
     fun getYourDostToken(param:DostToenModel): Call<ResponseBody> {
         return apiClient.getYourDostToken("https://yourdost.com/zion/v2/users/sso/token",param)
     }

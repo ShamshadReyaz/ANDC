@@ -28,6 +28,8 @@ class APIViewModel : ViewModel() {
         return uploadData
     }
 
+
+
     fun getProfile(
         model: ProfileRequestModel
     ): SingleLiveEvent<Resource<ResponseBody>>? {

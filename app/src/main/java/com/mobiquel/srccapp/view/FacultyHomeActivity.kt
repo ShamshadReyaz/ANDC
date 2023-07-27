@@ -45,6 +45,7 @@ class FacultyHomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeFacultyBinding
     private lateinit var apiViewModel: HomeAPIViewModel
     private val fragmentNoticeFragment = NoticeFragment()
+  //  private val fragmentAttendanceFragment = AttendanceFragment()
     private val fragmentProfileFragment = ProfileFragment()
     private val maintenanceFragment = MaintenanceFragment()
     private val wifiFragment = WifiFragment()
@@ -381,9 +382,22 @@ class FacultyHomeActivity : AppCompatActivity() {
                 datePickerDialog!!.show();
             }
             proceed.setOnClickListener {
+                val fragmentAttendanceFragment = AttendanceFragment()
                 val grpId = listOfGroupId!!.find { it.name.equals(group.text.toString()) }!!.id
                 val paperId = listOfPaperId!!.find { it.name.equals(paper.text.toString()) }!!.id
-
+                val bundle=Bundle()
+                bundle.putString("GRPID",grpId)
+                bundle.putString("PAPRID",paperId)
+                bundle.putString("GRPNAME",group.text.toString())
+                bundle.putString("PAPRNAME",paper.text.toString())
+                bundle.putString("DATE",dateOfAttendance.text.toString())
+                fragmentAttendanceFragment.arguments=bundle
+                fragmentSupportManager.beginTransaction().apply {
+                    replace(R.id.frameLayout, fragmentAttendanceFragment, "4")
+                        .addToBackStack("4")
+                    commit()
+                }
+                dialog!!.cancel()
             }
 
             dialog!!.setContentView(dialogView)
@@ -413,7 +427,7 @@ class FacultyHomeActivity : AppCompatActivity() {
                     if (jsonobject.getString("errorCode").equals("0")) {
 
                         val grpJsonArray = jsonobject.getJSONArray("responseObject")
-                        for (i in 0..grpJsonArray.length()) {
+                        for (i in 0 until grpJsonArray.length()) {
                             listOfGroupId.add(
                                 NameIdPojo(
                                     grpJsonArray.getJSONObject(i).getString("virtualGroupName"),
@@ -467,7 +481,7 @@ class FacultyHomeActivity : AppCompatActivity() {
                         if (jsonobject.getString("errorCode").equals("0")) {
 
                             val grpJsonArray = jsonobject.getJSONArray("responseObject")
-                            for (i in 0..grpJsonArray.length()) {
+                            for (i in 0 until grpJsonArray.length()) {
                                 listOfPaperId.add(
                                     NameIdPojo(
                                         grpJsonArray.getJSONObject(i).getString("subject"),

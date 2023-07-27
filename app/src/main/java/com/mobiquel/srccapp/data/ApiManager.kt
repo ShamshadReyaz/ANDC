@@ -71,6 +71,7 @@ class ApiManager private constructor() {
         return apiClient.getPapersForFacultyByVirtualGroup(param)
     }
 
+
     fun getVirtualClassForAttendanceForDates(param:MutableMap<String, String>): Call<ResponseBody> {
         return apiClient.getVirtualClassForAttendanceForDates(param)
     }

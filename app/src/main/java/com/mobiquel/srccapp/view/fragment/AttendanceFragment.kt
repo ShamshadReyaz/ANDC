@@ -1,30 +1,26 @@
 package com.mobiquel.srccapp.view.fragment
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CompoundButton
-import android.widget.CompoundButton.OnCheckedChangeListener
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.mobiquel.mdt112.`interface`.RecyclerItemClickListener
 import com.mobiquel.mdt112.`interface`.RecyclerItemClickListener2
 import com.mobiquel.srccapp.data.ApiManager
-import com.mobiquel.srccapp.data.NameIdPojo
 import com.mobiquel.srccapp.databinding.FragmentAttendanceBinding
-import com.mobiquel.srccapp.databinding.FragmentNoticeBinding
 import com.mobiquel.srccapp.pojo.AttendanceStudentModel
 import com.mobiquel.srccapp.pojo.SlotAttendanceStudentModel
 import com.mobiquel.srccapp.utils.Preferences
 import com.mobiquel.srccapp.utils.showSnackBar
+import com.mobiquel.srccapp.utils.showToast
+import com.mobiquel.srccapp.view.LoginActivity
 import com.mobiquel.srccapp.view.adapter.ListOfSlotsStudentsAttendanceListAdapter
-import com.mobiquel.srccapp.view.adapter.NoticeListAdapter
 import com.mobiquel.srccapp.view.adapter.StudentsAttendanceListAdapter
 import com.mobiquel.srccapp.view.viewmodel.APIViewModel
 import okhttp3.ResponseBody
@@ -41,8 +37,7 @@ class AttendanceFragment : Fragment() {
     private var paperId=""
     private var groupId=""
     private var dateOfAttendance=""
-    private var listOfAttendance=ArrayList<java.util.ArrayList<AttendanceStudentModel>>()
-    private var listOfStudent=ArrayList<AttendanceStudentModel>()
+    private var currentPos=0
     private var listOfSlot=ArrayList<SlotAttendanceStudentModel>()
     private var studentsAttendanceListAdapter:StudentsAttendanceListAdapter?=null
     private var slotsStudentsAttendanceListAdapter:ListOfSlotsStudentsAttendanceListAdapter?=null
@@ -69,21 +64,51 @@ class AttendanceFragment : Fragment() {
         binding.grppaper.text = requireArguments().getString("GRPNAME").toString()+", "+requireArguments().getString("PAPRNAME").toString()
 
         binding.addmore.setOnClickListener {
-            val listOfStudentTemp=ArrayList<AttendanceStudentModel>()
-            listOfStudentTemp.addAll(listOfStudent)
-            listOfAttendance.add(listOfStudentTemp)
-            for(slot in listOfSlot)
-                slot.isSelected="F"
 
-            listOfSlot.add(SlotAttendanceStudentModel("Slot "+listOfSlot.size.plus(1),"0","0","T"))
+            val builder = AlertDialog.Builder(requireActivity())
+            builder.setMessage("Do you want to copy data from the last slot?")
+            builder.setPositiveButton("Yes") { dialogInterface, which ->
+                dialogInterface.cancel()
+                var dataTemp=listOfSlot.get(currentPos).listOfStudent
+                var  dataModel=listOfSlot.get(currentPos)
+                dataModel.listOfStudent=studentsAttendanceListAdapter?.listOfAttendance?.map { it.copy() }
+                listOfSlot.set(currentPos,dataModel)
+                for(slot in listOfSlot)
+                    slot.isSelected="F"
+                currentPos++
+                listOfSlot.add(SlotAttendanceStudentModel("Slot "+listOfSlot.size.plus(1),"0",""+dataTemp!!.size,"T",dataTemp))
+                slotsStudentsAttendanceListAdapter?.notifyDataSetChanged()
+                binding.listOfAttendance.scrollToPosition(listOfSlot.size-1)
+                studentsAttendanceListAdapter?.updateList(dataTemp)
+                updateBottoomSheet()
+            }
+            builder.setNegativeButton("No") { dialogInterface, which ->
+                dialogInterface.cancel()
+                var dataTemp=listOfSlot.get(currentPos).listOfStudent
+                var  dataModel=listOfSlot.get(currentPos)
+                dataModel.listOfStudent=studentsAttendanceListAdapter?.listOfAttendance?.map { it.copy() }
+                listOfSlot.set(currentPos,dataModel)
+                for(slot in listOfSlot)
+                    slot.isSelected="F"
+                currentPos++
+                dataTemp?.map { it.isPresent="F" }
+                listOfSlot.add(SlotAttendanceStudentModel("Slot "+listOfSlot.size.plus(1),"0",""+dataTemp!!.size,"T",dataTemp))
+                slotsStudentsAttendanceListAdapter?.notifyDataSetChanged()
+                binding.listOfAttendance.scrollToPosition(listOfSlot.size-1)
+                studentsAttendanceListAdapter?.updateList(dataTemp)
+                updateBottoomSheet()
+            }
 
-            slotsStudentsAttendanceListAdapter?.notifyDataSetChanged()
-            Log.e("LIST OF ATTENDACE","== "+listOfAttendance.size)
-            Log.e("LIST OF ATTENDACE 2","== "+listOfAttendance.get(0).size+" == "+listOfAttendance.get(1).size)
-            binding.listOfAttendance.scrollToPosition(listOfSlot.size-1)
+            val alertDialog = builder.create()
+
+
+            // Set other dialog properties
+            alertDialog.setCancelable(true)
+            alertDialog.show()
+
         }
         binding.progressBar.visibility = View.VISIBLE
-        studentsAttendanceListAdapter=StudentsAttendanceListAdapter(requireActivity(),listOfStudent,this)
+        studentsAttendanceListAdapter=StudentsAttendanceListAdapter(requireActivity(),this)
         binding.listOfStudents.layoutManager = LinearLayoutManager(
             context,
             LinearLayoutManager.VERTICAL,
@@ -94,14 +119,12 @@ class AttendanceFragment : Fragment() {
         slotsStudentsAttendanceListAdapter=ListOfSlotsStudentsAttendanceListAdapter(requireActivity(),listOfSlot,object : RecyclerItemClickListener2{
             override fun onRecyclerItemClicked(pos: Int,oldpos:Int) {
 
-               // listOfAttendance.get(oldpos).clear()
+                var  dataModel=listOfSlot.get(oldpos)
+                dataModel.listOfStudent=studentsAttendanceListAdapter?.listOfAttendance?.map { it.copy() }
+                listOfSlot.set(oldpos,dataModel)
+                currentPos=pos
 
-                val listOfStudentTemp=ArrayList<AttendanceStudentModel>()
-                listOfStudentTemp.addAll(listOfStudent)
-                listOfAttendance.set(oldpos,listOfStudentTemp)
-                listOfStudent=ArrayList()
-                listOfStudent.addAll(listOfAttendance.get(pos))
-                studentsAttendanceListAdapter?.notifyDataSetChanged()
+                studentsAttendanceListAdapter?.updateList(listOfSlot.get(currentPos).listOfStudent!!)
 
                 for (model in listOfSlot)
                     model.isSelected="F"
@@ -109,6 +132,7 @@ class AttendanceFragment : Fragment() {
                 listOfSlot.get(pos).isSelected="T"
                 slotsStudentsAttendanceListAdapter?.notifyDataSetChanged()
                 binding.listOfAttendance.scrollToPosition(pos)
+                updateBottoomSheet()
 
             }
 
@@ -177,7 +201,8 @@ class AttendanceFragment : Fragment() {
                         val jsonobject = JSONObject(stringResponse)
 
                         if (jsonobject.getString("errorCode").equals("0")) {
-                          //  var listOfStudent=ArrayList<AttendanceStudentModel>()
+                           var listOfStudent=ArrayList<AttendanceStudentModel>()
+
                                 val studentJsonArray=jsonobject.getJSONArray("responseObject").getJSONObject(0).getJSONArray("studentList")
                             var present=0
                             var absent=0
@@ -191,6 +216,7 @@ class AttendanceFragment : Fragment() {
                                         studentJsonArray.getJSONObject(i).getString("rollNo"),
                                         studentJsonArray.getJSONObject(i).getString("batch")
                                         )
+                                    absent++
                                     listOfStudent.add(attendanceStudentModel)
                                 }
                                 else{
@@ -211,10 +237,15 @@ class AttendanceFragment : Fragment() {
 
                             }
 
-                            studentsAttendanceListAdapter?.notifyDataSetChanged()
+                           // var dataTemp=listOfStudentTemp.map { it }
+
+
+                            listOfSlot.add(SlotAttendanceStudentModel("Slot 1",""+present,""+absent,"F",
+                                listOfStudent
+                            ))
+                            studentsAttendanceListAdapter?.updateList(listOfSlot.get(0).listOfStudent!!)
                             updateBottoomSheet()
-                            listOfAttendance.add(listOfStudent)
-                            listOfSlot.add(SlotAttendanceStudentModel("Slot 1",""+present,""+absent,"F"))
+
 
                         } else if (jsonobject.getString("errorCode").equals("1"))
                             requireActivity().showSnackBar("Invalid Credentials! Please try again", binding.rlMain)
@@ -237,7 +268,7 @@ class AttendanceFragment : Fragment() {
     }
 
     private fun markAll(status:String){
-        for(studetModel in listOfStudent){
+        for(studetModel in studentsAttendanceListAdapter?.listOfAttendance!!){
             studetModel.isPresent=status
         }
         studentsAttendanceListAdapter?.notifyDataSetChanged()
@@ -247,14 +278,20 @@ class AttendanceFragment : Fragment() {
     fun updateBottoomSheet(){
         var present=0
         var absent=0
-        for(data in listOfStudent){
+        for(data in studentsAttendanceListAdapter?.listOfAttendance!!){
             if(data.isPresent.equals("T"))
                 present++
             else
                 absent++
         }
+        //Log.e("TEMP",""+listOfStudentTemp.size)
+        val modelTemp=listOfSlot.get(currentPos)
+        modelTemp.absent=""+absent
+        modelTemp.present=""+present
+        listOfSlot.set(currentPos,modelTemp)
         binding.totalAbsent.text="Total Absent: "+absent
         binding.totalPresent.text="Total Present: "+present
+        slotsStudentsAttendanceListAdapter?.notifyDataSetChanged()
     }
 
 }

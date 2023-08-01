@@ -17,10 +17,9 @@ import com.mobiquel.srccapp.view.fragment.AttendanceFragment
  */
 class StudentsAttendanceListAdapter(
     var context: Context,
-    private var listOfAttendance: List<AttendanceStudentModel>,
     private var attendanceFragment: AttendanceFragment
 ) : RecyclerView.Adapter<StudentsAttendanceListAdapter.ViewHolder>() {
-
+    var listOfAttendance=ArrayList<AttendanceStudentModel>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(context)
             .inflate(R.layout.list_item_attendance_student, parent, false)
@@ -63,5 +62,11 @@ class StudentsAttendanceListAdapter(
             }
 
         }
+    }
+
+    fun updateList(list:List<AttendanceStudentModel>){
+        listOfAttendance=ArrayList()
+        listOfAttendance.addAll(list)
+        notifyDataSetChanged()
     }
 }

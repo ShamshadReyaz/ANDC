@@ -23,6 +23,7 @@ import com.mobiquel.srccapp.data.NameIdPojo
 import com.mobiquel.srccapp.databinding.ActivityHomeBinding
 import com.mobiquel.srccapp.databinding.ActivityHomeFacultyBinding
 import com.mobiquel.srccapp.pojo.DostToenModel
+import com.mobiquel.srccapp.pojo.SlotAttendanceStudentModel
 import com.mobiquel.srccapp.utils.*
 import com.mobiquel.srccapp.view.fragment.*
 import com.mobiquel.srccapp.view.viewmodel.HomeAPIViewModel
@@ -260,7 +261,38 @@ class FacultyHomeActivity : AppCompatActivity() {
     fun goToHomePage() {
         val f0: FacultyHomeFragment? =
             supportFragmentManager.findFragmentByTag("0") as FacultyHomeFragment?
-        if (f0 != null && !f0.isVisible) {
+        val f1: AttendanceFragment? =
+            supportFragmentManager.findFragmentByTag("4") as AttendanceFragment?
+        if (f1 != null && f1.isVisible) {
+
+            val builder = AlertDialog.Builder(this)
+            //set title for alert dialog
+            //set message for alert dialog
+            builder.setMessage("Are you sure you want to exit attendance? All data would be lost")
+            // Create the AlertDialog
+            //performing positive action
+            builder.setPositiveButton("Yes") { dialogInterface, which ->
+                dialogInterface.cancel()
+                fragmentSupportManager.beginTransaction().apply {
+                    replace(R.id.frameLayout, facultyHomeFragment, "0")
+                        .addToBackStack("0")
+                    commit()
+                }
+                binding.edit.visibility = View.GONE
+            }
+            builder.setNegativeButton("No") { dialogInterface, which ->
+                dialogInterface.cancel()
+
+            }
+
+            val alertDialog = builder.create()
+
+
+            // Set other dialog properties
+            alertDialog.setCancelable(true)
+            alertDialog.show()
+        }
+        else if (f0 != null && !f0.isVisible) {
 
             fragmentSupportManager.beginTransaction().apply {
                 replace(R.id.frameLayout, facultyHomeFragment, "0")

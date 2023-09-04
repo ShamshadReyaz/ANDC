@@ -332,6 +332,14 @@ class FacultyHomeActivity : AppCompatActivity() {
                 }
                 binding.edit.visibility = View.GONE
             }
+            "home" -> {
+                fragmentSupportManager.beginTransaction().apply {
+                    replace(R.id.frameLayout, facultyHomeFragment, "0")
+                        .addToBackStack("0")
+                    commit()
+                }
+                binding.edit.visibility = View.GONE
+            }
             "attendance" -> {
                 /* fragmentSupportManager.beginTransaction().apply {
                      replace(R.id.frameLayout, maintenanceFragment, "3")
@@ -396,7 +404,7 @@ class FacultyHomeActivity : AppCompatActivity() {
                     cal.set(Calendar.YEAR, year)
                     cal.set(Calendar.MONTH, monthOfYear)
                     cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-                    val myFormat = "dd MMMM,yyyy" +
+                    val myFormat = "dd MMM, yyyy" +
                             "" // mention the format you need
                     val sdf = SimpleDateFormat(myFormat, Locale.US)
                     dateOfAttendance.setText(sdf.format(cal.time))
@@ -405,12 +413,14 @@ class FacultyHomeActivity : AppCompatActivity() {
                 cal = Calendar.getInstance()
                 datePickerDialog = DatePickerDialog(
                     this,
+                    R.style.MyDatePickerStyle,
                     dateSetListener,
                     // set DatePickerDialog to point to today's date when it loads up
                     cal.get(Calendar.YEAR),
                     cal.get(Calendar.MONTH),
                     cal.get(Calendar.DAY_OF_MONTH)
                 )
+                datePickerDialog!!.getDatePicker().maxDate=cal.timeInMillis;
                 datePickerDialog!!.show();
             }
             proceed.setOnClickListener {
@@ -546,4 +556,8 @@ class FacultyHomeActivity : AppCompatActivity() {
             })
 
     }
+
+
+
+
 }

@@ -45,16 +45,16 @@ class StudentsAttendanceListAdapter(
                 itemView.sno.text = "" + sno
                 itemView.rollnumber.text = "" + it.rollNo
                 itemView.name.text = it.studentName
-                itemView.status.isChecked = !it.isPresent.equals("F")
+                itemView.status.isChecked = !it.isPresent.equals("A")
                 if (pos % 2 == 0)
                     itemView.rl_main.setBackgroundColor(Color.parseColor("#F4F3F3"))
                 else
                     itemView.rl_main.setBackgroundColor(Color.parseColor("#FFFFFF"))
                 itemView.status.setOnClickListener {
-                    if (listOfAttendance.get(pos).isPresent.equals("F"))
-                        listOfAttendance.get(pos).isPresent="T"
+                    if (listOfAttendance.get(pos).isPresent.equals("A"))
+                        listOfAttendance.get(pos).isPresent="P"
                     else
-                        listOfAttendance.get(pos).isPresent="F"
+                        listOfAttendance.get(pos).isPresent="A"
                     attendanceFragment.updateBottoomSheet()
                     notifyDataSetChanged()
                 }

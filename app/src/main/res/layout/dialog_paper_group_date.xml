@@ -76,6 +76,8 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:focusableInTouchMode="true"
+            android:focusable="true"
             android:layout_marginTop="10dp"
             android:hint="Select Date *">
 
@@ -84,12 +86,11 @@
                 android:layout_width="match_parent"
                 android:textSize="12sp"
                 android:focusable="false"
-                android:focusableInTouchMode="false"
-                android:editable="false"
+                android:focusableInTouchMode="true"
                 android:layout_height="wrap_content"
                 android:drawableRight="@drawable/ic_baseline_calendar_month_24_black"
                 android:fontFamily="@font/poppins_regular"
-                android:imeOptions="actionDone" />
+                />
 
         </com.google.android.material.textfield.TextInputLayout>
 

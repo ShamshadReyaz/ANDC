@@ -79,6 +79,14 @@ interface APIInterface {
     @POST("getVirtualClassForAttendanceForDates")
     fun getVirtualClassForAttendanceForDates   (@FieldMap param:MutableMap<String, String>): Call<ResponseBody>
 
+    @FormUrlEncoded
+    @POST("deleteSessionWithAttendance")
+    fun deleteSessionWithAttendance   (@FieldMap param:MutableMap<String, String>): Call<ResponseBody>
+
+    @FormUrlEncoded
+    @POST("markAttendanceForClassForDates")
+    fun markAttendanceForClassForDates (@FieldMap param:MutableMap<String, String>): Call<ResponseBody>
+
     @Headers("Content-Type: application/json")
     @POST()
     fun getYourDostToken   (@Url url:String, @Body data:DostToenModel): Call<ResponseBody>

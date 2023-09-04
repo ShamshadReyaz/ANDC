@@ -5,5 +5,7 @@ data class SlotAttendanceStudentModel (
     var present: String? = "0",
     var absent: String? = "0",
     var isSelected: String? = "F",
-    var listOfStudent:List<AttendanceStudentModel>?=ArrayList()
+    var listOfStudent:List<AttendanceStudentModel>?=ArrayList(),
+    var period:String="0",
+    var slotId:String="0"
 )

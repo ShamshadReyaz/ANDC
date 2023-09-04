@@ -47,7 +47,7 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/poppins_semibold"
                     android:text="Total Present: 13"
-                    android:textColor="@color/green_active"
+                    android:textColor="#2F82E3"
                     android:textSize="12sp" />
 
                 <TextView
@@ -66,9 +66,9 @@
                 android:id="@+id/submit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/curve_background_blue"
+                android:background="@drawable/curve_background_green"
                 android:gravity="center_horizontal"
-                android:padding="5dp"
+                android:padding="10dp"
                 android:layout_marginTop="5dp"
                 android:text="SUBMIT ATTENDANCE"
                 android:textColor="@color/white"
@@ -102,7 +102,7 @@
                     android:id="@+id/addmore"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/curve_background_blue"
+                    android:background="@drawable/curve_background_add_slot"
                     android:drawableLeft="@drawable/ic_baseline_add_18"
                     android:drawablePadding="8dp"
                     android:gravity="center_vertical"

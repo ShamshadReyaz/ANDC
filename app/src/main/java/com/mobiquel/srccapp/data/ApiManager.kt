@@ -75,6 +75,12 @@ class ApiManager private constructor() {
     fun getVirtualClassForAttendanceForDates(param:MutableMap<String, String>): Call<ResponseBody> {
         return apiClient.getVirtualClassForAttendanceForDates(param)
     }
+    fun deleteSessionWithAttendance(param:MutableMap<String, String>): Call<ResponseBody> {
+        return apiClient.deleteSessionWithAttendance(param)
+    }
+    fun markAttendanceForClassForDates(param:MutableMap<String, String>): Call<ResponseBody> {
+        return apiClient.markAttendanceForClassForDates(param)
+    }
 
 
 

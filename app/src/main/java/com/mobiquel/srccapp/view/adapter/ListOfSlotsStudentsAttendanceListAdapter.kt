@@ -21,7 +21,8 @@ import com.mobiquel.srccapp.pojo.SlotAttendanceStudentModel
 class ListOfSlotsStudentsAttendanceListAdapter(
     var context: Context,
     private var listOfAttendance: List<SlotAttendanceStudentModel>,
-    private var recyclerItemClickListener: RecyclerItemClickListener2
+    private var recyclerItemClickListener: RecyclerItemClickListener2,
+    private var recyclerItemClickListener2: RecyclerItemClickListener
 ) : RecyclerView.Adapter<ListOfSlotsStudentsAttendanceListAdapter.ViewHolder>() {
 
 
@@ -52,8 +53,8 @@ class ListOfSlotsStudentsAttendanceListAdapter(
 
                 if (it.isSelected.equals("T")) {
                     itemView.rl_main.setBackgroundResource(R.drawable.rectangle_background_slot_attenadnce_3)
-                    itemView.slotName.setTextColor(Color.parseColor("#FFFFFF"))
-                    itemView.presentAbsent.setTextColor(Color.parseColor("#FFFFFF"))
+                    itemView.slotName.setTextColor(Color.parseColor("#000000"))
+                    itemView.presentAbsent.setTextColor(Color.parseColor("#000000"))
                 } else {
                     itemView.rl_main.setBackgroundResource(R.drawable.rectangle_background_slot_attenadnce)
                     itemView.slotName.setTextColor(Color.parseColor("#000000"))
@@ -61,7 +62,7 @@ class ListOfSlotsStudentsAttendanceListAdapter(
                 }
 
             }
-            itemView.setOnClickListener {
+            itemView.rl_main.setOnClickListener {
                 /*val previousPos=listOfAttendance.filterIndexed { index, slotAttendanceStudentModel ->
                     slotAttendanceStudentModel.isSelected.equals("P")
                 }*/
@@ -75,6 +76,10 @@ class ListOfSlotsStudentsAttendanceListAdapter(
                 recyclerItemClickListener.onRecyclerItemClicked(pos, previousPos)
 
             }
+            itemView.deleteSlot.setOnClickListener {
+                recyclerItemClickListener2.onRecyclerItemClicked(pos)
+            }
+
         }
     }
 }

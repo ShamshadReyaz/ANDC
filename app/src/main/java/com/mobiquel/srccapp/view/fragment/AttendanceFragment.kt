@@ -1,7 +1,6 @@
 package com.mobiquel.srccapp.view.fragment
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,6 +10,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.mobiquel.mdt112.`interface`.RecyclerItemClickListener
 import com.mobiquel.mdt112.`interface`.RecyclerItemClickListener2
 import com.mobiquel.srccapp.data.ApiManager
 import com.mobiquel.srccapp.databinding.FragmentAttendanceBinding
@@ -19,11 +19,12 @@ import com.mobiquel.srccapp.pojo.SlotAttendanceStudentModel
 import com.mobiquel.srccapp.utils.Preferences
 import com.mobiquel.srccapp.utils.showSnackBar
 import com.mobiquel.srccapp.utils.showToast
-import com.mobiquel.srccapp.view.LoginActivity
+import com.mobiquel.srccapp.view.FacultyHomeActivity
 import com.mobiquel.srccapp.view.adapter.ListOfSlotsStudentsAttendanceListAdapter
 import com.mobiquel.srccapp.view.adapter.StudentsAttendanceListAdapter
 import com.mobiquel.srccapp.view.viewmodel.APIViewModel
 import okhttp3.ResponseBody
+import org.json.JSONArray
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
@@ -39,8 +40,11 @@ class AttendanceFragment : Fragment() {
     private var dateOfAttendance=""
     private var currentPos=0
     private var listOfSlot=ArrayList<SlotAttendanceStudentModel>()
+    private var deletedListOfSlot=ArrayList<SlotAttendanceStudentModel>()
     private var studentsAttendanceListAdapter:StudentsAttendanceListAdapter?=null
     private var slotsStudentsAttendanceListAdapter:ListOfSlotsStudentsAttendanceListAdapter?=null
+    var period="0"
+    var typeOfOperation="ADD"
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -76,7 +80,7 @@ class AttendanceFragment : Fragment() {
                 for(slot in listOfSlot)
                     slot.isSelected="F"
                 currentPos++
-                listOfSlot.add(SlotAttendanceStudentModel("Slot "+listOfSlot.size.plus(1),"0",""+dataTemp!!.size,"T",dataTemp))
+                listOfSlot.add(SlotAttendanceStudentModel("Slot "+listOfSlot.size.plus(1),"0",""+dataTemp!!.size,"T",dataTemp,""+Integer.parseInt(period).plus(1)))
                 slotsStudentsAttendanceListAdapter?.notifyDataSetChanged()
                 binding.listOfAttendance.scrollToPosition(listOfSlot.size-1)
                 studentsAttendanceListAdapter?.updateList(dataTemp)
@@ -91,8 +95,8 @@ class AttendanceFragment : Fragment() {
                 for(slot in listOfSlot)
                     slot.isSelected="F"
                 currentPos++
-                dataTemp?.map { it.isPresent="F" }
-                listOfSlot.add(SlotAttendanceStudentModel("Slot "+listOfSlot.size.plus(1),"0",""+dataTemp!!.size,"T",dataTemp))
+                dataTemp?.map { it.isPresent="A" }
+                listOfSlot.add(SlotAttendanceStudentModel("Slot "+listOfSlot.size.plus(1),"0",""+dataTemp!!.size,"T",dataTemp,""+Integer.parseInt(period).plus(1)))
                 slotsStudentsAttendanceListAdapter?.notifyDataSetChanged()
                 binding.listOfAttendance.scrollToPosition(listOfSlot.size-1)
                 studentsAttendanceListAdapter?.updateList(dataTemp)
@@ -136,18 +140,72 @@ class AttendanceFragment : Fragment() {
 
             }
 
+        },object : RecyclerItemClickListener{
+            override fun onRecyclerItemClicked(position: Int) {
+                val builder = AlertDialog.Builder(requireActivity())
+                if(position==0){
+                    builder.setMessage("It is mandatory to have least one slot. You can't delete this slot.")
+                    builder.setPositiveButton("OK") { dialogInterface, which ->
+                        dialogInterface.cancel()
+                    }
+
+                }
+                else{
+                    builder.setMessage("Are you sure you want to delete this slot?")
+                    builder.setPositiveButton("Yes") { dialogInterface, which ->
+                        dialogInterface.cancel()
+                        val oldpos=position
+                        val pos=position-1
+                        var  dataModel=listOfSlot.get(oldpos)
+                        dataModel.listOfStudent=studentsAttendanceListAdapter?.listOfAttendance?.map { it.copy() }
+                        listOfSlot.set(oldpos,dataModel)
+                        currentPos=pos
+
+                        studentsAttendanceListAdapter?.updateList(listOfSlot.get(currentPos).listOfStudent!!)
+
+                        for (model in listOfSlot)
+                            model.isSelected="F"
+
+                        listOfSlot.get(pos).isSelected="T"
+                        deletedListOfSlot.add(dataModel)
+                        if(typeOfOperation.equals("UPDATE") && !dataModel.slotId.equals("0"))
+                            deleteSlot(dataModel.slotId)
+
+                        listOfSlot.removeAt(oldpos)
+                        slotsStudentsAttendanceListAdapter?.notifyDataSetChanged()
+                        binding.listOfAttendance.scrollToPosition(pos)
+                        updateBottoomSheet()
+
+                    }
+                    builder.setNegativeButton("No") { dialogInterface, which ->
+                        dialogInterface.cancel()
+                    }
+                }
+
+
+                val alertDialog = builder.create()
+                alertDialog.setCancelable(true)
+                alertDialog.show()
+            }
+
         })
         binding.listOfAttendance.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         binding.listOfAttendance.adapter = slotsStudentsAttendanceListAdapter
 
 
         binding.markall.setOnCheckedChangeListener { p0, p1 ->
-            if (p1)
-                markAll("T")
-            else
-                markAll("F")
+            if(p0.isPressed){
+                if (p1)
+                    markAll("T")
+                else
+                    markAll("F")
+            }
+
         }
 
+        binding.submit.setOnClickListener {
+            markAttendanceForClassForDates()
+        }
         getVirtualClassForAttendanceForDates()
 
     }
@@ -180,6 +238,38 @@ class AttendanceFragment : Fragment() {
         super.onResume()
         Log.e("RESUME", "NOTICE FRAGMENT")
     }
+
+
+
+
+    private fun markAll(status:String){
+        for(studetModel in studentsAttendanceListAdapter?.listOfAttendance!!){
+            studetModel.isPresent=status
+        }
+        studentsAttendanceListAdapter?.notifyDataSetChanged()
+        updateBottoomSheet()
+    }
+
+    fun updateBottoomSheet(){
+        var present=0
+        var absent=0
+        for(data in studentsAttendanceListAdapter?.listOfAttendance!!){
+            if(data.isPresent.equals("P"))
+                present++
+            else
+                absent++
+        }
+        binding.markall.isChecked = absent <= 0
+        //Log.e("TEMP",""+listOfStudentTemp.size)
+        val modelTemp=listOfSlot.get(currentPos)
+        modelTemp.absent=""+absent
+        modelTemp.present=""+present
+        listOfSlot.set(currentPos,modelTemp)
+        binding.totalAbsent.text="Total Absent: "+absent
+        binding.totalPresent.text="Total Present: "+present
+        slotsStudentsAttendanceListAdapter?.notifyDataSetChanged()
+    }
+
     private fun getVirtualClassForAttendanceForDates() {
         Preferences.instance!!.loadPreferences(requireActivity())
         val data: MutableMap<String, String> = HashMap()
@@ -201,48 +291,61 @@ class AttendanceFragment : Fragment() {
                         val jsonobject = JSONObject(stringResponse)
 
                         if (jsonobject.getString("errorCode").equals("0")) {
-                           var listOfStudent=ArrayList<AttendanceStudentModel>()
 
-                                val studentJsonArray=jsonobject.getJSONArray("responseObject").getJSONObject(0).getJSONArray("studentList")
-                            var present=0
-                            var absent=0
-                            for (i in 0 until studentJsonArray.length()) {
-                                if(studentJsonArray.getJSONObject(i).isNull("isPresent")){
-                                    val attendanceStudentModel=AttendanceStudentModel(
-                                        studentJsonArray.getJSONObject(i).getString("studentId"),
-                                        studentJsonArray.getJSONObject(i).getString("studentName"),
-                                        studentJsonArray.getJSONObject(i).getString("slotId"),
-                                        "F",
-                                        studentJsonArray.getJSONObject(i).getString("rollNo"),
-                                        studentJsonArray.getJSONObject(i).getString("batch")
+                            for(j in 0 until jsonobject.getJSONArray("responseObject").length()){
+                                var listOfStudent=ArrayList<AttendanceStudentModel>()
+                                if(!jsonobject.getJSONArray("responseObject").getJSONObject(j).isNull("sessionRecord")){
+                                    typeOfOperation="UPDATE"
+                                    period=jsonobject.getJSONArray("responseObject").getJSONObject(j).getJSONObject("sessionRecord").getString("period")
+                                }
+                                val studentJsonArray=jsonobject.getJSONArray("responseObject").getJSONObject(j).getJSONArray("studentList")
+                                var present=0
+                                var absent=0
+                                var slotId="0"
+                                for (i in 0 until studentJsonArray.length()) {
+
+                                    if(!studentJsonArray.getJSONObject(i).isNull("slotId")){
+                                        slotId=studentJsonArray.getJSONObject(i).getString("slotId")
+                                    }
+
+                                    if(studentJsonArray.getJSONObject(i).isNull("isPresent")){
+                                        val attendanceStudentModel=AttendanceStudentModel(
+                                            studentJsonArray.getJSONObject(i).getString("studentId"),
+                                            studentJsonArray.getJSONObject(i).getString("studentName"),
+                                            studentJsonArray.getJSONObject(i).getString("slotId"),
+                                            "F",
+                                            studentJsonArray.getJSONObject(i).getString("rollNo"),
+                                            studentJsonArray.getJSONObject(i).getString("batch")
                                         )
-                                    absent++
-                                    listOfStudent.add(attendanceStudentModel)
-                                }
-                                else{
-                                    val attendanceStudentModel=AttendanceStudentModel(
-                                        studentJsonArray.getJSONObject(i).getString("studentId"),
-                                        studentJsonArray.getJSONObject(i).getString("studentName"),
-                                        studentJsonArray.getJSONObject(i).getString("slotId"),
-                                        studentJsonArray.getJSONObject(i).getString("isPresent"),
-                                        studentJsonArray.getJSONObject(i).getString("rollNo"),
-                                        studentJsonArray.getJSONObject(i).getString("batch")
-                                    )
-                                    if(studentJsonArray.getJSONObject(i).getString("isPresent").equals("T"))
-                                        present++
-                                    else
                                         absent++
-                                    listOfStudent.add(attendanceStudentModel)
+                                        listOfStudent.add(attendanceStudentModel)
+                                    }
+                                    else{
+                                        val attendanceStudentModel=AttendanceStudentModel(
+                                            studentJsonArray.getJSONObject(i).getString("studentId"),
+                                            studentJsonArray.getJSONObject(i).getString("studentName"),
+                                            studentJsonArray.getJSONObject(i).getString("slotId"),
+                                            studentJsonArray.getJSONObject(i).getString("isPresent"),
+                                            studentJsonArray.getJSONObject(i).getString("rollNo"),
+                                            studentJsonArray.getJSONObject(i).getString("batch")
+                                        )
+                                        if(studentJsonArray.getJSONObject(i).getString("isPresent").equals("P"))
+                                            present++
+                                        else
+                                            absent++
+                                        listOfStudent.add(attendanceStudentModel)
+                                    }
+
                                 }
 
+                                // var dataTemp=listOfStudentTemp.map { it }
+
+
+                                listOfSlot.add(SlotAttendanceStudentModel("Slot "+j.plus(1),""+present,""+absent,"F",
+                                    listOfStudent,period,slotId
+                                ))
                             }
-
-                           // var dataTemp=listOfStudentTemp.map { it }
-
-
-                            listOfSlot.add(SlotAttendanceStudentModel("Slot 1",""+present,""+absent,"F",
-                                listOfStudent
-                            ))
+                            listOfSlot.get(0).isSelected="T"
                             studentsAttendanceListAdapter?.updateList(listOfSlot.get(0).listOfStudent!!)
                             updateBottoomSheet()
 
@@ -267,31 +370,137 @@ class AttendanceFragment : Fragment() {
 
     }
 
-    private fun markAll(status:String){
-        for(studetModel in studentsAttendanceListAdapter?.listOfAttendance!!){
-            studetModel.isPresent=status
-        }
-        studentsAttendanceListAdapter?.notifyDataSetChanged()
-        updateBottoomSheet()
-    }
+    private fun markAttendanceForClassForDates() {
+        binding.progressBar.visibility = View.VISIBLE
+        var attendanceJSONArray=JSONArray()
+        var deletedAttendanceJSONArray=JSONArray()
+        //var period=0
+        for(data in listOfSlot){
+            val attendanceJson=JSONObject()
+            var absentIds=""
+            var presentIds=""
+            for(dataStudent in data.listOfStudent!!){
+                if(dataStudent.isPresent.equals("P"))
+                    presentIds=presentIds+dataStudent.studentId+","
+                else
+                    absentIds=absentIds+dataStudent.studentId+","
+            }
 
-    fun updateBottoomSheet(){
-        var present=0
-        var absent=0
-        for(data in studentsAttendanceListAdapter?.listOfAttendance!!){
-            if(data.isPresent.equals("T"))
-                present++
-            else
-                absent++
-        }
-        //Log.e("TEMP",""+listOfStudentTemp.size)
-        val modelTemp=listOfSlot.get(currentPos)
-        modelTemp.absent=""+absent
-        modelTemp.present=""+present
-        listOfSlot.set(currentPos,modelTemp)
-        binding.totalAbsent.text="Total Absent: "+absent
-        binding.totalPresent.text="Total Present: "+present
-        slotsStudentsAttendanceListAdapter?.notifyDataSetChanged()
-    }
+            attendanceJson.put("sessionId","")
+            attendanceJson.put("virtualGroupId",groupId)
+            attendanceJson.put("paperId",paperId)
+            attendanceJson.put("facultyId",Preferences.instance!!.userId!!)
+            attendanceJson.put("sessionDate",dateOfAttendance)
+            attendanceJson.put("period",data.period)
+            attendanceJson.put("lectureType","Lecture")
+            attendanceJson.put("absentStudentIds",absentIds)
+            attendanceJson.put("presentStudentIds",presentIds)
+            attendanceJson.put("ecaStudentIds","")
+            attendanceJson.put("date",dateOfAttendance)
 
+            attendanceJSONArray.put(attendanceJson)
+
+
+        }
+
+        for(data in deletedListOfSlot){
+            val attendanceJson=JSONObject()
+            var absentIds=""
+            var presentIds=""
+            for(dataStudent in data.listOfStudent!!){
+                if(dataStudent.isPresent.equals("P"))
+                    presentIds=presentIds+dataStudent.studentId+","
+                else
+                    absentIds=absentIds+dataStudent.studentId+","
+            }
+
+            attendanceJson.put("sessionId","")
+            attendanceJson.put("virtualGroupId",groupId)
+            attendanceJson.put("paperId",paperId)
+            attendanceJson.put("facultyId",Preferences.instance!!.userId!!)
+            attendanceJson.put("sessionDate",dateOfAttendance)
+            attendanceJson.put("period",data.period)
+            attendanceJson.put("lectureType","Lecture")
+            attendanceJson.put("absentStudentIds",absentIds)
+            attendanceJson.put("presentStudentIds",presentIds)
+            attendanceJson.put("ecaStudentIds","")
+            attendanceJson.put("date",dateOfAttendance)
+
+            deletedAttendanceJSONArray.put(attendanceJson)
+
+
+        }
+        Preferences.instance!!.loadPreferences(requireActivity())
+        val data: MutableMap<String, String> = HashMap()
+        data["attendanceJSON"] = attendanceJSONArray.toString()
+        data["deletedSessionIds"] = deletedAttendanceJSONArray.toString()
+
+        val apiManager: ApiManager? = ApiManager.init()
+        apiManager!!.markAttendanceForClassForDates(data)
+            .enqueue(object : Callback<ResponseBody> {
+                override fun onResponse(
+                    call: Call<ResponseBody>,
+                    response: Response<ResponseBody>
+                ) {
+                    binding.progressBar.visibility = View.GONE
+                    try {
+                        val stringResponse = response.body()?.string()
+                        val jsonobject = JSONObject(stringResponse)
+
+                        if (jsonobject.getString("errorCode").equals("0")) {
+                            if(jsonobject.getString("responseObject").equals("true"))
+                            {
+                                requireActivity().showToast("Attendance marked successfully!")
+                                (requireActivity() as FacultyHomeActivity).redirectToFragment("home")
+                            }
+
+                        } else if (jsonobject.getString("errorCode").equals("1"))
+                            requireActivity().showSnackBar("Error marking attendance! Please try again.", binding.rlMain)
+                        else {
+
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+
+                }
+
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                    Log.e("DATA", "FAILURE")
+                    binding.progressBar.visibility = View.GONE
+                }
+
+            })
+
+    }
+    private fun deleteSlot(slotId:String) {
+
+        Preferences.instance!!.loadPreferences(requireActivity())
+        val data: MutableMap<String, String> = HashMap()
+        data["facultyId"] = Preferences.instance!!.userId!!
+        data["virtualClassId"] = groupId
+        data["paperId"] = paperId
+        data["sessionDate"] = dateOfAttendance
+        data["sessionId"] = slotId
+
+        val apiManager: ApiManager? = ApiManager.init()
+        apiManager!!.deleteSessionWithAttendance(data)
+            .enqueue(object : Callback<ResponseBody> {
+                override fun onResponse(
+                    call: Call<ResponseBody>,
+                    response: Response<ResponseBody>
+                ) {
+                    binding.progressBar.visibility = View.GONE
+
+
+                }
+
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                    Log.e("DATA", "FAILURE")
+                    binding.progressBar.visibility = View.GONE
+                }
+
+            })
+
+    }
 }

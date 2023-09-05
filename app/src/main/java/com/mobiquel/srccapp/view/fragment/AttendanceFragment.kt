@@ -196,9 +196,9 @@ class AttendanceFragment : Fragment() {
         binding.markall.setOnCheckedChangeListener { p0, p1 ->
             if(p0.isPressed){
                 if (p1)
-                    markAll("T")
+                    markAll("P")
                 else
-                    markAll("F")
+                    markAll("A")
             }
 
         }
@@ -313,11 +313,11 @@ class AttendanceFragment : Fragment() {
                                             studentJsonArray.getJSONObject(i).getString("studentId"),
                                             studentJsonArray.getJSONObject(i).getString("studentName"),
                                             studentJsonArray.getJSONObject(i).getString("slotId"),
-                                            "F",
+                                            "P",
                                             studentJsonArray.getJSONObject(i).getString("rollNo"),
                                             studentJsonArray.getJSONObject(i).getString("batch")
                                         )
-                                        absent++
+                                        present++
                                         listOfStudent.add(attendanceStudentModel)
                                     }
                                     else{

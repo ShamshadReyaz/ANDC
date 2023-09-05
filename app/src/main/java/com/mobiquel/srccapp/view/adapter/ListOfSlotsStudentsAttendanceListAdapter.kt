@@ -48,7 +48,7 @@ class ListOfSlotsStudentsAttendanceListAdapter(
         fun setData(rankModel: SlotAttendanceStudentModel?, pos: Int) {
             rankModel?.let {
 
-                itemView.slotName.text = "" + it.slotName
+                itemView.slotName.text = "Slot " + pos.plus(1)
                 itemView.presentAbsent.text = "Present: " + it.present + " Absent: " + it.absent
 
                 if (it.isSelected.equals("T")) {

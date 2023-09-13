@@ -6,10 +6,14 @@ import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.ConnectivityManager
+import android.net.Network
+import android.net.NetworkCapabilities
 import android.net.Uri
 import android.os.Build
 import android.provider.Settings
 import android.telephony.TelephonyManager
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.Window
@@ -18,6 +22,8 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
@@ -118,6 +124,28 @@ fun Context.getDeviceId(): String {
     return deviceId
 }
 
+@RequiresApi(Build.VERSION_CODES.M)
+fun Context.isNetworkAvailable(): Boolean {
+    val connectivityManager =
+        this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    if (connectivityManager != null) {
+        val capabilities =
+            connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
+        if (capabilities != null) {
+            if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) {
+                Log.e("Internet", "NetworkCapabilities.TRANSPORT_CELLULAR")
+                return true
+            } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
+                Log.e("Internet", "NetworkCapabilities.TRANSPORT_WIFI")
+                return true
+            } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)) {
+                Log.e("Internet", "NetworkCapabilities.TRANSPORT_ETHERNET")
+                return true
+            }
+        }
+    }
+    return false
+}
 fun Context.showImagePopup(imageurl:String) {
 
     var dialog = Dialog(this)

@@ -68,14 +68,16 @@
         <entry key="..\:/D Drive/Android Projects/SRCCApp/app/src/main/res/drawable/ic_log_out.xml" value="0.1085" />
         <entry key="..\:/D Drive/Android Projects/SRCCApp/app/src/main/res/drawable/ic_yellowiconsvgsmall.xml" value="0.1085" />
         <entry key="..\:/D Drive/Android Projects/SRCCApp/app/src/main/res/layout/activity_home.xml" value="0.3333333333333333" />
+        <entry key="..\:/D Drive/Android Projects/SRCCApp/app/src/main/res/layout/activity_home_faculty.xml" value="0.1" />
         <entry key="..\:/D Drive/Android Projects/SRCCApp/app/src/main/res/layout/dialog_webview.xml" value="0.1" />
         <entry key="..\:/D Drive/Android Projects/SRCCApp/app/src/main/res/layout/fragment_notice.xml" value="0.1" />
+        <entry key="..\:/D Drive/Android Projects/SRCCApp/app/src/main/res/layout/fragment_student_home.xml" value="0.16666666666666666" />
         <entry key="..\:/D Drive/Android Projects/SRCCApp/app/src/main/res/layout/fragment_webview.xml" value="0.15833333333333333" />
         <entry key="..\:/D Drive/Android Projects/SRCCApp/app/src/main/res/layout/list_item_maintanance.xml" value="0.1" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

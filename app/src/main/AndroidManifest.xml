@@ -4,15 +4,16 @@
     package="com.mobiquel.srccapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
 
     <application
         android:name="com.mobiquel.srccapp.BaseApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/logo"
         android:label="@string/app_name"
         android:networkSecurityConfig="@xml/network_security_config"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.Login">
         <activity android:name="com.mobiquel.srccapp.view.LoginActivity" />

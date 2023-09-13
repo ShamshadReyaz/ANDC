@@ -452,6 +452,15 @@ class FacultyHomeActivity : AppCompatActivity() {
         }
     }
 
+    fun redirectToAttendacePage(bundle: Bundle){
+        val fragmentAttendanceFragment = AttendanceFragment()
+        fragmentAttendanceFragment.arguments=bundle
+        fragmentSupportManager.beginTransaction().apply {
+            replace(R.id.frameLayout, fragmentAttendanceFragment, "4")
+                .addToBackStack("4")
+            commit()
+        }
+    }
     fun getGroup() {
         Preferences.instance!!.loadPreferences(context!!)
         val data: MutableMap<String, String> = HashMap()

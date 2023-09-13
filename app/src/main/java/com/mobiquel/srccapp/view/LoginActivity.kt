@@ -81,6 +81,9 @@ class LoginActivity : AppCompatActivity() {
 
         })
 */
+        binding.username.setText("sonu.gupta@srcc.edu")
+        binding.password.setText("dVOD251")
+
         binding.faculty.isChecked = true
 
 

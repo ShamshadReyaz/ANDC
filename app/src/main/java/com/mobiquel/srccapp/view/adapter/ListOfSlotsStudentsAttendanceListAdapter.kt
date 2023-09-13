@@ -20,10 +20,10 @@ import com.mobiquel.srccapp.pojo.SlotAttendanceStudentModel
  */
 class ListOfSlotsStudentsAttendanceListAdapter(
     var context: Context,
-    private var listOfAttendance: List<SlotAttendanceStudentModel>,
     private var recyclerItemClickListener: RecyclerItemClickListener2,
     private var recyclerItemClickListener2: RecyclerItemClickListener
 ) : RecyclerView.Adapter<ListOfSlotsStudentsAttendanceListAdapter.ViewHolder>() {
+    var listOfAttendance=ArrayList<SlotAttendanceStudentModel>()
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -81,5 +81,10 @@ class ListOfSlotsStudentsAttendanceListAdapter(
             }
 
         }
+    }
+    fun updateList(list:List<SlotAttendanceStudentModel>){
+        listOfAttendance=ArrayList()
+        listOfAttendance.addAll(list)
+        notifyDataSetChanged()
     }
 }

@@ -6,43 +6,36 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.text.HtmlCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mobiquel.mdt112.`interface`.RecyclerItemClickListener
 import com.mobiquel.srccapp.R
-import com.mobiquel.srccapp.data.ApiManager
-import com.mobiquel.srccapp.databinding.FragmentNoticeBinding
 import com.mobiquel.srccapp.databinding.FragmentStudentHomeBinding
 import com.mobiquel.srccapp.pojo.ButtonModel
+import com.mobiquel.srccapp.room.database.AppDatabase
+import com.mobiquel.srccapp.room.viewmodel.AttendanceViewModel
 import com.mobiquel.srccapp.utils.Preferences
 import com.mobiquel.srccapp.utils.autoscrollviewpager.BannerPagerAdapter
-import com.mobiquel.srccapp.utils.showSnackBar
 import com.mobiquel.srccapp.view.FacultyHomeActivity
-import com.mobiquel.srccapp.view.HomeActivity
 import com.mobiquel.srccapp.view.adapter.ButtonListAdapter
-import com.mobiquel.srccapp.view.adapter.NoticeListAdapter
+import com.mobiquel.srccapp.view.adapter.ListOfOfflineAttendanceAdapter
 import com.mobiquel.srccapp.view.viewmodel.APIViewModel
-import okhttp3.ResponseBody
-import org.json.JSONObject
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 class FacultyHomeFragment : Fragment() {
 
     private var _binding: FragmentStudentHomeBinding? = null
     private val binding get() = _binding!!
-    private var apiViewModel: APIViewModel?=null
-    private var listOfBtns:ArrayList<ButtonModel>?=null
-
+    private var apiViewModel: APIViewModel? = null
+    private var listOfBtns: ArrayList<ButtonModel>? = null
+    private var offlineAdapter: ListOfOfflineAttendanceAdapter? = null
+    private lateinit var attendanceViewModel: AttendanceViewModel
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -50,8 +43,10 @@ class FacultyHomeFragment : Fragment() {
     ): View? {
         _binding = FragmentStudentHomeBinding.inflate(inflater, container, false)
         apiViewModel = ViewModelProviders.of(this).get(APIViewModel::class.java)
-        listOfBtns= ArrayList()
-        if(Preferences.instance?.userType.equals("faculty")){
+        attendanceViewModel= ViewModelProvider(this).get(AttendanceViewModel::class.java)
+
+        listOfBtns = ArrayList()
+        if (Preferences.instance?.userType.equals("faculty")) {
             listOfBtns!!.add(ButtonModel("Notice", R.drawable.notice_4,"notice"))
             listOfBtns!!.add(ButtonModel("Attendance", R.drawable.attendance_3,"attendance"))
             listOfBtns!!.add(ButtonModel("Maintenance", R.drawable.maintence_5,"maintenance"))
@@ -101,11 +96,48 @@ class FacultyHomeFragment : Fragment() {
 
         binding.vpBanner!!.setAdapter(pagerAdapter)
         binding.dotsIndicator!!.setViewPager(binding.vpBanner)
-        binding.dotsIndicator.visibility=View.GONE
+        binding.dotsIndicator.visibility = View.GONE
 
         val sdf = SimpleDateFormat("dd MMM yyyy")
         val currentDate = sdf.format(Date())
         binding.datetoday.setText(currentDate)
+
+            lifecycleScope.launch {
+                if(attendanceViewModel.getAllAttendanceData(requireActivity()).isNotEmpty()){
+                    binding.footerLayout.visibility = View.VISIBLE
+                    val listOfOffline = attendanceViewModel.getAllAttendanceData(requireActivity())
+                    offlineAdapter = ListOfOfflineAttendanceAdapter(
+                        requireActivity(),
+                        listOfOffline!!,
+                        object : RecyclerItemClickListener {
+                            override fun onRecyclerItemClicked(position: Int) {
+                                var bundle = Bundle()
+                                bundle.putString(
+                                    "GRPID",
+                                    listOfOffline.get(position).virtualGroupId
+                                )
+                                bundle.putString("PAPRID", listOfOffline.get(position).paperId)
+                                bundle.putString(
+                                    "GRPNAME",
+                                    listOfOffline.get(position).virtualGroupName
+                                )
+                                bundle.putString("PAPRNAME", listOfOffline.get(position).paperName)
+                                bundle.putString("DATE", listOfOffline.get(position).sessionDate)
+                                (activity!! as FacultyHomeActivity).redirectToAttendacePage(bundle)
+
+                            }
+
+                        })
+                    binding.listOfOffline.layoutManager = LinearLayoutManager(
+                        requireActivity(),
+                        LinearLayoutManager.HORIZONTAL,
+                        false
+                    )
+                    binding.listOfOffline.adapter = offlineAdapter
+                }
+
+            }
+
         return binding.root
     }
 

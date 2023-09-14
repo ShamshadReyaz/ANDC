@@ -50,6 +50,7 @@ class FacultyHomeFragment : Fragment() {
             listOfBtns!!.add(ButtonModel("Notice", R.drawable.notice_4,"notice"))
             listOfBtns!!.add(ButtonModel("Attendance", R.drawable.attendance_3,"attendance"))
             listOfBtns!!.add(ButtonModel("Maintenance", R.drawable.maintence_5,"maintenance"))
+            listOfBtns!!.add(ButtonModel("Offline", R.drawable.baseline_wifi_off_home,"offline"))
         }
         else{
             listOfBtns!!.add(ButtonModel("Notice", R.drawable.notice_4,"notice"))
@@ -102,41 +103,7 @@ class FacultyHomeFragment : Fragment() {
         val currentDate = sdf.format(Date())
         binding.datetoday.setText(currentDate)
 
-            lifecycleScope.launch {
-                if(attendanceViewModel.getAllAttendanceData(requireActivity()).isNotEmpty()){
-                    binding.footerLayout.visibility = View.VISIBLE
-                    val listOfOffline = attendanceViewModel.getAllAttendanceData(requireActivity())
-                    offlineAdapter = ListOfOfflineAttendanceAdapter(
-                        requireActivity(),
-                        listOfOffline!!,
-                        object : RecyclerItemClickListener {
-                            override fun onRecyclerItemClicked(position: Int) {
-                                var bundle = Bundle()
-                                bundle.putString(
-                                    "GRPID",
-                                    listOfOffline.get(position).virtualGroupId
-                                )
-                                bundle.putString("PAPRID", listOfOffline.get(position).paperId)
-                                bundle.putString(
-                                    "GRPNAME",
-                                    listOfOffline.get(position).virtualGroupName
-                                )
-                                bundle.putString("PAPRNAME", listOfOffline.get(position).paperName)
-                                bundle.putString("DATE", listOfOffline.get(position).sessionDate)
-                                (activity!! as FacultyHomeActivity).redirectToAttendacePage(bundle)
 
-                            }
-
-                        })
-                    binding.listOfOffline.layoutManager = LinearLayoutManager(
-                        requireActivity(),
-                        LinearLayoutManager.HORIZONTAL,
-                        false
-                    )
-                    binding.listOfOffline.adapter = offlineAdapter
-                }
-
-            }
 
         return binding.root
     }

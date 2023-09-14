@@ -7,5 +7,6 @@ data class SlotAttendanceStudentModel (
     var isSelected: String? = "F",
     var listOfStudent:List<AttendanceStudentModel>?=ArrayList(),
     var period:String="0",
-    var slotId:String="0"
+    var slotId:String="0",
+    var type:String="ADD"
 )

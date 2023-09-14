@@ -14,6 +14,9 @@ import com.google.firebase.messaging.RemoteMessage
 import com.mobiquel.srccapp.view.HomeActivity
 import org.json.JSONObject
 import com.mobiquel.srccapp.R
+import com.mobiquel.srccapp.utils.Preferences
+import com.mobiquel.srccapp.view.FacultyHomeActivity
+import com.mobiquel.srccapp.view.SplashActivity2
 
 /**
  * Created by Arman Reyaz on 6/17/2021.
@@ -44,12 +47,33 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     }
 
     private fun sendNotification(title: String, message: String) {
-        val intent = Intent(this, HomeActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-        val pendingIntent = PendingIntent.getActivity(
-            this, 0 /* Request code */, intent,
-            PendingIntent.FLAG_ONE_SHOT
-        )
+        var intent:Intent?=null
+        var pendingIntent:PendingIntent?=null
+        if(Preferences.instance!!.isLoginDone.toString().equals("0")){
+            intent = Intent(this, SplashActivity2::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            pendingIntent = PendingIntent.getActivity(
+                this, 0 /* Request code */, intent,
+                PendingIntent.FLAG_ONE_SHOT
+            )
+        }
+        else if (Preferences.instance?.userType.equals("faculty")){
+            intent = Intent(this, FacultyHomeActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            pendingIntent = PendingIntent.getActivity(
+                this, 0 /* Request code */, intent,
+                PendingIntent.FLAG_ONE_SHOT
+            )
+        }
+        else {
+            intent = Intent(this, HomeActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            pendingIntent = PendingIntent.getActivity(
+                this, 0 /* Request code */, intent,
+                PendingIntent.FLAG_ONE_SHOT
+            )
+        }
+
 
         val channelId = getString(R.string.default_notification_channel_id)
         val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)

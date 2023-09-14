@@ -24,10 +24,7 @@ import com.mobiquel.srccapp.pojo.SlotAttendanceStudentModel
 import com.mobiquel.srccapp.room.database.AppDatabase
 import com.mobiquel.srccapp.room.entity.AttendanceClassEntity
 import com.mobiquel.srccapp.room.viewmodel.AttendanceViewModel
-import com.mobiquel.srccapp.utils.Preferences
-import com.mobiquel.srccapp.utils.isNetworkAvailable
-import com.mobiquel.srccapp.utils.showSnackBar
-import com.mobiquel.srccapp.utils.showToast
+import com.mobiquel.srccapp.utils.*
 import com.mobiquel.srccapp.view.FacultyHomeActivity
 import com.mobiquel.srccapp.view.adapter.ListOfSlotsStudentsAttendanceListAdapter
 import com.mobiquel.srccapp.view.adapter.StudentsAttendanceListAdapter
@@ -85,70 +82,73 @@ class AttendanceFragment : Fragment() {
             .toString() + ", " + requireArguments().getString("PAPRNAME").toString()
 
         binding.addmore.setOnClickListener {
-
-            val builder = AlertDialog.Builder(requireActivity())
-            builder.setMessage("Do you want to copy data from the last slot?")
-            builder.setPositiveButton("Yes") { dialogInterface, which ->
-                dialogInterface.cancel()
-                var dataTemp = listOfSlot.get(currentPos).listOfStudent
-                var dataModel = listOfSlot.get(currentPos)
-                dataModel.listOfStudent =
-                    studentsAttendanceListAdapter?.listOfAttendance?.map { it.copy() }
-                listOfSlot.set(currentPos, dataModel)
-                for (slot in listOfSlot)
-                    slot.isSelected = "F"
-
-                listOfSlot.add(
-                    SlotAttendanceStudentModel(
-                        "Slot " + listOfSlot.size.plus(1),
-                        "0",
-                        "" + dataTemp!!.size,
-                        "T",
-                        dataTemp,
-                        "" + Integer.parseInt(period).plus(1), slotId
-                    )
-                )
-                currentPos = listOfSlot.size - 1
-                slotsStudentsAttendanceListAdapter?.updateList(listOfSlot)
-                binding.listOfAttendance.scrollToPosition(listOfSlot.size - 1)
-                studentsAttendanceListAdapter?.updateList(dataTemp)
-                updateBottoomSheet()
+            if(listOfSlot.size==3){
+                requireActivity().showSingleButtonDialog("Sorry!You can add maximum of 3 slots.")
             }
-            builder.setNegativeButton("No") { dialogInterface, which ->
-                dialogInterface.cancel()
-                var dataTemp = listOfSlot.get(currentPos).listOfStudent
-                var dataModel = listOfSlot.get(currentPos)
-                dataModel.listOfStudent =
-                    studentsAttendanceListAdapter?.listOfAttendance?.map { it.copy() }
-                listOfSlot.set(currentPos, dataModel)
-                for (slot in listOfSlot)
-                    slot.isSelected = "F"
+            else{
+                val builder = AlertDialog.Builder(requireActivity())
+                builder.setMessage("Do you want to copy data from the last slot?")
+                builder.setPositiveButton("Yes") { dialogInterface, which ->
+                    dialogInterface.cancel()
+                    var dataTemp = listOfSlot.get(currentPos).listOfStudent
+                    var dataModel = listOfSlot.get(currentPos)
+                    dataModel.listOfStudent =
+                        studentsAttendanceListAdapter?.listOfAttendance?.map { it.copy() }
+                    listOfSlot.set(currentPos, dataModel)
+                    for (slot in listOfSlot)
+                        slot.isSelected = "F"
 
-                dataTemp?.map { it.isPresent = "P" }
-                listOfSlot.add(
-                    SlotAttendanceStudentModel(
-                        "Slot " + listOfSlot.size.plus(1),
-                        "0",
-                        "" + dataTemp!!.size,
-                        "T",
-                        dataTemp,
-                        "" + Integer.parseInt(period).plus(1), slotId
+                    listOfSlot.add(
+                        SlotAttendanceStudentModel(
+                            "Slot " + listOfSlot.size.plus(1),
+                            "0",
+                            "" + dataTemp!!.size,
+                            "T",
+                            dataTemp,
+                            "" + Integer.parseInt(period).plus(1), slotId
+                        )
                     )
-                )
-                currentPos = listOfSlot.size - 1
-                slotsStudentsAttendanceListAdapter?.updateList(listOfSlot)
-                binding.listOfAttendance.scrollToPosition(listOfSlot.size - 1)
-                studentsAttendanceListAdapter?.updateList(dataTemp)
-                updateBottoomSheet()
+                    currentPos = listOfSlot.size - 1
+                    slotsStudentsAttendanceListAdapter?.updateList(listOfSlot)
+                    binding.listOfAttendance.scrollToPosition(listOfSlot.size - 1)
+                    studentsAttendanceListAdapter?.updateList(dataTemp)
+                    updateBottoomSheet()
+                }
+                builder.setNegativeButton("No") { dialogInterface, which ->
+                    dialogInterface.cancel()
+                    var dataTemp = listOfSlot.get(currentPos).listOfStudent
+                    var dataModel = listOfSlot.get(currentPos)
+                    dataModel.listOfStudent =
+                        studentsAttendanceListAdapter?.listOfAttendance?.map { it.copy() }
+                    listOfSlot.set(currentPos, dataModel)
+                    for (slot in listOfSlot)
+                        slot.isSelected = "F"
+
+                    dataTemp?.map { it.isPresent = "P" }
+                    listOfSlot.add(
+                        SlotAttendanceStudentModel(
+                            "Slot " + listOfSlot.size.plus(1),
+                            "0",
+                            "" + dataTemp!!.size,
+                            "T",
+                            dataTemp,
+                            "" + Integer.parseInt(period).plus(1), slotId
+                        )
+                    )
+                    currentPos = listOfSlot.size - 1
+                    slotsStudentsAttendanceListAdapter?.updateList(listOfSlot)
+                    binding.listOfAttendance.scrollToPosition(listOfSlot.size - 1)
+                    studentsAttendanceListAdapter?.updateList(dataTemp)
+                    updateBottoomSheet()
+                }
+
+                val alertDialog = builder.create()
+
+
+                // Set other dialog properties
+                alertDialog.setCancelable(true)
+                alertDialog.show()
             }
-
-            val alertDialog = builder.create()
-
-
-            // Set other dialog properties
-            alertDialog.setCancelable(true)
-            alertDialog.show()
-
         }
 
         studentsAttendanceListAdapter = StudentsAttendanceListAdapter(requireActivity(), this)
@@ -215,8 +215,11 @@ class AttendanceFragment : Fragment() {
                             for (model in listOfSlot)
                                 model.isSelected = "F"
 
-
-                            deletedListOfSlot.add(dataModel)
+                            if (!dataModel.slotId.equals("0"))
+                            {
+                                deletedListOfSlot.add(dataModel)
+                                deletedListOfSlot.map { it.type="DELETE" }
+                            }
                             if (typeOfOperation.equals("UPDATE") && !dataModel.slotId.equals("0"))
                                 deleteSlot(dataModel.slotId)
 
@@ -236,6 +239,8 @@ class AttendanceFragment : Fragment() {
                     val alertDialog = builder.create()
                     alertDialog.setCancelable(true)
                     alertDialog.show()
+
+
                 }
 
             })
@@ -466,7 +471,7 @@ class AttendanceFragment : Fragment() {
     private fun markAttendanceForClassForDates() {
         binding.progressBar.visibility = View.VISIBLE
         var attendanceJSONArray = JSONArray()
-        var deletedAttendanceJSONArray = JSONArray()
+        //var deletedAttendanceJSONArray = JSONArray()
         //var period=0
         for (data in listOfSlot) {
             val attendanceJson = JSONObject()
@@ -497,36 +502,13 @@ class AttendanceFragment : Fragment() {
         }
 
         for (data in deletedListOfSlot) {
-            val attendanceJson = JSONObject()
-            var absentIds = ""
-            var presentIds = ""
-            for (dataStudent in data.listOfStudent!!) {
-                if (dataStudent.isPresent.equals("P"))
-                    presentIds = presentIds + dataStudent.studentId + ","
-                else
-                    absentIds = absentIds + dataStudent.studentId + ","
-            }
-
-            attendanceJson.put("sessionId", "")
-            attendanceJson.put("virtualGroupId", groupId)
-            attendanceJson.put("paperId", paperId)
-            attendanceJson.put("facultyId", Preferences.instance!!.userId!!)
-            attendanceJson.put("sessionDate", dateOfAttendance)
-            attendanceJson.put("period", data.period)
-            attendanceJson.put("lectureType", "Lecture")
-            attendanceJson.put("absentStudentIds", absentIds)
-            attendanceJson.put("presentStudentIds", presentIds)
-            attendanceJson.put("ecaStudentIds", "")
-            attendanceJson.put("date", dateOfAttendance)
-
-            deletedAttendanceJSONArray.put(attendanceJson)
-
-
+            if(!data.slotId.equals("0"))
+                deleteSlot(data.slotId)
         }
         Preferences.instance!!.loadPreferences(requireActivity())
         val data: MutableMap<String, String> = HashMap()
         data["attendanceJSON"] = attendanceJSONArray.toString()
-        data["deletedSessionIds"] = deletedAttendanceJSONArray.toString()
+        //data["deletedSessionIds"] = deletedAttendanceJSONArray.toString()
 
         val apiManager: ApiManager? = ApiManager.init()
         apiManager!!.markAttendanceForClassForDates(data)
@@ -549,7 +531,7 @@ class AttendanceFragment : Fragment() {
                                 }
 
                                 requireActivity().showToast("Attendance marked successfully!")
-                                (requireActivity() as FacultyHomeActivity).redirectToFragment("home")
+                                (requireActivity() as FacultyHomeActivity).redirectToFragment("onoff")
                             }
 
                         } else if (jsonobject.getString("errorCode").equals("1"))
@@ -586,6 +568,7 @@ class AttendanceFragment : Fragment() {
                 dateOfAttendance
             )
             if (attendanceClassEntityInDB != null) {
+                listOfSlot.addAll(deletedListOfSlot)
                 attendanceViewModel.deleteAttendaceById(requireActivity(), databaseId)
                 var attendanceClassEntity = AttendanceClassEntity()
                 attendanceClassEntity.virtualGroupId = groupId
@@ -596,7 +579,6 @@ class AttendanceFragment : Fragment() {
                 attendanceClassEntity.facultyId = Preferences.instance!!.userId!!
                 attendanceClassEntity.sessionDate = dateOfAttendance
                 attendanceClassEntity.listOfStudent = listOfSlot
-                attendanceClassEntity.deletedListOfStudent = deletedListOfSlot
                 attendanceClassEntity.lectureType = "Lecture"
                 attendanceClassEntity.period = period
                 Log.e(
@@ -604,10 +586,11 @@ class AttendanceFragment : Fragment() {
                     "" + attendanceViewModel.insert(requireActivity(), attendanceClassEntity)
                 )
                 requireActivity().showToast("No internet present! Attendance saved successfully!")
-                (requireActivity() as FacultyHomeActivity).redirectToFragment("home")
+                (requireActivity() as FacultyHomeActivity).redirectToFragment("onoff")
 
             } else {
                 var attendanceClassEntity = AttendanceClassEntity()
+                listOfSlot.addAll(deletedListOfSlot)
                 attendanceClassEntity.virtualGroupId = groupId
                 attendanceClassEntity.paperId = paperId
                 attendanceClassEntity.slotId = slotId
@@ -616,7 +599,6 @@ class AttendanceFragment : Fragment() {
                 attendanceClassEntity.facultyId = Preferences.instance!!.userId!!
                 attendanceClassEntity.sessionDate = dateOfAttendance
                 attendanceClassEntity.listOfStudent = listOfSlot
-                attendanceClassEntity.deletedListOfStudent = deletedListOfSlot
                 attendanceClassEntity.lectureType = "Lecture"
                 attendanceClassEntity.period = period
                 Log.e(
@@ -624,7 +606,7 @@ class AttendanceFragment : Fragment() {
                     "" + attendanceViewModel.insert(requireActivity(), attendanceClassEntity)
                 )
                 requireActivity().showToast("No internet present! Attendance saved successfully!")
-                (requireActivity() as FacultyHomeActivity).redirectToFragment("home")
+                (requireActivity() as FacultyHomeActivity).redirectToFragment("onoff")
 
             }
         }
@@ -644,13 +626,24 @@ class AttendanceFragment : Fragment() {
             if (attendanceClassEntity != null) {
                 period = attendanceClassEntity.period.toString()
                 slotId = attendanceClassEntity.slotId.toString()
-                listOfSlot =
-                    (attendanceClassEntity.listOfStudent as ArrayList<SlotAttendanceStudentModel>?)!!
-                if (attendanceClassEntity.deletedListOfStudent!!.isNotEmpty())
-                    deletedListOfSlot =
-                        (attendanceClassEntity.deletedListOfStudent as ArrayList<SlotAttendanceStudentModel>?)!!
+                var temp=(attendanceClassEntity.listOfStudent!! as ArrayList<SlotAttendanceStudentModel>?)!!
+                listOfSlot = temp.filter { it.type.equals("ADD") } as ArrayList<SlotAttendanceStudentModel>
+                try{
+                    deletedListOfSlot = temp.filter { it.type.equals("DELETE") } as ArrayList<SlotAttendanceStudentModel>
+                }catch (e:java.lang.Exception){
 
+                }
+
+                /* deletedListOfSlot =
+                     (attendanceClassEntity.deletedListOfStudent!! as ArrayList<SlotAttendanceStudentModel>?)!!
+                 */
+               /* if (attendanceClassEntity.deletedListOfStudent!!.isNotEmpty())
+                    deletedListOfSlot =
+                        (attendanceClassEntity.deletedListOfStudent!! as ArrayList<SlotAttendanceStudentModel>?)!!
+*/
                 databaseId = attendanceClassEntity.id!!
+                for(data in listOfSlot)
+                    data.isSelected="F"
                 listOfSlot.get(0).isSelected = "T"
                 studentsAttendanceListAdapter?.updateList(listOfSlot.get(0).listOfStudent!!)
                 updateBottoomSheet()
@@ -720,4 +713,5 @@ class AttendanceFragment : Fragment() {
             })
 
     }
+
 }

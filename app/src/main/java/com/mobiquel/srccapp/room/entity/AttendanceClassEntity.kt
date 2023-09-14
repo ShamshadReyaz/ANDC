@@ -17,6 +17,5 @@ data class AttendanceClassEntity(
     var sessionDate: String? = "",
     var period: String? = "",
     var listOfStudent: List<SlotAttendanceStudentModel>? = ArrayList(),
-    var deletedListOfStudent: List<SlotAttendanceStudentModel>? = ArrayList(),
     var lectureType: String = "0"
 )

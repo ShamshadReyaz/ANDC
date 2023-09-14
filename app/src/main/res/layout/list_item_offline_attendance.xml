@@ -1,22 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="5dp"
     android:layout_marginBottom="5dp"
-    android:layout_marginRight="@dimen/d_10dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
     app:cardCornerRadius="@dimen/d_10dp"
     app:cardElevation="@dimen/d_2dp">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <RelativeLayout
             android:id="@+id/rl_main"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="0.7"
             android:layout_height="wrap_content"
             android:background="@drawable/rectangle_background_slot_attenadnce"
             android:paddingLeft="15dp"
@@ -28,12 +30,11 @@
                 android:id="@+id/t1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:singleLine="true"
                 android:text="Slot 1"
+                android:maxLines="2"
                 android:includeFontPadding="false"
                 android:textColor="#666666"
-                android:textSize="10sp" />
+                android:textSize="13sp" />
             <TextView
                 android:id="@+id/t2"
                 android:layout_below="@id/t1"
@@ -44,16 +45,18 @@
                 android:text="Slot 1"
                 android:includeFontPadding="false"
                 android:textColor="@color/black"
-                android:textSize="10sp" />
+                android:textSize="12sp" />
         </RelativeLayout>
 
         <RelativeLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="0.3"
             android:layout_height="match_parent"
             android:background="@drawable/rectangle_background_slot_attenadnce_2"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:paddingTop="5dp"
+            android:gravity="center_horizontal"
             android:paddingBottom="5dp">
 
             <ImageView
@@ -61,6 +64,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
                 android:src="@drawable/ic_edit_3" />
 
             <ImageView
@@ -68,7 +72,6 @@
                 android:layout_toRightOf="@id/view"
                 android:layout_width="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:visibility="gone"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:src="@drawable/baseline_sync_24" />

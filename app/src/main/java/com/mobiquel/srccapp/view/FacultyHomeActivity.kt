@@ -52,6 +52,7 @@ class FacultyHomeActivity : AppCompatActivity() {
     private val wifiFragment = WifiFragment()
     private val webViewFragment = WebViewragment()
     private val facultyHomeFragment = FacultyHomeFragment()
+    private val offlineFragment = OfflineFragment()
 
     private val fragmentSupportManager = supportFragmentManager
     var active: Fragment = fragmentNoticeFragment
@@ -67,6 +68,8 @@ class FacultyHomeActivity : AppCompatActivity() {
 
     var datePickerDialog: DatePickerDialog? = null
     var cal = Calendar.getInstance()
+
+    var attendancePreviousFragmentType="online"
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -273,11 +276,23 @@ class FacultyHomeActivity : AppCompatActivity() {
             //performing positive action
             builder.setPositiveButton("Yes") { dialogInterface, which ->
                 dialogInterface.cancel()
-                fragmentSupportManager.beginTransaction().apply {
-                    replace(R.id.frameLayout, facultyHomeFragment, "0")
-                        .addToBackStack("0")
+                /*fragmentSupportManager.beginTransaction().apply {
+                    replace(R.id.frameLayout, offlineFragment, "5")
+                        .addToBackStack("5")
                     commit()
-                }
+                }*/
+                if(attendancePreviousFragmentType.equals("online"))
+                    fragmentSupportManager.beginTransaction().apply {
+                        replace(R.id.frameLayout, facultyHomeFragment, "0")
+                            .addToBackStack("0")
+                        commit()
+                    }
+                else
+                    fragmentSupportManager.beginTransaction().apply {
+                        replace(R.id.frameLayout, offlineFragment, "5")
+                            .addToBackStack("5")
+                        commit()
+                    }
                 binding.edit.visibility = View.GONE
             }
             builder.setNegativeButton("No") { dialogInterface, which ->
@@ -299,6 +314,7 @@ class FacultyHomeActivity : AppCompatActivity() {
                     .addToBackStack("0")
                 commit()
             }
+            attendancePreviousFragmentType="online"
             binding.edit.visibility = View.GONE
         } else
             finish()
@@ -338,16 +354,36 @@ class FacultyHomeActivity : AppCompatActivity() {
                         .addToBackStack("0")
                     commit()
                 }
+                attendancePreviousFragmentType="online"
                 binding.edit.visibility = View.GONE
             }
             "attendance" -> {
-                /* fragmentSupportManager.beginTransaction().apply {
-                     replace(R.id.frameLayout, maintenanceFragment, "3")
-                         .addToBackStack("3")
-                     commit()
-                 }
-                 binding.edit.visibility = View.GONE*/
                 showPaperGroupDialog()
+            }
+            "offline" -> {
+                fragmentSupportManager.beginTransaction().apply {
+                    replace(R.id.frameLayout, offlineFragment, "5")
+                        .addToBackStack("5")
+                    commit()
+                }
+                attendancePreviousFragmentType="offline"
+                binding.edit.visibility = View.GONE
+            }
+            "onoff" -> {
+                if(attendancePreviousFragmentType.equals("online"))
+                fragmentSupportManager.beginTransaction().apply {
+                    replace(R.id.frameLayout, facultyHomeFragment, "0")
+                        .addToBackStack("0")
+                    commit()
+                }
+                else
+                    fragmentSupportManager.beginTransaction().apply {
+                        replace(R.id.frameLayout, offlineFragment, "5")
+                            .addToBackStack("5")
+                        commit()
+                }
+                /*attendancePreviousFragmentType="offline"
+                binding.edit.visibility = View.GONE*/
             }
             "" -> {
                 Toast.makeText(this@FacultyHomeActivity, "Coming Soon!", Toast.LENGTH_SHORT).show()
@@ -439,6 +475,7 @@ class FacultyHomeActivity : AppCompatActivity() {
                         .addToBackStack("4")
                     commit()
                 }
+                attendancePreviousFragmentType="online"
                 dialog!!.cancel()
             }
 

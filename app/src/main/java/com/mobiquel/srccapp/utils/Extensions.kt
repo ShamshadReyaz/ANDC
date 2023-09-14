@@ -23,6 +23,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -172,6 +173,17 @@ fun Context.showImagePopup(imageurl:String) {
     }
 
     dialog.show()
+}
+
+fun Context.showSingleButtonDialog(message:String){
+    val builder = AlertDialog.Builder(this)
+    builder.setMessage(message)
+    builder.setPositiveButton("OK") { dialogInterface, which ->
+        dialogInterface.cancel()
+    }
+    val alertDialog = builder.create()
+    alertDialog.setCancelable(true)
+    alertDialog.show()
 }
 
 

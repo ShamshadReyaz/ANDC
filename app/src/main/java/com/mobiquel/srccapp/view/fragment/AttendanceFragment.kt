@@ -626,7 +626,7 @@ class AttendanceFragment : Fragment() {
             if (attendanceClassEntity != null) {
                 period = attendanceClassEntity.period.toString()
                 slotId = attendanceClassEntity.slotId.toString()
-                var temp=(attendanceClassEntity.listOfStudent!! as ArrayList<SlotAttendanceStudentModel>?)!!
+                var temp=(attendanceClassEntity.listOfStudent!!)
                 listOfSlot = temp.filter { it.type.equals("ADD") } as ArrayList<SlotAttendanceStudentModel>
                 try{
                     deletedListOfSlot = temp.filter { it.type.equals("DELETE") } as ArrayList<SlotAttendanceStudentModel>

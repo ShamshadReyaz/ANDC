@@ -10,20 +10,16 @@ import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.FirebaseApp
 import com.google.firebase.messaging.FirebaseMessaging
 import com.mobiquel.srccapp.R
 import com.mobiquel.srccapp.data.ApiManager
 import com.mobiquel.srccapp.data.NameIdPojo
-import com.mobiquel.srccapp.databinding.ActivityHomeBinding
 import com.mobiquel.srccapp.databinding.ActivityHomeFacultyBinding
 import com.mobiquel.srccapp.pojo.DostToenModel
-import com.mobiquel.srccapp.pojo.SlotAttendanceStudentModel
 import com.mobiquel.srccapp.utils.*
 import com.mobiquel.srccapp.view.fragment.*
 import com.mobiquel.srccapp.view.viewmodel.HomeAPIViewModel
@@ -35,8 +31,6 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 
 
 class FacultyHomeActivity : AppCompatActivity() {
@@ -86,7 +80,7 @@ class FacultyHomeActivity : AppCompatActivity() {
         apiViewModel = HomeAPIViewModel()
         version.text = "Version: " + getAppVersion()
         getNotificationId()
-        getGroup()
+        getGroup("")
         getYourDostToken()
 
 
@@ -358,7 +352,12 @@ class FacultyHomeActivity : AppCompatActivity() {
                 binding.edit.visibility = View.GONE
             }
             "attendance" -> {
-                showPaperGroupDialog()
+                if (listOfGroupName.size > 0)
+                    showPaperGroupDialog()
+                else if (isNetworkAvailable())
+                    getGroup("SHOW")
+                else
+                    showSnackBar("Internet not available.", binding.rlMain)
             }
             "offline" -> {
                 fragmentSupportManager.beginTransaction().apply {
@@ -430,8 +429,13 @@ class FacultyHomeActivity : AppCompatActivity() {
                     position: Int,
                     id: Long
                 ) {
-                    val modelClass = listOfGroupId!!.find { it.name.equals(group.text.toString()) }
-                    getPaper(modelClass!!.id)
+                    if (isNetworkAvailable()) {
+                        val modelClass =
+                            listOfGroupId!!.find { it.name.equals(group.text.toString()) }
+                        getPaper(modelClass!!.id)
+                    } else
+                        showToast("Internet not available.")
+
                 }
 
             })
@@ -489,16 +493,19 @@ class FacultyHomeActivity : AppCompatActivity() {
         }
     }
 
-    fun redirectToAttendacePage(bundle: Bundle){
+    fun redirectToAttendacePage(bundle: Bundle) {
         val fragmentAttendanceFragment = AttendanceFragment()
-        fragmentAttendanceFragment.arguments=bundle
+        fragmentAttendanceFragment.arguments = bundle
         fragmentSupportManager.beginTransaction().apply {
             replace(R.id.frameLayout, fragmentAttendanceFragment, "4")
                 .addToBackStack("4")
             commit()
         }
     }
-    fun getGroup() {
+
+    fun getGroup(type: String) {
+        if (type.equals("SHOW"))
+            binding.progressBar.visibility = View.VISIBLE
         Preferences.instance!!.loadPreferences(context!!)
         val data: MutableMap<String, String> = HashMap()
         data["facultyId"] = Preferences.instance!!.userId!!
@@ -513,7 +520,8 @@ class FacultyHomeActivity : AppCompatActivity() {
                     val stringResponse = response.body()?.string()
                     val jsonobject = JSONObject(stringResponse)
                     if (jsonobject.getString("errorCode").equals("0")) {
-
+                        listOfGroupId.clear()
+                        listOfGroupName.clear()
                         val grpJsonArray = jsonobject.getJSONArray("responseObject")
                         for (i in 0 until grpJsonArray.length()) {
                             listOfGroupId.add(
@@ -526,6 +534,8 @@ class FacultyHomeActivity : AppCompatActivity() {
                                 grpJsonArray.getJSONObject(i).getString("virtualGroupName")
                             )
                         }
+                        if (type.equals("SHOW"))
+                            showPaperGroupDialog()
 
                     } else if (jsonobject.getString("errorCode").equals("1"))
                         showSnackBar("Invalid Credentials! Please try again", binding.rlMain)

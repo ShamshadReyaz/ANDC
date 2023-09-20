@@ -24,10 +24,8 @@ import kotlinx.android.synthetic.main.list_item_offline_attendance.view.*
 class ListOfOfflineAttendanceAdapter(
     var context: Context,
     private var listOfAttendance: List<AttendanceClassEntity>,
-    private var recyclerItemClickListener: RecyclerItemClickListener,
-    private var recyclerItemClickListener2: RecyclerItemClickListener
+    private var recyclerItemClickListener: RecyclerItemClickListener
 ) : RecyclerView.Adapter<ListOfOfflineAttendanceAdapter.ViewHolder>() {
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(context)
@@ -60,11 +58,10 @@ class ListOfOfflineAttendanceAdapter(
                 recyclerItemClickListener.onRecyclerItemClicked(pos)
 
             }
-            itemView.sync.setOnClickListener {
+           /* itemView.sync.setOnClickListener {
 
-                recyclerItemClickListener2.onRecyclerItemClicked(pos)
 
-            }
+            }*/
 
         }
     }

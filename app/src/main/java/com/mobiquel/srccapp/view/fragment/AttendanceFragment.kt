@@ -111,6 +111,7 @@ class AttendanceFragment : Fragment() {
                             "" + Integer.parseInt(period).plus(1), slotId
                         )
                     )
+                    period="" + Integer.parseInt(period).plus(1)
                     currentPos = listOfSlot.size - 1
                     slotsStudentsAttendanceListAdapter?.updateList(listOfSlot)
                     binding.listOfAttendance.scrollToPosition(listOfSlot.size - 1)
@@ -138,6 +139,7 @@ class AttendanceFragment : Fragment() {
                             "" + Integer.parseInt(period).plus(1), slotId
                         )
                     )
+                    period="" + Integer.parseInt(period).plus(1)
                     currentPos = listOfSlot.size - 1
                     slotsStudentsAttendanceListAdapter?.updateList(listOfSlot)
                     binding.listOfAttendance.scrollToPosition(listOfSlot.size - 1)
@@ -265,14 +267,38 @@ class AttendanceFragment : Fragment() {
         binding.submit.setOnClickListener {
             //saveAttendanceInDatabase()
             if (requireActivity().isNetworkAvailable())
-                markAttendanceForClassForDates()
+            {
+                if(databaseId==-1){
+                    markAttendanceForClassForDates()
+                }
+                else{
+                    lifecycleScope.launch {
+                        val attendanceClassEntity = attendanceViewModel.getAttendanceByCondition(
+                            requireActivity(), Preferences.instance!!.userId!!,
+                            groupId!!,
+                            paperId!!,
+                            dateOfAttendance!!
+                        )
+                        if (attendanceClassEntity != null) {
+                            markAttendanceForClassForDates()
+                        }
+                        else{
+                            val builder = AlertDialog.Builder(requireActivity())
+                            builder.setMessage("Your attendance is already synced on server!")
+                            builder.setPositiveButton("OK") { dialogInterface, which ->
+                                dialogInterface.cancel()
+                                (requireActivity() as FacultyHomeActivity).redirectToFragment("onoff")
+                            }
+                            val alertDialog = builder.create()
+                            alertDialog.setCancelable(true)
+                            alertDialog.show()
+                        }
+                    }
+                }
+            }
             else
                 saveAttendanceInDatabase()
-                /*requireActivity().showSnackBar(
-                    "Internet not present! Please try again.",
-                    binding.submit
-                )*/
-            //saveAttendanceInDatabase()
+
         }
 
         /*if (requireActivity().isNetworkAvailable())
@@ -639,13 +665,6 @@ class AttendanceFragment : Fragment() {
 
                 }
 
-                /* deletedListOfSlot =
-                     (attendanceClassEntity.deletedListOfStudent!! as ArrayList<SlotAttendanceStudentModel>?)!!
-                 */
-               /* if (attendanceClassEntity.deletedListOfStudent!!.isNotEmpty())
-                    deletedListOfSlot =
-                        (attendanceClassEntity.deletedListOfStudent!! as ArrayList<SlotAttendanceStudentModel>?)!!
-*/
                 databaseId = attendanceClassEntity.id!!
                 for(data in listOfSlot)
                     data.isSelected="F"

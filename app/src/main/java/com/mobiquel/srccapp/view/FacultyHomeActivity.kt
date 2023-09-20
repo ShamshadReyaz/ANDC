@@ -1,8 +1,10 @@
 package com.mobiquel.srccapp.view
 
 import android.app.DatePickerDialog
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -10,6 +12,8 @@ import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputLayout
@@ -20,11 +24,13 @@ import com.mobiquel.srccapp.data.ApiManager
 import com.mobiquel.srccapp.data.NameIdPojo
 import com.mobiquel.srccapp.databinding.ActivityHomeFacultyBinding
 import com.mobiquel.srccapp.pojo.DostToenModel
-import com.mobiquel.srccapp.service.AutoSyncOfflineService
+import com.mobiquel.srccapp.room.viewmodel.AttendanceViewModel
 import com.mobiquel.srccapp.utils.*
 import com.mobiquel.srccapp.view.fragment.*
 import com.mobiquel.srccapp.view.viewmodel.HomeAPIViewModel
 import kotlinx.android.synthetic.main.activity_home.*
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import okhttp3.ResponseBody
 import org.json.JSONObject
 import retrofit2.Call
@@ -64,13 +70,17 @@ class FacultyHomeActivity : AppCompatActivity() {
     var datePickerDialog: DatePickerDialog? = null
     var cal = Calendar.getInstance()
 
-    var attendancePreviousFragmentType="online"
+    var attendancePreviousFragmentType = "online"
+
+    private lateinit var attendanceViewModel: AttendanceViewModel
+    private lateinit var internetReceiver: BroadcastReceiver
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeFacultyBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        attendanceViewModel = ViewModelProvider(this).get(AttendanceViewModel::class.java)
 
         hashMap = null
 
@@ -137,8 +147,28 @@ class FacultyHomeActivity : AppCompatActivity() {
             alertDialog.show()
         }
 
-        val serviceIntent=Intent(this,AutoSyncOfflineService::class.java)
-        startService(serviceIntent)
+
+        /*  receiver = InternetConnectivityReceiver()
+          val filter = IntentFilter()
+          filter.addAction("android.net.conn.CONNECTIVITY_CHANGE")
+          registerReceiver(receiver, filter);*/
+        internetReceiver = object : BroadcastReceiver() {
+            override fun onReceive(arg0: Context, arg1: Intent) {
+                /*val sms = arg1.extras!!.getString("m")
+                intext.setText(sms)*/
+                if (isNetworkAvailable()) {
+                    Log.e("INTENET PRESENT", "TRUE")
+                    syncData()
+                } else
+                    Log.e("INTENET PRESENT", "FALSE")
+
+
+            }
+        }
+        val filter = IntentFilter()
+        filter.addAction("android.net.conn.CONNECTIVITY_CHANGE")
+        registerReceiver(internetReceiver, filter);
+
     }
 
 
@@ -166,11 +196,13 @@ class FacultyHomeActivity : AppCompatActivity() {
     }
 
     override fun onResume() {
+        syncData()
         super.onResume()
         Log.e("RESUME", "HOME")
     }
 
     override fun onPause() {
+        unregisterReceiver(internetReceiver);
         super.onPause()
         Log.e("PAUSE", "HOME")
     }
@@ -616,7 +648,21 @@ class FacultyHomeActivity : AppCompatActivity() {
 
     }
 
+    fun syncData() {
+        if (isNetworkAvailable()) {
+            runBlocking {
+                attendanceViewModel.syncData(this@FacultyHomeActivity)
+                /*val f1: OfflineFragment? =
+                    supportFragmentManager.findFragmentByTag("5") as OfflineFragment?
+                if (f1!=null && f1!!.isVisible)
+                    f1!!.getOfflineData()*/
+            }
+            /*lifecycleScope.launch {
 
+            }*/
+
+        }
+    }
 
 
 }

@@ -18,7 +18,7 @@
         <RelativeLayout
             android:id="@+id/rl_main"
             android:layout_width="0dp"
-            android:layout_weight="0.7"
+            android:layout_weight="0.85"
             android:layout_height="wrap_content"
             android:background="@drawable/rectangle_background_slot_attenadnce"
             android:paddingLeft="15dp"
@@ -50,7 +50,7 @@
 
         <RelativeLayout
             android:layout_width="0dp"
-            android:layout_weight="0.3"
+            android:layout_weight="0.15"
             android:layout_height="match_parent"
             android:background="@drawable/rectangle_background_slot_attenadnce_2"
             android:paddingLeft="10dp"
@@ -72,6 +72,7 @@
                 android:layout_toRightOf="@id/view"
                 android:layout_width="wrap_content"
                 android:layout_marginLeft="10dp"
+                android:visibility="gone"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:src="@drawable/baseline_sync_24" />

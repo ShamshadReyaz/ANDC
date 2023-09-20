@@ -1,4 +1,4 @@
-package com.mobiquel.srccapp.service
+package com.mobiquel.srccapp.receiver
 
 /**
  * Created by Arman Reyaz on 4/3/2021.

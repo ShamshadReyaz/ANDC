@@ -81,6 +81,9 @@ class AttendanceFragment : Fragment() {
         binding.grppaper.text = requireArguments().getString("GRPNAME")
             .toString() + ", " + requireArguments().getString("PAPRNAME").toString()
 
+        binding.attendanceNotMarked.setOnClickListener {
+            requireActivity().showSingleButtonDialog("You haven't submitted/marked attendance yet for this date.")
+        }
         binding.addmore.setOnClickListener {
             if(listOfSlot.size==3){
                 requireActivity().showSingleButtonDialog("Sorry!You can add maximum of 3 slots.")
@@ -443,6 +446,8 @@ class AttendanceFragment : Fragment() {
                             listOfSlot.get(0).isSelected = "T"
                             studentsAttendanceListAdapter?.updateList(listOfSlot.get(0).listOfStudent!!)
                             updateBottoomSheet()
+                            if(slotId.equals("0"))
+                                binding.attendanceNotMarked.visibility=View.VISIBLE
 
 
                         } else if (jsonobject.getString("errorCode").equals("1"))

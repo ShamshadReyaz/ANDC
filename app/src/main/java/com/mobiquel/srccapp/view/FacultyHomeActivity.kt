@@ -20,6 +20,7 @@ import com.mobiquel.srccapp.data.ApiManager
 import com.mobiquel.srccapp.data.NameIdPojo
 import com.mobiquel.srccapp.databinding.ActivityHomeFacultyBinding
 import com.mobiquel.srccapp.pojo.DostToenModel
+import com.mobiquel.srccapp.service.AutoSyncOfflineService
 import com.mobiquel.srccapp.utils.*
 import com.mobiquel.srccapp.view.fragment.*
 import com.mobiquel.srccapp.view.viewmodel.HomeAPIViewModel
@@ -136,6 +137,8 @@ class FacultyHomeActivity : AppCompatActivity() {
             alertDialog.show()
         }
 
+        val serviceIntent=Intent(this,AutoSyncOfflineService::class.java)
+        startService(serviceIntent)
     }
 
 
@@ -265,7 +268,7 @@ class FacultyHomeActivity : AppCompatActivity() {
             val builder = AlertDialog.Builder(this)
             //set title for alert dialog
             //set message for alert dialog
-            builder.setMessage("Are you sure you want to exit attendance? All data would be lost")
+            builder.setMessage("Are you sure you want to exit attendance? Unsaved data will be lost.")
             // Create the AlertDialog
             //performing positive action
             builder.setPositiveButton("Yes") { dialogInterface, which ->

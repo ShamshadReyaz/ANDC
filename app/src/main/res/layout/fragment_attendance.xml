@@ -103,7 +103,9 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="@dimen/d_10dp"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
             <RelativeLayout
@@ -165,11 +167,28 @@
             </LinearLayout>
         </RelativeLayout>
 
+        <TextView
+            android:id="@+id/attendanceNotMarked"
+            android:drawableRight="@drawable/baseline_info_24"
+            android:text="Attendance Not Marked"
+            android:drawablePadding="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:visibility="gone"
+            android:textSize="12sp"
+            android:fontFamily="@font/poppins_regular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/listOfAttendance"
             android:layout_width="match_parent"
+            android:layout_marginTop="5dp"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp" />
+            android:layout_marginLeft="10dp"
+
+            android:layout_marginRight="@dimen/d_10dp"
+            android:layout_marginBottom="10dp" />
 
         <LinearLayout
             android:id="@+id/labelLayout"

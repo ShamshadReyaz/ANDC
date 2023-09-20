@@ -38,6 +38,12 @@
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
             </intent-filter>
         </service>
+        <service
+            android:name="com.mobiquel.srccapp.service.AutoSyncOfflineService"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="com.google.android.c2dm.permission.SEND">
+        </service>
     </application>
 
 </manifest>

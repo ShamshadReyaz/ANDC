@@ -24,7 +24,8 @@ import kotlinx.android.synthetic.main.list_item_offline_attendance.view.*
 class ListOfOfflineAttendanceAdapter(
     var context: Context,
     private var listOfAttendance: List<AttendanceClassEntity>,
-    private var recyclerItemClickListener: RecyclerItemClickListener
+    private var recyclerItemClickListener: RecyclerItemClickListener,
+    private var recyclerItemClickListener2: RecyclerItemClickListener
 ) : RecyclerView.Adapter<ListOfOfflineAttendanceAdapter.ViewHolder>() {
 
 
@@ -61,7 +62,7 @@ class ListOfOfflineAttendanceAdapter(
             }
             itemView.sync.setOnClickListener {
 
-
+                recyclerItemClickListener2.onRecyclerItemClicked(pos)
 
             }
 

@@ -13,7 +13,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputLayout
@@ -29,7 +28,6 @@ import com.mobiquel.srccapp.utils.*
 import com.mobiquel.srccapp.view.fragment.*
 import com.mobiquel.srccapp.view.viewmodel.HomeAPIViewModel
 import kotlinx.android.synthetic.main.activity_home.*
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import okhttp3.ResponseBody
 import org.json.JSONObject
@@ -486,6 +484,7 @@ class FacultyHomeActivity : AppCompatActivity() {
                 }
             dateOfAttendance.setOnClickListener {
                 cal = Calendar.getInstance()
+                cal.timeZone= TimeZone.getTimeZone("Asia/Calcutta")
                 datePickerDialog = DatePickerDialog(
                     this,
                     R.style.MyDatePickerStyle,

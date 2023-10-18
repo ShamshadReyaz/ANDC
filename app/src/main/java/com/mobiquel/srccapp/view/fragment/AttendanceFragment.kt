@@ -402,9 +402,7 @@ class AttendanceFragment : Fragment() {
 
                             for (j in 0 until jsonobject.getJSONArray("responseObject").length()) {
                                 var listOfStudent = ArrayList<AttendanceStudentModel>()
-                                if (!jsonobject.getJSONArray("responseObject").getJSONObject(j)
-                                        .isNull("sessionRecord")
-                                ) {
+                                if (!jsonobject.getJSONArray("responseObject").getJSONObject(j).isNull("sessionRecord")) {
                                     typeOfOperation = "UPDATE"
                                     period =
                                         jsonobject.getJSONArray("responseObject").getJSONObject(j)
@@ -458,9 +456,6 @@ class AttendanceFragment : Fragment() {
                                     }
 
                                 }
-
-                                // var dataTemp=listOfStudentTemp.map { it }
-
 
                                 listOfSlot.add(
                                     SlotAttendanceStudentModel(

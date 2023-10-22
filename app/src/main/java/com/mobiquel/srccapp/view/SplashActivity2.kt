@@ -31,7 +31,6 @@ class SplashActivity2 : AppCompatActivity() {
     }
 
     private fun showHomeScreen() {
-
             Preferences.instance!!.loadPreferences(this@SplashActivity2)
             Log.e("PREF",Preferences.instance?.userType!!)
             if (Preferences.instance?.userType.equals("faculty") || Preferences.instance?.userType.equals("non-teaching")) {
@@ -40,9 +39,7 @@ class SplashActivity2 : AppCompatActivity() {
             } else {
                 startActivity(Intent(this, HomeActivity::class.java))
                 finish()
-
             }
-
     }
 
     private fun showLoginScreen() {

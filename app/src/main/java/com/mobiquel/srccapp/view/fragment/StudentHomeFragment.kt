@@ -55,6 +55,7 @@ class StudentHomeFragment : Fragment() {
         //listOfBtns!!.add(ButtonModel("IA Record", R.drawable.record_3,""))
 
         listOfBtns!!.add(ButtonModel("Notice", R.drawable.notice_4,"notice"))
+        listOfBtns!!.add(ButtonModel("Attendance", R.drawable.attendance_3,"attendance"))
         listOfBtns!!.add(ButtonModel("Maintenance", R.drawable.maintence_5,"maintenance"))
         listOfBtns!!.add(ButtonModel("Credentials", R.drawable.credentials_6,"wifi"))
 

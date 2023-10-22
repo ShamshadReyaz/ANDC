@@ -28,6 +28,13 @@ class APIViewModel : ViewModel() {
         return uploadData
     }
 
+    fun getStudentAttendance(
+        studentId: String
+    ): SingleLiveEvent<Resource<ResponseBody>>? {
+        uploadData = APIRepository.getStudentAttendance(studentId)
+        return uploadData
+    }
+
 
 
     fun getProfile(

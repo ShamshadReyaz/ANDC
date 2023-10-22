@@ -6,42 +6,10 @@
     android:layout_height="match_parent">
     <RelativeLayout
         android:id="@+id/footerLayout"
-        android:background="@drawable/rectangle_background_gray"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
-        android:visibility="gone"
-        android:padding="10dp"
-        android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/ins1"
-            android:layout_width="wrap_content"
-            android:textSize="10sp"
-            android:textColor="@color/colorRed"
-            android:layout_height="wrap_content"
-            android:autoLink="email"
-            android:fontFamily="@font/poppins_semibold"
-            android:text="Note : For any discrepancy in attendance, the student may coordinate with the concerned faculty at level 1 and drop an email to technical.support@srcc.du.ac.in at level 2." />
-        <TextView
-            android:id="@+id/ins2"
-            android:layout_width="wrap_content"
-            android:textSize="10sp"
-            android:textColor="@color/colorNavyBlue"
-            android:layout_below="@id/ins1"
-            android:layout_marginTop="5dp"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins_semibold"
-            android:text="Slab for marks of attendance" />
-        <TextView
-            android:id="@+id/ins3"
-            android:layout_width="wrap_content"
-            android:textSize="10sp"
-            android:textColor="@color/colorNavyBlue"
-            android:layout_below="@id/ins2"
-            android:layout_marginTop="5dp"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins_semibold"
-            android:text="Calculation of benefits" />
-    </RelativeLayout>
+        android:padding="100dp"
+        android:layout_height="wrap_content"></RelativeLayout>
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"

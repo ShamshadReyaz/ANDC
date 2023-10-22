@@ -31,6 +31,10 @@ interface APIInterface {
     fun getNotices   (@FieldMap param:MutableMap<String, String>): Call<ResponseBody>
 
     @FormUrlEncoded
+    @POST("getStudentAttendanceRecord")
+    fun getStudentAttendanceRecord   (@FieldMap param:MutableMap<String, String>): Call<ResponseBody>
+
+    @FormUrlEncoded
     @POST("getFacultyProfile")
     fun getFacultyProfile   (@FieldMap param:MutableMap<String, String>): Call<ResponseBody>
 

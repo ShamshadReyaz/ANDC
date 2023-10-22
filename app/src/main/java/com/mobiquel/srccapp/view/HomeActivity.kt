@@ -35,6 +35,7 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
     private lateinit var apiViewModel: HomeAPIViewModel
     private val fragmentNoticeFragment = NoticeFragment()
+    private val fragmentAttendanceStudentFragment = StudentAttendanceFragment()
     private val fragmentStudentHomeFragment = StudentHomeFragment()
     private val fragmentProfileFragment = ProfileFragment()
     private val maintenanceFragment = MaintenanceFragment()
@@ -61,9 +62,6 @@ class HomeActivity : AppCompatActivity() {
         version.text = "Version: " + getAppVersion()
         getNotificationId()
         getYourDostToken()
-        if (Preferences!!.instance!!.userType.equals("student")) {
-            binding.navView.menu.findItem(R.id.navigation_wifi_tab).isVisible = true
-        }
 
         fragmentSupportManager.beginTransaction().apply {
             add(R.id.frameLayout, fragmentStudentHomeFragment, "0")
@@ -262,6 +260,7 @@ class HomeActivity : AppCompatActivity() {
                 }
                 binding.edit.visibility = View.GONE
             }
+
             "profile"-> {
                 fragmentSupportManager.beginTransaction().apply {
                     replace(R.id.frameLayout, fragmentProfileFragment, "2")
@@ -282,6 +281,14 @@ class HomeActivity : AppCompatActivity() {
                 fragmentSupportManager.beginTransaction().apply {
                     replace(R.id.frameLayout, wifiFragment, "4")
                         .addToBackStack("4")
+                    commit()
+                }
+                binding.edit.visibility = View.GONE
+            }
+            "attendance" -> {
+                fragmentSupportManager.beginTransaction().apply {
+                    replace(R.id.frameLayout, fragmentAttendanceStudentFragment, "5")
+                        .addToBackStack("5")
                     commit()
                 }
                 binding.edit.visibility = View.GONE

@@ -164,14 +164,33 @@ class StudentAttendanceFragment : Fragment() {
 
             var listView =
                 dialogView.findViewById<RecyclerView>(R.id.listview)
+            val regex = "-?[0-9]+(\\.[0-9]+)?".toRegex()
+            val section=key.split("separator")[1]
+            var typeOfClass=""
+            var ugcType=""
+            var creditsLecture=""
+            if(jsonArray.length()>0)
+                creditsLecture =jsonArray.getJSONObject(0).getJSONObject("paperDetails").getString("creditsLecture")
+            if(section.substring(section.length-2,section.length-1).matches(regex))
+                typeOfClass="CA"  //Tutorial
+            else
+                typeOfClass="IA"
+
+            if(Preferences!!.instance!!.collegeRollNo!!.substring(0,2).toInt()>=22)
+                ugcType="UGCF"  //Tutorial
+            else
+                ugcType="LOCF"//Lecture
+
             monthName.setText(key.split("separator")[0]+"\n("+key.split("separator")[1]+")")
-            val mAdapter=ListOfStudentAttendanceDetailAdapter(requireActivity(),jsonArray)
+            val mAdapter=ListOfStudentAttendanceDetailAdapter(requireActivity(),jsonArray,typeOfClass)
             listView.layoutManager = LinearLayoutManager(
                 requireActivity(),
                 LinearLayoutManager.VERTICAL,
                 false
             )
             listView.adapter = mAdapter
+
+
             var classHeld=0
             var classAttended=0
             var benefits=0
@@ -180,12 +199,13 @@ class StudentAttendanceFragment : Fragment() {
                 classAttended=classAttended.plus(Integer.parseInt(jsonArray.getJSONObject(i).getString("classesAttended")))
                 benefits=benefits.plus(Integer.parseInt(jsonArray.getJSONObject(i).getString("benefits")))
             }
-            val oneBy3ofheld=(1/3)*classHeld.toDouble()
+            val oneBy3ofheld=(classHeld/3).toDouble()
             classHeldTotal.setText("Classes Held: "+classHeld)
             classAttendedTotal.setText("Classes Attended: "+classAttended)
             benefitsTotal.setText("Benefits: "+benefits)
-            var attendancePercent:Double=((classAttended.toDouble()/classHeld)*100)
+            var attendancePercent:Double=((classAttended.toDouble()/classHeld.minus(minOf(oneBy3ofheld.toInt(),benefits)))*100)
             var attendanceMarks=0
+            var multiplyingFactor:Double=1.0
             when(attendancePercent){
                 in 0.00 .. 66.90->attendanceMarks=0
                 in 67.00 .. 69.90->attendanceMarks=1
@@ -194,8 +214,19 @@ class StudentAttendanceFragment : Fragment() {
                 in 80.00 .. 84.90->attendanceMarks=4
                 else->attendanceMarks=5
             }
+            if(typeOfClass.equals("IA") && ugcType.equals("UGCF") && creditsLecture.equals("1"))
+                multiplyingFactor= 0.4
+            else if(typeOfClass.equals("IA") && ugcType.equals("UGCF") && creditsLecture.equals("2"))
+                multiplyingFactor= 0.8
+            else if(typeOfClass.equals("IA") && ugcType.equals("UGCF") && creditsLecture.equals("3"))
+                multiplyingFactor= 1.2
+            else if(typeOfClass.equals("CA") && ugcType.equals("UGCF"))
+                multiplyingFactor= 1.0
+
+            val attendanceMarksValue=(attendanceMarks*multiplyingFactor).toDouble()
+
             attendancePerc.setText("Attendance Percentage\n"+String.format("%.2f", attendancePercent).toDouble())
-            marksOfAttendance.setText("Marks of Attendance\n$attendanceMarks")
+            marksOfAttendance.setText("Marks of Attendance\n$attendanceMarksValue")
             dialog!!.setContentView(dialogView)
             dialog!!.setCancelable(true)
             dialog!!.window?.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)

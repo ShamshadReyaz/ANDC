@@ -3,6 +3,7 @@ package com.mobiquel.srccapp.view.adapter
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,7 +31,8 @@ import org.json.JSONObject
  */
 class ListOfStudentAttendanceDetailAdapter(
     var context: Context,
-    private var listOfAttendance: JSONArray
+    private var listOfAttendance: JSONArray,
+    private var typeOfClass: String
 ) : RecyclerView.Adapter<ListOfStudentAttendanceDetailAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -54,7 +56,8 @@ class ListOfStudentAttendanceDetailAdapter(
 
         fun setData(rankModel: JSONObject?, pos: Int) {
             itemView.month.setText(rankModel?.getString("month"))
-            itemView.type.setText("Type: IA")
+            itemView.type.setText("Type: "+typeOfClass)
+            Log.e("CREDITS",""+rankModel?.getJSONObject("paperDetails")?.getString("creditsLecture"))
             itemView.faculty.setText("By "+rankModel?.getString("facultyName"))
             itemView.classHeld.setText("Classes Held: "+rankModel?.getString("classesHeld"))
             itemView.classAttended.setText("Classes Attended: "+rankModel?.getString("classesAttended"))

@@ -223,10 +223,10 @@ class StudentAttendanceFragment : Fragment() {
             else if(typeOfClass.equals("CA") && ugcType.equals("UGCF"))
                 multiplyingFactor= 1.0
 
-            val attendanceMarksValue=(attendanceMarks*multiplyingFactor).toDouble()
+            val attendanceMarksValue=(attendanceMarks*multiplyingFactor)
 
             attendancePerc.setText("Attendance Percentage\n"+String.format("%.2f", attendancePercent).toDouble())
-            marksOfAttendance.setText("Marks of Attendance\n$attendanceMarksValue")
+            marksOfAttendance.setText("Marks of Attendance\n"+ String.format("%.2f", attendanceMarksValue).toDouble())
             dialog!!.setContentView(dialogView)
             dialog!!.setCancelable(true)
             dialog!!.window?.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)

@@ -58,6 +58,9 @@ class StudentHomeFragment : Fragment() {
         listOfBtns!!.add(ButtonModel("Attendance", R.drawable.attendance_3,"attendance"))
         listOfBtns!!.add(ButtonModel("Maintenance", R.drawable.maintence_5,"maintenance"))
         listOfBtns!!.add(ButtonModel("Credentials", R.drawable.credentials_6,"wifi"))
+        listOfBtns!!.add(ButtonModel("Academic details", R.drawable.attendance_3,"academic"))
+        listOfBtns!!.add(ButtonModel("Assignments and Messages", R.drawable.maintence_5,"assignments"))
+        listOfBtns!!.add(ButtonModel("IA Record", R.drawable.credentials_6,"iarecord"))
 
         binding.myprofile.setOnClickListener {
             (requireActivity() as HomeActivity).redirectToFragment("profile")

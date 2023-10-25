@@ -293,6 +293,30 @@ class HomeActivity : AppCompatActivity() {
                 }
                 binding.edit.visibility = View.GONE
             }
+            "academic" -> {
+                fragmentSupportManager.beginTransaction().apply {
+                    replace(R.id.frameLayout, fragmentAttendanceStudentFragment, "5")
+                        .addToBackStack("5")
+                    commit()
+                }
+                binding.edit.visibility = View.GONE
+            }
+            "assignments" -> {
+                fragmentSupportManager.beginTransaction().apply {
+                    replace(R.id.frameLayout, fragmentAttendanceStudentFragment, "5")
+                        .addToBackStack("5")
+                    commit()
+                }
+                binding.edit.visibility = View.GONE
+            }
+            "iarecord" -> {
+                fragmentSupportManager.beginTransaction().apply {
+                    replace(R.id.frameLayout, fragmentAttendanceStudentFragment, "5")
+                        .addToBackStack("5")
+                    commit()
+                }
+                binding.edit.visibility = View.GONE
+            }
             ""->{
                 Toast.makeText(this@HomeActivity,"Coming Soon!",Toast.LENGTH_SHORT).show()
             }

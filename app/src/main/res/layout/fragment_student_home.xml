@@ -6,16 +6,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:id="@+id/topLayout"
+    <ScrollView
         android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:layout_margin="15dp"
         android:layout_height="wrap_content">
 
-        <RelativeLayout
-            android:id="@+id/r1"
-            android:layout_width="60dp"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/topLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:id="@+id/r1"
+                    android:layout_width="60dp"
             android:layout_alignParentRight="true"
             android:layout_height="60dp">
             <ImageView
@@ -100,9 +109,12 @@
             android:id="@+id/listOfBtns"
             android:layout_marginTop="20dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
+
+        </LinearLayout>
+    </ScrollView>
     <RelativeLayout
         android:id="@+id/footerLayout"
         android:layout_alignParentBottom="true"

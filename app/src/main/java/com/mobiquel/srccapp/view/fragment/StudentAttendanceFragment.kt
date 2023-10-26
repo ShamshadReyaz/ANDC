@@ -205,7 +205,7 @@ class StudentAttendanceFragment : Fragment() {
             benefitsTotal.setText("Benefits: "+benefits)
             var attendancePercent:Double=((classAttended.toDouble()/classHeld.minus(minOf(oneBy3ofheld.toInt(),benefits)))*100)
             var attendanceMarks=0
-            var multiplyingFactor:Double=1.0
+            var multiplyingFactor=0.0
             when(attendancePercent){
                 in 0.00 .. 66.90->attendanceMarks=0
                 in 67.00 .. 69.90->attendanceMarks=1
@@ -222,6 +222,7 @@ class StudentAttendanceFragment : Fragment() {
                 multiplyingFactor= 1.2
             else if(typeOfClass.equals("CA") && ugcType.equals("UGCF"))
                 multiplyingFactor= 1.0
+
 
             val attendanceMarksValue=(attendanceMarks*multiplyingFactor)
 

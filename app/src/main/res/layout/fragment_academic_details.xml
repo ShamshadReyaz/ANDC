@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rl_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/d_10dp"
+        app:cardCornerRadius="@dimen/d_5dp"
+        app:cardElevation="@dimen/d_10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/d_10dp"
+            android:paddingRight="@dimen/d_10dp"
+            android:paddingBottom="@dimen/d_10dp">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/facultyNameTil"
+                style="@style/MyDenseOutlined"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/d_10dp"
+                android:hint="Exam Roll No."
+                android:textColorHint="@color/colorGray"
+                app:boxStrokeColor="@color/colorGray">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/facultyName"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:enabled="false"
+                    android:fontFamily="@font/poppins_regular"
+                    android:imeOptions="actionNext"
+                    android:inputType="textEmailAddress"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/d_14sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/empCodeTil"
+                style="@style/MyDenseOutlined"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/d_10dp"
+                android:hint="Enrollment No."
+                android:textColorHint="@color/colorGray"
+                app:boxStrokeColor="@color/colorGray">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/employeeCode"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:enabled="false"
+                    android:fontFamily="@font/poppins_regular"
+                    android:imeOptions="actionNext"
+                    android:inputType="textEmailAddress"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/d_14sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/designationTil"
+                style="@style/MyDenseOutlined"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/d_10dp"
+                android:hint="College Roll No."
+                android:textColorHint="@color/colorGray"
+                app:boxStrokeColor="@color/colorGray">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/designation"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:enabled="false"
+                    android:fontFamily="@font/poppins_regular"
+                    android:imeOptions="actionNext"
+                    android:inputType="textEmailAddress"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/d_14sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/deptTil"
+                style="@style/MyDenseOutlined"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/d_10dp"
+                android:hint="Section"
+                android:textColorHint="@color/colorGray"
+                app:boxStrokeColor="@color/colorGray">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/department"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:enabled="false"
+                    android:fontFamily="@font/poppins_regular"
+                    android:imeOptions="actionNext"
+                    android:inputType="textEmailAddress"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/d_14sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/mobileTil"
+                style="@style/MyDenseOutlined"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/d_10dp"
+                android:hint="Tutorial"
+                android:textColorHint="@color/colorGray"
+                app:boxStrokeColor="@color/colorGray">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/mobile"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:enabled="false"
+                    android:fontFamily="@font/poppins_regular"
+                    android:imeOptions="actionNext"
+                    android:inputType="textEmailAddress"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/d_14sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:backgroundTint="@color/theme_color"
+        android:visibility="gone" />
+
+</RelativeLayout>

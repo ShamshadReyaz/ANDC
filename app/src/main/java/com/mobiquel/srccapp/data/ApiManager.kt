@@ -62,6 +62,12 @@ class ApiManager private constructor() {
     fun checkSmartProfVersion(param:MutableMap<String, String>): Call<ResponseBody> {
         return apiClient.checkSmartProfVersion(param)
     }
+    fun getStudentAcademicDetailsByRollNo(param:MutableMap<String, String>): Call<ResponseBody> {
+        return apiClient.getStudentAcademicDetailsByRollNo(param)
+    }
+    fun getMessagesForStudentId(param:MutableMap<String, String>): Call<ResponseBody> {
+        return apiClient.getMessagesForStudentId(param)
+    }
 
     fun getVirtualClassForFaculty(param:MutableMap<String, String>): Call<ResponseBody> {
         return apiClient.getVirtualClassForFaculty(param)

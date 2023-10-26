@@ -9,8 +9,12 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.FirebaseApp
 import com.google.firebase.messaging.FirebaseMessaging
 import com.mobiquel.srccapp.R
@@ -18,10 +22,12 @@ import com.mobiquel.srccapp.data.ApiManager
 import com.mobiquel.srccapp.databinding.ActivityHomeBinding
 import com.mobiquel.srccapp.pojo.DostToenModel
 import com.mobiquel.srccapp.utils.*
+import com.mobiquel.srccapp.view.adapter.AssignmentsMessagesListAdapter
 import com.mobiquel.srccapp.view.fragment.*
 import com.mobiquel.srccapp.view.viewmodel.HomeAPIViewModel
 import kotlinx.android.synthetic.main.activity_home.*
 import okhttp3.ResponseBody
+import org.json.JSONArray
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
@@ -194,6 +200,79 @@ class HomeActivity : AppCompatActivity() {
 
     }
 
+    fun getMessagesForStudentId() {
+        Preferences.instance!!.loadPreferences(context!!)
+        val data: MutableMap<String, String> = HashMap()
+        data["studentId"] = Preferences.instance!!.userId!!
+        binding.progressBar.visibility = View.VISIBLE
+        val apiManager: ApiManager? = ApiManager.init()
+        apiManager!!.getMessagesForStudentId(data).enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(
+                call: Call<ResponseBody>,
+                response: Response<ResponseBody>
+            ) {
+                binding.progressBar.visibility = View.GONE
+                try {
+                    val stringResponse = response.body()?.string()
+                    val jsonobject = JSONObject(stringResponse)
+                    if (jsonobject.getString("errorCode").equals("1"))
+                        showSnackBar("Invalid Credentials! Please try again", binding.rlMain)
+                    else {
+                        if (jsonobject.getJSONArray("responseObject").length() > 0)
+                            showAssignmentsMessagesDialog(jsonobject.getJSONArray("responseObject"))
+                        else
+                            showSnackBar("No Assignments/Messages found", binding.rlMain)
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                Log.e("DATA", "FAILURE")
+                binding.progressBar.visibility = View.GONE
+            }
+
+        })
+
+    }
+
+    fun getStudentAcademicDetailsByRollNo() {
+        Preferences.instance!!.loadPreferences(context!!)
+        val data: MutableMap<String, String> = HashMap()
+        data["rollNo"] = Preferences.instance!!.collegeRollNo!!
+        binding.progressBar.visibility = View.VISIBLE
+        val apiManager: ApiManager? = ApiManager.init()
+        apiManager!!.getStudentAcademicDetailsByRollNo(data)
+            .enqueue(object : Callback<ResponseBody> {
+                override fun onResponse(
+                    call: Call<ResponseBody>,
+                    response: Response<ResponseBody>
+                ) {
+                    binding.progressBar.visibility = View.GONE
+                    try {
+                        val stringResponse = response.body()?.string()
+                        val jsonobject = JSONObject(stringResponse)
+                        if (jsonobject.getString("errorCode").equals("1"))
+                            showSnackBar("Invalid Credentials! Please try again", binding.rlMain)
+                        else {
+                            showAcademicDetailsDialog(jsonobject.getJSONObject("responseObject"))
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+
+                }
+
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                    Log.e("DATA", "FAILURE")
+                    binding.progressBar.visibility = View.GONE
+                }
+
+            })
+
+    }
 
     fun getYourDostToken() {
         Preferences.instance!!.loadPreferences(context!!)
@@ -294,20 +373,10 @@ class HomeActivity : AppCompatActivity() {
                 binding.edit.visibility = View.GONE
             }
             "academic" -> {
-                fragmentSupportManager.beginTransaction().apply {
-                    replace(R.id.frameLayout, fragmentAttendanceStudentFragment, "5")
-                        .addToBackStack("5")
-                    commit()
-                }
-                binding.edit.visibility = View.GONE
+                getStudentAcademicDetailsByRollNo()
             }
             "assignments" -> {
-                fragmentSupportManager.beginTransaction().apply {
-                    replace(R.id.frameLayout, fragmentAttendanceStudentFragment, "5")
-                        .addToBackStack("5")
-                    commit()
-                }
-                binding.edit.visibility = View.GONE
+                getMessagesForStudentId()
             }
             "iarecord" -> {
                 fragmentSupportManager.beginTransaction().apply {
@@ -317,13 +386,67 @@ class HomeActivity : AppCompatActivity() {
                 }
                 binding.edit.visibility = View.GONE
             }
-            ""->{
-                Toast.makeText(this@HomeActivity,"Coming Soon!",Toast.LENGTH_SHORT).show()
+            "" -> {
+                Toast.makeText(this@HomeActivity, "Coming Soon!", Toast.LENGTH_SHORT).show()
             }
 
         }
 
     }
 
+    fun showAcademicDetailsDialog(jsonObject: JSONObject) {
+        try {
+            val dialogView: View = View.inflate(this, R.layout.dialog_show_academic_details, null)
+            val dialog = BottomSheetDialog(this)
+
+            var examRollNo =
+                dialogView.findViewById<TextInputEditText>(R.id.examRollNo)
+            var enrollmentNo =
+                dialogView.findViewById<TextInputEditText>(R.id.enrollmentNo)
+            var collegeRollNo =
+                dialogView.findViewById<TextInputEditText>(R.id.collegeRollNo)
+            var sectionName =
+                dialogView.findViewById<TextInputEditText>(R.id.sectionName)
+            var tutorialName =
+                dialogView.findViewById<TextInputEditText>(R.id.tutorialName)
+            examRollNo.setText(jsonObject.getString("examRollNo"))
+            enrollmentNo.setText(jsonObject.getString("enrollmentNo"))
+            collegeRollNo.setText(jsonObject.getString("collegeRollNo"))
+            sectionName.setText(jsonObject.getString("section"))
+            tutorialName.setText(jsonObject.getString("tutorial"))
+
+
+            dialog!!.setContentView(dialogView)
+            dialog!!.setCancelable(true)
+            dialog!!.window?.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
+                ?.setBackgroundResource(android.R.color.transparent)
+            dialog!!.show()
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    fun showAssignmentsMessagesDialog(jsonArray: JSONArray) {
+        try {
+            val dialogView: View =
+                View.inflate(this, R.layout.dialog_show_assignments_messages, null)
+            val dialog = BottomSheetDialog(this)
+
+            var listView =
+                dialogView.findViewById<RecyclerView>(R.id.listview)
+            val mAdapter=AssignmentsMessagesListAdapter(context!!,jsonArray)
+            listView.adapter=mAdapter
+            listView.layoutManager=LinearLayoutManager(context!!)
+
+            dialog!!.setContentView(dialogView)
+            dialog!!.setCancelable(true)
+            dialog!!.window?.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
+                ?.setBackgroundResource(android.R.color.transparent)
+            dialog.behavior.state = BottomSheetBehavior.STATE_EXPANDED
+            dialog!!.show()
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
+        }
+    }
 
 }

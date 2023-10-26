@@ -2,6 +2,7 @@ package com.mobiquel.srccapp.view.adapter
 
 import android.content.Context
 import android.graphics.Paint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -51,20 +52,21 @@ class AssignmentsMessagesListAdapter(
                 }
                 else {
                     val exteFile=jsonObject.getString("fileURL").substring(jsonObject.getString("fileURL").lastIndexOf("."))
+                    Log.e("exteFile",exteFile)
                     if(exteFile.equals("png",true) ||
                         exteFile.equals("jpg",true) ||
                         exteFile.equals("jpeg",true)){
                         itemView.img.visibility = View.VISIBLE
                         itemView.t3.visibility = View.GONE
                         Glide.with(context).load(jsonObject.getString("fileURL")).into(itemView.img);
-                        itemView.img.setOnClickListener { context.showImagePopup(jsonObject.getString("photoURL")) }
+                        itemView.img.setOnClickListener { context.showImagePopup(jsonObject.getString("fileURL")) }
                     }
                     else
                     {
                         itemView.t3.visibility = View.VISIBLE
                         itemView.img.visibility = View.GONE
                         itemView.t3.setText("Click to View Attachment")
-                        itemView.t3.setOnClickListener { context.redirectToWeb2(jsonObject.getString("attachmentURL")) }
+                        itemView.t3.setOnClickListener { context.redirectToWeb2(jsonObject.getString("fileURL")) }
                         itemView.t3.paintFlags = itemView.t3.getPaintFlags() or Paint.UNDERLINE_TEXT_FLAG
 
                     }

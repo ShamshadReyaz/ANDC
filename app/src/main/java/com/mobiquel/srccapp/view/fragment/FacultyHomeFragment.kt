@@ -48,9 +48,9 @@ class FacultyHomeFragment : Fragment() {
         listOfBtns = ArrayList()
         if (Preferences.instance?.userType.equals("faculty")) {
             listOfBtns!!.add(ButtonModel("Notice", R.drawable.notice_4,"notice"))
-            listOfBtns!!.add(ButtonModel("Attendance", R.drawable.attendance_3,"attendance"))
+            //listOfBtns!!.add(ButtonModel("Attendance", R.drawable.attendance_3,"attendance"))
             listOfBtns!!.add(ButtonModel("Maintenance", R.drawable.maintence_5,"maintenance"))
-            listOfBtns!!.add(ButtonModel("Offline", R.drawable.baseline_wifi_off_home,"offline"))
+            //listOfBtns!!.add(ButtonModel("Offline", R.drawable.baseline_wifi_off_home,"offline"))
         }
         else{
             listOfBtns!!.add(ButtonModel("Notice", R.drawable.notice_4,"notice"))

@@ -5,7 +5,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
         android:name="com.mobiquel.srccapp.BaseApplication"
@@ -38,10 +38,10 @@
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
             </intent-filter>
         </service>
-        <receiver android:name=".receiver.InternetConnectivityReceiver"
+        <!--<receiver android:name=".receiver.InternetConnectivityReceiver"
             android:exported="true"
             >
-        </receiver>
+        </receiver>-->
     </application>
 
 </manifest>

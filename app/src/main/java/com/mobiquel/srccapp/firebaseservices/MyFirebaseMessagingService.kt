@@ -59,6 +59,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         }
         else if (Preferences.instance?.userType.equals("faculty")){
             intent = Intent(this, FacultyHomeActivity::class.java)
+            intent.putExtra("TYPE","NOTIFICATION")
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             pendingIntent = PendingIntent.getActivity(
                 this, 0 /* Request code */, intent,
@@ -67,6 +68,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         }
         else {
             intent = Intent(this, HomeActivity::class.java)
+            intent.putExtra("TYPE","NOTIFICATION")
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             pendingIntent = PendingIntent.getActivity(
                 this, 0 /* Request code */, intent,

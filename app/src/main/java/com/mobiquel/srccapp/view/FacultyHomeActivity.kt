@@ -1,16 +1,21 @@
 package com.mobiquel.srccapp.view
 
+import android.Manifest
 import android.app.DatePickerDialog
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.tasks.OnCompleteListener
@@ -92,10 +97,15 @@ class FacultyHomeActivity : AppCompatActivity() {
         getGroup("")
         getYourDostToken()
 
+        if(intent?.extras?.getString("TYPE").equals("NOTIFICATION")){
+            redirectToFragment("notice")
+        }
+        else{
+            fragmentSupportManager.beginTransaction().apply {
+                add(R.id.frameLayout, facultyHomeFragment, "0")
+                commit()
+            }
 
-        fragmentSupportManager.beginTransaction().apply {
-            add(R.id.frameLayout, facultyHomeFragment, "0")
-            commit()
         }
 
 
@@ -150,10 +160,11 @@ class FacultyHomeActivity : AppCompatActivity() {
           val filter = IntentFilter()
           filter.addAction("android.net.conn.CONNECTIVITY_CHANGE")
           registerReceiver(receiver, filter);*/
-        internetReceiver = object : BroadcastReceiver() {
+
+        /*internetReceiver = object : BroadcastReceiver() {
             override fun onReceive(arg0: Context, arg1: Intent) {
-                /*val sms = arg1.extras!!.getString("m")
-                intext.setText(sms)*/
+                *//*val sms = arg1.extras!!.getString("m")
+                intext.setText(sms)*//*
                 if (isNetworkAvailable()) {
                     Log.e("INTENET PRESENT", "TRUE")
                     syncData()
@@ -166,7 +177,18 @@ class FacultyHomeActivity : AppCompatActivity() {
         val filter = IntentFilter()
         filter.addAction("android.net.conn.CONNECTIVITY_CHANGE")
         registerReceiver(internetReceiver, filter);
-
+*/
+        if (Build.VERSION.SDK_INT >= 31) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(
+                        Manifest.permission.POST_NOTIFICATIONS
+                    ),
+                    1
+                )
+            }
+        }
     }
 
 
@@ -180,6 +202,7 @@ class FacultyHomeActivity : AppCompatActivity() {
             val token = task.result
             if (token != null) {
                 notificationId = token
+                Log.e("TOKEN",token)
                 checkSmartProfVersion()
 
             }
@@ -194,13 +217,13 @@ class FacultyHomeActivity : AppCompatActivity() {
     }
 
     override fun onResume() {
-        syncData()
+        //syncData()
         super.onResume()
         Log.e("RESUME", "HOME")
     }
 
     override fun onPause() {
-        unregisterReceiver(internetReceiver);
+       // unregisterReceiver(internetReceiver);
         super.onPause()
         Log.e("PAUSE", "HOME")
     }

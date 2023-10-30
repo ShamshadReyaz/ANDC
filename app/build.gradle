@@ -9,16 +9,16 @@ plugins {
 }
 
 android {
-    compileSdkVersion 32
+    compileSdkVersion 33
     useLibrary 'org.apache.http.legacy'
 
     defaultConfig {
 
         applicationId "com.mobiquel.srccapp"
         minSdkVersion 21
-        targetSdkVersion 32
-        versionCode 25
-        versionName "1.0.7"
+        targetSdkVersion 33
+        versionCode 27
+        versionName "1.0.9"
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
 

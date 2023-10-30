@@ -1,13 +1,18 @@
 package com.mobiquel.srccapp.view
 
+import android.Manifest
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -69,9 +74,16 @@ class HomeActivity : AppCompatActivity() {
         getNotificationId()
         getYourDostToken()
 
-        fragmentSupportManager.beginTransaction().apply {
-            add(R.id.frameLayout, fragmentStudentHomeFragment, "0")
-            commit()
+
+        if(intent?.extras?.getString("TYPE").equals("NOTIFICATION")){
+            redirectToFragment("notice")
+        }
+        else{
+            fragmentSupportManager.beginTransaction().apply {
+                add(R.id.frameLayout, fragmentStudentHomeFragment, "0")
+                commit()
+            }
+
         }
 
 
@@ -119,6 +131,18 @@ class HomeActivity : AppCompatActivity() {
             // Set other dialog properties
             alertDialog.setCancelable(true)
             alertDialog.show()
+        }
+
+        if (Build.VERSION.SDK_INT >= 31) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(
+                        Manifest.permission.POST_NOTIFICATIONS
+                    ),
+                    1
+                )
+            }
         }
 
     }

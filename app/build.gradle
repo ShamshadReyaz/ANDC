@@ -17,7 +17,7 @@ android {
         applicationId "com.mobiquel.srccapp"
         minSdkVersion 21
         targetSdkVersion 33
-        versionCode 27
+        versionCode 29
         versionName "1.0.9"
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true

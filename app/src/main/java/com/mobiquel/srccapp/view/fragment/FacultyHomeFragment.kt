@@ -73,18 +73,21 @@ class FacultyHomeFragment : Fragment() {
         binding.listOfBtns.layoutManager=GridLayoutManager(requireActivity(),3)
         binding.listOfBtns.adapter=adapter
 
-        val nameSplit=Preferences.instance!!.userName!!.split(" ")
-        Log.e("NAME SLPIT",nameSplit.toString())
-        Log.e("NAME SLPIT SIZE",nameSplit.size.toString())
-        Log.e("NAME SLPIT SIZE",nameSplit.get(0))
-        Log.e("NAME SLPIT SIZE",nameSplit.get(1))
-        if(nameSplit.size>1){
-            binding.hilabel.text= "Hi ${nameSplit.get(0)} ${nameSplit.get(1)}, welcome"
-        }
-        else  if(nameSplit.size>0){
-            binding.hilabel.text= "Hi ${nameSplit.get(0)}, Welcome"
-        }
+        try{
+            val nameSplit=Preferences.instance!!.userName!!.split(" ")
+            Log.e("NAME SLPIT",nameSplit.toString())
+            Log.e("NAME SLPIT SIZE",nameSplit.size.toString())
+            Log.e("NAME SLPIT SIZE",nameSplit.get(0))
+            Log.e("NAME SLPIT SIZE",nameSplit.get(1))
+            if(nameSplit.size>1){
+                binding.hilabel.text= "Hi ${nameSplit.get(0)} ${nameSplit.get(1)}, welcome"
+            }
+            else  if(nameSplit.size>0){
+                binding.hilabel.text= "Hi ${nameSplit.get(0)}, Welcome"
+            }
 
+
+        }catch (e:Exception){}
 
         var bannerList=ArrayList<Int>()
         bannerList.add(R.drawable.banner_3_3)

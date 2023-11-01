@@ -42,35 +42,38 @@ class NoticeListAdapter(
         var currentPosition: Int = 0
         fun setData(rankModel: String?, pos: Int) {
             rankModel?.let {
-                val jsonObject = JSONObject(levelList.get(pos))
-                itemView.t1.setText(jsonObject.getString("title"))
-                itemView.t2.setText(jsonObject.getString("description"))
-                itemView.t4.setText(jsonObject.getString("postedBy"))
-                itemView.t5.setText(jsonObject.getString("createdOn"))
+                try{
+                    val jsonObject = JSONObject(levelList.get(pos))
+                    itemView.t1.setText(jsonObject.getString("title"))
+                    itemView.t2.setText(jsonObject.getString("description"))
+                    itemView.t4.setText(jsonObject.getString("postedBy"))
+                    itemView.t5.setText(jsonObject.getString("createdOn"))
 
-                if (jsonObject.getString("photoURL").equals(""))
-                    itemView.img.visibility = View.GONE
-                else {
-                    itemView.img.visibility = View.VISIBLE
-                    Glide.with(context).load(jsonObject.getString("photoURL")).into(itemView.img);
+                    if (jsonObject.getString("photoURL").equals(""))
+                        itemView.img.visibility = View.GONE
+                    else {
+                        itemView.img.visibility = View.VISIBLE
+                        Glide.with(context).load(jsonObject.getString("photoURL")).into(itemView.img);
 
-                }
-                itemView.img.setOnClickListener {
-                    context.showImagePopup(jsonObject.getString("photoURL"))
-                }
-                if (jsonObject.getString("attachmentURL").equals(""))
-                    itemView.t3.visibility = View.GONE
-                else {
-                    itemView.t3.visibility = View.VISIBLE
-                    itemView.t3.setText("Click to View Attachment")
-                    itemView.t3.setOnClickListener {
-                        context.redirectToWeb2(jsonObject.getString("attachmentURL"))
                     }
-                    itemView.t3.paintFlags =
-                        itemView.t3.getPaintFlags() or Paint.UNDERLINE_TEXT_FLAG
+                    itemView.img.setOnClickListener {
+                        context.showImagePopup(jsonObject.getString("photoURL"))
+                    }
+                    if (jsonObject.getString("attachmentURL").equals(""))
+                        itemView.t3.visibility = View.GONE
+                    else {
+                        itemView.t3.visibility = View.VISIBLE
+                        itemView.t3.setText("Click to View Attachment")
+                        itemView.t3.setOnClickListener {
+                            context.redirectToWeb2(jsonObject.getString("attachmentURL"))
+                        }
+                        itemView.t3.paintFlags =
+                            itemView.t3.getPaintFlags() or Paint.UNDERLINE_TEXT_FLAG
 
-                }
+                    }
 
+
+                }catch (e:Exception){}
 
             }
 

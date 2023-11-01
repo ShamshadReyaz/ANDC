@@ -69,10 +69,12 @@ class StudentHomeFragment : Fragment() {
         listOfBtns!!.add(ButtonModel("Assessment", R.drawable.ic_assessment,"assessment"))
         listOfBtns!!.add(ButtonModel("Student", R.drawable.ic_student,"student"))
 */
-        val nameSplit=Preferences.instance!!.userName!!.split(" ")
-        if(nameSplit.size>0){
-            binding.hilabel.text= "Hi ${nameSplit.get(0)}, welcome"
-        }
+        try{
+            val nameSplit=Preferences.instance!!.userName!!.split(" ")
+            if(nameSplit.size>0){
+                binding.hilabel.text= "Hi ${nameSplit.get(0)}, welcome"
+            }
+        }catch (e:Exception){}
 
         val adapter=ButtonListAdapter(requireActivity(),listOfBtns!!,object : RecyclerItemClickListener{
             override fun onRecyclerItemClicked(position: Int) {

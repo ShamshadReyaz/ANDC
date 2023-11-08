@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.mobiquel.srccapp">
+    package="com.mobiquel.hansrajapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
-        android:name="com.mobiquel.srccapp.BaseApplication"
+        android:name="com.mobiquel.hansrajpp.BaseApplication"
         android:allowBackup="true"
         android:icon="@drawable/logo"
         android:label="@string/app_name"
@@ -16,8 +16,8 @@
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.Login">
-        <activity android:name="com.mobiquel.srccapp.view.LoginActivity" />
-        <activity android:name="com.mobiquel.srccapp.view.SplashActivity2"
+        <activity android:name="com.mobiquel.hansrajpp.view.LoginActivity" />
+        <activity android:name="com.mobiquel.hansrajpp.view.SplashActivity2"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,11 +25,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.mobiquel.srccapp.view.HomeActivity" />
-        <activity android:name="com.mobiquel.srccapp.view.FacultyHomeActivity" />
+        <activity android:name="com.mobiquel.hansrajpp.view.HomeActivity" />
+        <activity android:name="com.mobiquel.hansrajpp.view.FacultyHomeActivity" />
 
         <service
-            android:name="com.mobiquel.srccapp.firebaseservices.MyFirebaseMessagingService"
+            android:name="com.mobiquel.hansrajpp.firebaseservices.MyFirebaseMessagingService"
             android:enabled="true"
             android:exported="true"
             android:permission="com.google.android.c2dm.permission.SEND">

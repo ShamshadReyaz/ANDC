@@ -19,7 +19,7 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/d_50dp"
+                android:layout_marginTop="80dp"
                 app:cardCornerRadius="@dimen/d_5dp"
                 app:cardElevation="@dimen/d_10dp">
 
@@ -34,7 +34,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="100dp"
+                        android:layout_marginTop="80dp"
 
                         android:fontFamily="@font/poppins_medium"
                         android:text="@string/app_name"
@@ -45,6 +45,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/d_10dp"
+                        android:visibility="gone"
                         android:fontFamily="@font/poppins_medium"
                         android:text="Select Usertype"
                         android:textColor="@color/colorBlack"
@@ -52,6 +53,7 @@
 
                     <RadioGroup
                         android:id="@+id/userTypeGrp"
+                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/d_10dp"
@@ -174,7 +176,7 @@
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_gravity="center_horizontal"
-            android:src="@drawable/logo_circel" />
+            android:src="@drawable/logo" />
 
 
     </FrameLayout>

@@ -14,11 +14,11 @@ android {
 
     defaultConfig {
 
-        applicationId "com.mobiquel.srccapp"
+        applicationId "com.mobiquel.hansrajapp"
         minSdkVersion 21
         targetSdkVersion 33
         versionCode 29
-        versionName "1.0.9"
+        versionName "1.0.0"
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
 

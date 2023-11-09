@@ -503,7 +503,8 @@ class AttendanceFragment : Fragment() {
             val attendanceJson = JSONObject()
             var absentIds = ""
             var presentIds = ""
-            for (dataStudent in data.listOfStudent!!) {
+            var tempListOfStud=data.listOfStudent!!.toSet()
+            for (dataStudent in tempListOfStud) {
                 if (dataStudent.isPresent.equals("P"))
                     presentIds = presentIds + dataStudent.studentId + ","
                 else

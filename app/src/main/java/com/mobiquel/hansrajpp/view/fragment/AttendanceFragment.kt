@@ -56,6 +56,7 @@ class AttendanceFragment : Fragment() {
     private val appDatabase by lazy { AppDatabase.getDataBase(requireActivity()).attendanceDao() }
     private var slotId = "0"
     private lateinit var attendanceViewModel: AttendanceViewModel
+    private var sessionType =""
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -76,6 +77,11 @@ class AttendanceFragment : Fragment() {
 
         paperId = requireArguments().getString("PAPRID").toString()
         groupId = requireArguments().getString("GRPID").toString()
+        when(requireArguments().getString("SESSIONTYPE").toString()){
+            "CLASS"->sessionType="Lecture"
+            "PRACTICAL"->sessionType="Practical"
+            "TUTORIAL"->sessionType="Tutorial"
+        }
         dateOfAttendance = requireArguments().getString("DATE").toString()
         binding.datetoday.text = requireArguments().getString("DATE").toString()
         binding.grppaper.text = requireArguments().getString("GRPNAME")
@@ -421,7 +427,7 @@ class AttendanceFragment : Fragment() {
                                             studentJsonArray.getJSONObject(i).getString("slotId")
                                     }
 
-                                    if (studentJsonArray.getJSONObject(i).isNull("isPresent")) {
+                                    if (studentJsonArray.getJSONObject(i).getString("isPresent").equals("")) {
                                         val attendanceStudentModel = AttendanceStudentModel(
                                             studentJsonArray.getJSONObject(i)
                                                 .getString("studentId"),
@@ -517,7 +523,7 @@ class AttendanceFragment : Fragment() {
             attendanceJson.put("facultyId", Preferences.instance!!.userId!!)
             attendanceJson.put("sessionDate", dateOfAttendance)
             attendanceJson.put("period", data.period)
-            attendanceJson.put("lectureType", "Lecture")
+            attendanceJson.put("lectureType", sessionType)
             attendanceJson.put("absentStudentIds", absentIds)
             attendanceJson.put("presentStudentIds", presentIds)
             attendanceJson.put("ecaStudentIds", "")
@@ -606,7 +612,7 @@ class AttendanceFragment : Fragment() {
                 attendanceClassEntity.facultyId = Preferences.instance!!.userId!!
                 attendanceClassEntity.sessionDate = dateOfAttendance
                 attendanceClassEntity.listOfStudent = listOfSlot
-                attendanceClassEntity.lectureType = "Lecture"
+                attendanceClassEntity.lectureType = sessionType
                 attendanceClassEntity.period = period
                 Log.e(
                     "STATUS",
@@ -626,7 +632,7 @@ class AttendanceFragment : Fragment() {
                 attendanceClassEntity.facultyId = Preferences.instance!!.userId!!
                 attendanceClassEntity.sessionDate = dateOfAttendance
                 attendanceClassEntity.listOfStudent = listOfSlot
-                attendanceClassEntity.lectureType = "Lecture"
+                attendanceClassEntity.lectureType = sessionType
                 attendanceClassEntity.period = period
                 Log.e(
                     "STATUS",

@@ -60,6 +60,25 @@
                 android:imeOptions="actionDone" />
 
         </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:hint="Select Session *">
+
+            <AutoCompleteTextView
+                android:id="@+id/sessionType"
+                android:layout_width="match_parent"
+                android:completionThreshold="1"
+                android:textSize="12sp"
+                android:editable="false"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_regular"
+                android:imeOptions="actionNext" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
 
         <TextView
             android:layout_width="wrap_content"

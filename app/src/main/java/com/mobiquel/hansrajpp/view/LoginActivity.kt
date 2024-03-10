@@ -116,19 +116,22 @@ class LoginActivity : AppCompatActivity() {
                         else {
                             Preferences.instance!!.loadPreferences(this@LoginActivity)
                             Preferences.instance!!.isLoginDone = "1"
-
                             Preferences.instance!!.userType =
                                 "faculty"
                             Preferences.instance!!.userName =
                                 jsonobject.getJSONObject("responseObject").getJSONObject("staff").getString("name")
-
                             Preferences.instance!!.email =
-                                binding.username.text.toString()
+                                jsonobject.getJSONObject("responseObject").getJSONObject("staff").getString("email")
+                            Preferences.instance!!.gameSound =
+                                jsonobject.getJSONObject("responseObject").getJSONObject("staff").getString("designation")
+                            Preferences.instance!!.gender =
+                                jsonobject.getJSONObject("responseObject").getJSONObject("staff").getString("departmentName")
+                            Preferences.instance!!.language =
+                                jsonobject.getJSONObject("responseObject").getJSONObject("staff").getString("salutation")
+                            Preferences.instance!!.userType =
+                                "faculty"
                             Preferences.instance!!.userId =
                                 jsonobject.getJSONObject("responseObject").getJSONObject("staff").getString("userId")
-                         /*   Preferences.instance!!.collegeRollNo =
-                                jsonobject.getJSONObject("responseObject").getString("enrollmentNo")
-*/
                             Preferences.instance!!.savePreferences(this@LoginActivity)
                             showToast(jsonobject.getString("errorMessage"))
                             startActivity(Intent(this@LoginActivity, FacultyHomeActivity::class.java))

@@ -44,9 +44,9 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Preferences!!.instance!!.loadPreferences(requireContext())
-        var model = ProfileRequestModel()
+       // var model = ProfileRequestModel()
 
-        if (Preferences!!.instance!!.userType.equals("student")) {
+        /*if (Preferences!!.instance!!.userType.equals("student")) {
             model.studentId = Preferences.instance!!.userId!!
             model.collegeRollNo = Preferences.instance!!.collegeRollNo!!
             model.userType="student"
@@ -60,11 +60,14 @@ class ProfileFragment : Fragment() {
             model.staffId=Preferences.instance!!.userId!!
             model.userType="nonteaching"
         }
+*/
+        binding.facultyName.setText(Preferences!!.instance!!.language+" "+Preferences!!.instance!!.userName)
+        binding.designation.setText(Preferences!!.instance!!.gameSound)
+        binding.department.setText(Preferences!!.instance!!.gender)
+        binding.email.setText(Preferences!!.instance!!.email)
+      //  binding.progressBar.visibility = View.VISIBLE
 
-
-        binding.progressBar.visibility = View.VISIBLE
-
-        apiViewModel?.getProfile(model)?.observe(this, Observer {
+      /*  apiViewModel?.getProfile(model)?.observe(this, Observer {
 
             binding.progressBar.visibility = View.GONE
             try {
@@ -170,7 +173,7 @@ class ProfileFragment : Fragment() {
                 e.printStackTrace()
             }
         })
-
+*/
         Log.e("ON CREATE VIEW", "PROFILE FRAGMENT")
 
 

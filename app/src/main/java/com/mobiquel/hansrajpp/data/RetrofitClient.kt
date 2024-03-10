@@ -17,7 +17,7 @@ object RetrofitClient {
         okhttpClient.addInterceptor(logging)
 
         Retrofit.Builder()
-            .baseUrl("http://139.59.93.96:8080/RollCallSRCC/rest/service/")
+            .baseUrl("http://206.189.138.254:8080/HansrajSmartProf/rest/service/")
             .client(okhttpClient.build())
             .addConverterFactory(GsonConverterFactory.create())
     }

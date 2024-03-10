@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -67,8 +68,11 @@ class FacultyHomeActivity : AppCompatActivity() {
     private var listOfGroupId = ArrayList<NameIdPojo>()
 
     private var listOfPaperName = ArrayList<String>()
+    private var listOfSessionTypeName = ArrayList<String>()
+
     private var listOfPaperId = ArrayList<NameIdPojo>()
     private var paperAdapter: ArrayAdapter<String>? = null
+    private var sessionTypeAdapter: ArrayAdapter<String>? = null
 
     var datePickerDialog: DatePickerDialog? = null
     var cal = Calendar.getInstance()
@@ -203,7 +207,7 @@ class FacultyHomeActivity : AppCompatActivity() {
             if (token != null) {
                 notificationId = token
                 Log.e("TOKEN",token)
-               // checkSmartProfVersion()
+                //checkSmartProfVersion()
 
             }
 
@@ -254,7 +258,9 @@ class FacultyHomeActivity : AppCompatActivity() {
                     if (jsonobject.getString("errorCode").equals("1"))
                         showSnackBar("Invalid Credentials! Please try again", binding.rlMain)
                     else {
-
+                        if(!jsonobject.getString("responseObject").equals(getAppVersion())){
+                            showAppUpdateDialog()
+                        }
                     }
                 } catch (e: Exception) {
                     e.printStackTrace()
@@ -271,7 +277,21 @@ class FacultyHomeActivity : AppCompatActivity() {
 
     }
 
-
+    fun showAppUpdateDialog(){
+        val builder = AlertDialog.Builder(this)
+        builder.setMessage("App update available. Please update your app.")
+        builder.setPositiveButton("Proceed") { dialogInterface, which ->
+            dialogInterface.cancel()
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(AppConstants.PLAY_STORE_URL))
+            startActivity(intent)
+        }
+        builder.setNegativeButton("Cancel") { dialogInterface, which ->
+            dialogInterface.cancel()
+        }
+        val alertDialog = builder.create()
+        alertDialog.setCancelable(true)
+        alertDialog.show()
+    }
     fun getYourDostToken() {
         Preferences.instance!!.loadPreferences(context!!)
         val dostTokenModel = DostToenModel()
@@ -383,7 +403,7 @@ class FacultyHomeActivity : AppCompatActivity() {
                         .addToBackStack("2")
                     commit()
                 }
-                binding.edit.visibility = View.VISIBLE
+              //  binding.edit.visibility = View.VISIBLE
             }
             "maintenance" -> {
                 fragmentSupportManager.beginTransaction().apply {
@@ -447,11 +467,14 @@ class FacultyHomeActivity : AppCompatActivity() {
         try {
             val dialogView: View = View.inflate(this, R.layout.dialog_paper_group_date, null)
             val dialog = BottomSheetDialog(this)
-
+            var selectedGroupName=""
             var group =
                 dialogView.findViewById<AutoCompleteTextView>(R.id.group)
             var paper =
                 dialogView.findViewById<AutoCompleteTextView>(R.id.paper)
+            var sessionType =
+                dialogView.findViewById<AutoCompleteTextView>(R.id.sessionType)
+
             var dateOfAttendance =
                 dialogView.findViewById<EditText>(R.id.dateOfAttendance)
             var dateOfAttendancelay =
@@ -464,6 +487,13 @@ class FacultyHomeActivity : AppCompatActivity() {
                     R.layout.list_item_dropdown,
                     listOfGroupName!!
                 )
+            sessionTypeAdapter =
+                ArrayAdapter(
+                    this,
+                    R.layout.list_item_dropdown,
+                    listOfSessionTypeName!!
+                )
+
             paperAdapter =
                 ArrayAdapter(
                     this,
@@ -472,6 +502,7 @@ class FacultyHomeActivity : AppCompatActivity() {
                 )
             group.setAdapter(groupAdapter)
             paper.setAdapter(paperAdapter)
+            sessionType.setAdapter(sessionTypeAdapter)
 
             group.setOnItemClickListener(object : AdapterView.OnItemClickListener {
                 override fun onItemClick(
@@ -482,14 +513,35 @@ class FacultyHomeActivity : AppCompatActivity() {
                 ) {
                     if (isNetworkAvailable()) {
                         val modelClass =
-                            listOfGroupId!!.find { it.name.equals(group.text.toString()) }
+                            listOfGroupId!!.get(position)
                         getPaper(modelClass!!.id)
+                        val mappingType=modelClass.mappingType.split(",")
+                        listOfSessionTypeName.clear()
+                        for(i in 0..mappingType.size-1){
+                            listOfSessionTypeName.add(mappingType.get(i))
+                        }
+                        selectedGroupName=modelClass.name
+                        sessionTypeAdapter!!.notifyDataSetChanged()
+                        sessionType.setText("",false)
+                        paper.setText("",false)
                     } else
                         showToast("Internet not available.")
 
                 }
 
             })
+            paper.setOnItemClickListener(object : AdapterView.OnItemClickListener {
+                override fun onItemClick(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+
+                }
+
+            })
+
             val dateSetListener =
                 DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
                     cal.set(Calendar.YEAR, year)
@@ -516,23 +568,35 @@ class FacultyHomeActivity : AppCompatActivity() {
                 datePickerDialog!!.show();
             }
             proceed.setOnClickListener {
-                val fragmentAttendanceFragment = AttendanceFragment()
-                val grpId = listOfGroupId!!.find { it.name.equals(group.text.toString()) }!!.id
-                val paperId = listOfPaperId!!.find { it.name.equals(paper.text.toString()) }!!.id
-                val bundle=Bundle()
-                bundle.putString("GRPID",grpId)
-                bundle.putString("PAPRID",paperId)
-                bundle.putString("GRPNAME",group.text.toString())
-                bundle.putString("PAPRNAME",paper.text.toString())
-                bundle.putString("DATE",dateOfAttendance.text.toString())
-                fragmentAttendanceFragment.arguments=bundle
-                fragmentSupportManager.beginTransaction().apply {
-                    replace(R.id.frameLayout, fragmentAttendanceFragment, "4")
-                        .addToBackStack("4")
-                    commit()
+                if(group.text.toString().equals(""))
+                    showToast("Please select Group")
+                else if(paper.text.toString().equals(""))
+                    showToast("Please select Paper")
+                else if(sessionType.text.toString().equals(""))
+                    showToast("Please select Session Type")
+                else if(dateOfAttendance.text.toString().equals(""))
+                    showToast("Please select Date Of Attendance")
+                else{
+                    val fragmentAttendanceFragment = AttendanceFragment()
+                    val grpId = listOfGroupId!!.find { it.name.equals(selectedGroupName) }!!.id
+                    val paperId = listOfPaperId!!.find { it.name.equals(paper.text.toString()) }!!.id
+                    val bundle=Bundle()
+                    bundle.putString("GRPID",grpId)
+                    bundle.putString("PAPRID",paperId)
+                    bundle.putString("GRPNAME",selectedGroupName)
+                    bundle.putString("PAPRNAME",paper.text.toString())
+                    bundle.putString("SESSIONTYPE",sessionType.text.toString())
+                    bundle.putString("DATE",dateOfAttendance.text.toString())
+                    fragmentAttendanceFragment.arguments=bundle
+                    fragmentSupportManager.beginTransaction().apply {
+                        replace(R.id.frameLayout, fragmentAttendanceFragment, "4")
+                            .addToBackStack("4")
+                        commit()
+                    }
+                    attendancePreviousFragmentType="online"
+                    dialog!!.cancel()
                 }
-                attendancePreviousFragmentType="online"
-                dialog!!.cancel()
+
             }
 
             dialog!!.setContentView(dialogView)
@@ -576,14 +640,16 @@ class FacultyHomeActivity : AppCompatActivity() {
                         listOfGroupName.clear()
                         val grpJsonArray = jsonobject.getJSONArray("responseObject")
                         for (i in 0 until grpJsonArray.length()) {
+                            Log.e("CLASS TYPE",grpJsonArray.getJSONObject(i).getString("classType"))
                             listOfGroupId.add(
                                 NameIdPojo(
                                     grpJsonArray.getJSONObject(i).getString("virtualGroupName"),
-                                    grpJsonArray.getJSONObject(i).getString("virtualGroupId")
+                                    grpJsonArray.getJSONObject(i).getString("virtualGroupId"),
+                                    grpJsonArray.getJSONObject(i).getString("classType")
                                 )
                             )
                             listOfGroupName.add(
-                                grpJsonArray.getJSONObject(i).getString("virtualGroupName")
+                                grpJsonArray.getJSONObject(i).getString("virtualGroupName")+" ("+grpJsonArray.getJSONObject(i).getString("classType")+")"
                             )
                         }
                         if (type.equals("SHOW"))
@@ -635,7 +701,8 @@ class FacultyHomeActivity : AppCompatActivity() {
                                 listOfPaperId.add(
                                     NameIdPojo(
                                         grpJsonArray.getJSONObject(i).getString("subject"),
-                                        grpJsonArray.getJSONObject(i).getString("paperId")
+                                        grpJsonArray.getJSONObject(i).getString("paperId"),
+                                        ""
                                     )
                                 )
                                 listOfPaperName.add(

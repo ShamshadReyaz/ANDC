@@ -47,12 +47,14 @@ class ListOfStudentAttendanceDetailAdapter(
 
         fun setData(rankModel: JSONObject?, pos: Int) {
             itemView.month.setText(rankModel?.getString("month"))
-            itemView.type.setText("Type: "+typeOfClass)
+            itemView.type.visibility=View.GONE
+            //itemView.type.setText("Type: "+typeOfClass)
+
             Log.e("CREDITS",""+rankModel?.getJSONObject("paperDetails")?.getString("creditsLecture"))
             itemView.faculty.setText("By "+rankModel?.getString("facultyName"))
             itemView.classHeld.setText("Classes Held: "+rankModel?.getString("classesHeld"))
             itemView.classAttended.setText("Classes Attended: "+rankModel?.getString("classesAttended"))
-            itemView.benefits.setText("Benefits: "+rankModel?.getString("benefits"))
+            itemView.benefits.setText("Benefits: 0")
 
 
         }

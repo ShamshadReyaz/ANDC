@@ -9,7 +9,7 @@
         android:id="@+id/topLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorSky"
+        android:background="#F6DBDC"
         android:elevation="10dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
@@ -52,6 +52,7 @@
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@id/edit"
             android:padding="@dimen/d_5dp"
+            android:visibility="gone"
             android:src="@drawable/ic_yourdost_new" />
 
         <TextView
@@ -92,7 +93,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:backgroundTint="@color/theme_color"
+        android:indeterminateTint="@color/theme_color"
         android:visibility="gone" />
 
 </RelativeLayout>

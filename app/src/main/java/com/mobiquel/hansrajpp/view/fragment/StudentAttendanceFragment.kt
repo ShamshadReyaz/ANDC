@@ -68,7 +68,7 @@ class StudentAttendanceFragment : Fragment() {
                         attendanceHashMap= HashMap()
                         for(i in 0 until jsonArray.length()){
                             val jsonObject=jsonArray.getJSONObject(i)
-                            val key=jsonObject.getString("paperName")+"separator"+jsonObject.getString("section")
+                            val key=jsonObject.getString("paperName")+"separator"+jsonObject.getString("section")+"separator"+jsonObject.getString("groupType")
                             if(attendanceHashMap!!.containsKey(key)){
                                 var dataArray= attendanceHashMap!!.get(key)
                                 dataArray?.put(jsonObject)
@@ -95,7 +95,7 @@ class StudentAttendanceFragment : Fragment() {
                                 false
                             )
                             binding.listView.adapter = adapter
-                            binding.footerLayout.visibility=View.VISIBLE
+                            //binding.footerLayout.visibility=View.VISIBLE
                         }
                         else
                             binding.noResult.visibility=View.VISIBLE
@@ -107,7 +107,7 @@ class StudentAttendanceFragment : Fragment() {
                 }
 
             })
-        binding.ins2.paintFlags =
+       /* binding.ins2.paintFlags =
             binding.ins2.getPaintFlags() or Paint.UNDERLINE_TEXT_FLAG
         binding.ins3.paintFlags =
             binding.ins3.getPaintFlags() or Paint.UNDERLINE_TEXT_FLAG
@@ -117,7 +117,7 @@ class StudentAttendanceFragment : Fragment() {
         }
         binding.ins3.setOnClickListener {
             requireActivity().redirectToWeb2("https://online.srcc.edu/smartprof/file_uploads/SRCC%20HANDBOOK%202021-22%20(1)-200-201.pdf")
-        }
+        }*/
     }
 
 
@@ -167,17 +167,20 @@ class StudentAttendanceFragment : Fragment() {
             var ugcType=""
             var creditsLecture=""
             if(jsonArray.length()>0)
+            {
                 creditsLecture =jsonArray.getJSONObject(0).getJSONObject("paperDetails").getString("creditsLecture")
-            if(section.substring(section.length-2,section.length-1).matches(regex))
+                typeOfClass =jsonArray.getJSONObject(0).getString("groupType")
+            }
+            /*if(section.substring(section.length-2,section.length-1).matches(regex))
                 typeOfClass="CA"  //Tutorial
             else
-                typeOfClass="IA"
+                typeOfClass="IA"*/
 
-            if(Preferences!!.instance!!.collegeRollNo!!.substring(0,2).toInt()>=22)
+           /* if(Preferences!!.instance!!.collegeRollNo!!.substring(0,2).toInt()>=22)
                 ugcType="UGCF"  //Tutorial
             else
                 ugcType="LOCF"//Lecture
-
+*/
             monthName.setText(key.split("separator")[0]+"\n("+key.split("separator")[1]+")")
             val mAdapter=ListOfStudentAttendanceDetailAdapter(requireActivity(),jsonArray,typeOfClass)
             listView.layoutManager = LinearLayoutManager(
@@ -194,14 +197,19 @@ class StudentAttendanceFragment : Fragment() {
             for(i in 0 until jsonArray.length()){
                 classHeld=classHeld.plus(Integer.parseInt(jsonArray.getJSONObject(i).getString("classesHeld")))
                 classAttended=classAttended.plus(Integer.parseInt(jsonArray.getJSONObject(i).getString("classesAttended")))
-                benefits=benefits.plus(Integer.parseInt(jsonArray.getJSONObject(i).getString("benefits")))
+                try{
+                    benefits=benefits.plus(Integer.parseInt(jsonArray.getJSONObject(i).getString("benefits")))
+                }catch (e:Exception){
+                    benefits=benefits.plus(Integer.parseInt("0"))
+                }
+
             }
             val oneBy3ofheld=(classHeld/3).toDouble()
             classHeldTotal.setText("Classes Held: "+classHeld)
             classAttendedTotal.setText("Classes Attended: "+classAttended)
             benefitsTotal.setText("Benefits: "+benefits)
             var attendancePercent:Double=((classAttended.toDouble()/classHeld.minus(minOf(oneBy3ofheld.toInt(),benefits)))*100)
-            var attendanceMarks=0
+           /* var attendanceMarks=0
             var multiplyingFactor=0.0
             when(attendancePercent){
                 in 0.00 .. 66.90->attendanceMarks=0
@@ -211,20 +219,21 @@ class StudentAttendanceFragment : Fragment() {
                 in 80.00 .. 84.90->attendanceMarks=4
                 else->attendanceMarks=5
             }
-            if(typeOfClass.equals("IA") && ugcType.equals("UGCF") && creditsLecture.equals("1"))
+            if(typeOfClass.equals("IA") && creditsLecture.equals("1"))
                 multiplyingFactor= 0.4
-            else if(typeOfClass.equals("IA") && ugcType.equals("UGCF") && creditsLecture.equals("2"))
+            else if(typeOfClass.equals("IA")  && creditsLecture.equals("2"))
                 multiplyingFactor= 0.8
-            else if(typeOfClass.equals("IA") && ugcType.equals("UGCF") && creditsLecture.equals("3"))
+            else if(typeOfClass.equals("IA")  && creditsLecture.equals("3"))
                 multiplyingFactor= 1.2
-            else if(typeOfClass.equals("CA") && ugcType.equals("UGCF"))
+            else if(typeOfClass.equals("CA") )
                 multiplyingFactor= 1.0
+*/
 
-
-            val attendanceMarksValue=(attendanceMarks*multiplyingFactor)
+            //val attendanceMarksValue=(attendanceMarks*multiplyingFactor)
 
             attendancePerc.setText("Attendance Percentage\n"+String.format("%.2f", attendancePercent).toDouble())
-            marksOfAttendance.setText("Marks of Attendance\n"+ String.format("%.2f", attendanceMarksValue).toDouble())
+            marksOfAttendance.visibility=View.GONE
+            //marksOfAttendance.setText("Marks of Attendance\n"+ String.format("%.2f", attendanceMarksValue).toDouble())
             dialog!!.setContentView(dialogView)
             dialog!!.setCancelable(true)
             dialog!!.window?.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)

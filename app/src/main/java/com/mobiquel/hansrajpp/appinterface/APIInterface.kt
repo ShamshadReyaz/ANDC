@@ -19,7 +19,7 @@ interface APIInterface {
     fun nonTeachingLogin   (@FieldMap param:MutableMap<String, String>): Call<ResponseBody>
 
     @FormUrlEncoded
-    @POST("commonLogin")
+    @POST("studentLogin")
     fun studentLogin   (@FieldMap param:MutableMap<String, String>): Call<ResponseBody>
 
     @FormUrlEncoded

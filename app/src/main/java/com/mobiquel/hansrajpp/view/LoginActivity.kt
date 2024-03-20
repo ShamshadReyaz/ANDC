@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.RadioGroup
 import androidx.appcompat.app.AppCompatActivity
 import com.mobiquel.hansrajapp.databinding.ActivityLoginBinding
 import com.mobiquel.hansrajpp.data.ApiManager
@@ -43,43 +44,35 @@ class LoginActivity : AppCompatActivity() {
             else if (binding.password.text.toString().equals(""))
                 showSnackBar("Please enter Password!", binding.rlMain)
             else {
-               // viewModelLogin()
                 login()
-/*
-                    binding.progressBar.visibility=View.VISIBLE
-                var genderUserType =
-                    resources.getResourceEntryName(binding.userTypeGrp.checkedRadioButtonId) // "male"
-                if (genderUserType.equals("nonTeaching"))
-                    genderUserType = "non-teaching"
-
-
-*/
-
             }
 
         }
+/*
+        Username : sanjeev
+        Password : 929070
+*/
+/*
+        gautamjyoti338@gmail.com
+        Information@123
+*/
 
-       /*binding.userTypeGrp.setOnCheckedChangeListener(object : RadioGroup.OnCheckedChangeListener {
+       binding.userTypeGrp.setOnCheckedChangeListener(object : RadioGroup.OnCheckedChangeListener {
             override fun onCheckedChanged(p0: RadioGroup?, p1: Int) {
                 val userType =
                     resources.getResourceEntryName(p1) // "male"
                 if (userType.equals("faculty")) {
-                    binding.username.setText("aasheerwad.dwivedi@srcc.edu")
-                    binding.password.setText("gojJ379")
+                    binding.usernameLayout.setHint("Enter Username")
                 }
                 if (userType.equals("student")) {
-                    binding.username.setText("20ba003@srcc.edu")
-                    binding.password.setText("KDAS931")
+                    binding.usernameLayout.setHint("Enter EmailId")
                 }
-                if (userType.equals("nonTeaching")) {
-                    binding.username.setText("neha.sharma@srcc.du.ac.in")
-                    binding.password.setText("srcc@123")
-                }
+
 
             }
 
         })
-*/
+
        // binding.username.setText("sonu.gupta@srcc.edu")
        // binding.password.setText("dVOD251")
 
@@ -94,13 +87,17 @@ class LoginActivity : AppCompatActivity() {
         binding.progressBar.visibility = View.VISIBLE
         val data: MutableMap<String, String> = HashMap()
         Log.e("DECRYPT","====== "+Security.decrypt("D1Qqkid2T3MKAQd72AdP8w=="))
+        val genderUserType =
+            resources.getResourceEntryName(binding.userTypeGrp.checkedRadioButtonId) // "male"
+
+        if (genderUserType.equals("student"))
         data["email"] = binding.username.text.toString()
+        else
         data["username"] = Security.encrypt(binding.username.text.toString())
+
         data["password"] = Security.encrypt(binding.password.text.toString())
         val apiManager: ApiManager? = ApiManager.init()
 
-        val genderUserType =
-            resources.getResourceEntryName(binding.userTypeGrp.checkedRadioButtonId) // "male"
         if (genderUserType.equals("faculty")) {
             apiManager!!.facultyLogin(data).enqueue(object : Callback<ResponseBody> {
                 override fun onResponse(
@@ -147,10 +144,11 @@ class LoginActivity : AppCompatActivity() {
                 override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                     Log.e("DATA", "FAILURE"+t.printStackTrace())
                     binding.progressBar.visibility = View.GONE
+                    showSnackBar("Network Issue! Please try again", binding.rlMain)
+
                 }
 
             })
-
         }
         else if (genderUserType.equals("student")) {
             apiManager!!.studentLogin(data).enqueue(object : Callback<ResponseBody> {
@@ -195,6 +193,8 @@ class LoginActivity : AppCompatActivity() {
                 override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                     Log.e("DATA", "FAILURE")
                     binding.progressBar.visibility = View.GONE
+                    showSnackBar("Network Issue! Please try again", binding.rlMain)
+
                 }
 
             })

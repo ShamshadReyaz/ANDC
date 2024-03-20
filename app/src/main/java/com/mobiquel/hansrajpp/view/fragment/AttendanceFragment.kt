@@ -85,7 +85,7 @@ class AttendanceFragment : Fragment() {
         dateOfAttendance = requireArguments().getString("DATE").toString()
         binding.datetoday.text = requireArguments().getString("DATE").toString()
         binding.grppaper.text = requireArguments().getString("GRPNAME")
-            .toString() + ", " + requireArguments().getString("PAPRNAME").toString()
+            .toString() + ", " + requireArguments().getString("PAPRNAME").toString()+" ("+sessionType+")"
 
         binding.attendanceNotMarked.setOnClickListener {
             requireActivity().showSingleButtonDialog("You haven't submitted/marked attendance yet for this date.")
@@ -407,68 +407,71 @@ class AttendanceFragment : Fragment() {
                         if (jsonobject.getString("errorCode").equals("0")) {
 
                             for (j in 0 until jsonobject.getJSONArray("responseObject").length()) {
-                                var listOfStudent = ArrayList<AttendanceStudentModel>()
-                                if (!jsonobject.getJSONArray("responseObject").getJSONObject(j).isNull("sessionRecord")) {
-                                    typeOfOperation = "UPDATE"
-                                    period =
+                                if(sessionType.equals(jsonobject.getJSONArray("responseObject").getJSONObject(j).getJSONObject("sessionRecord").getString("lectureType"))){
+                                    var listOfStudent = ArrayList<AttendanceStudentModel>()
+                                    if (!jsonobject.getJSONArray("responseObject").getJSONObject(j).isNull("sessionRecord")) {
+                                        typeOfOperation = "UPDATE"
+                                        period =
+                                            jsonobject.getJSONArray("responseObject").getJSONObject(j)
+                                                .getJSONObject("sessionRecord").getString("period")
+                                    }
+                                    val studentJsonArray =
                                         jsonobject.getJSONArray("responseObject").getJSONObject(j)
-                                            .getJSONObject("sessionRecord").getString("period")
-                                }
-                                val studentJsonArray =
-                                    jsonobject.getJSONArray("responseObject").getJSONObject(j)
-                                        .getJSONArray("studentList")
-                                var present = 0
-                                var absent = 0
+                                            .getJSONArray("studentList")
+                                    var present = 0
+                                    var absent = 0
 
-                                for (i in 0 until studentJsonArray.length()) {
+                                    for (i in 0 until studentJsonArray.length()) {
 
-                                    if (!studentJsonArray.getJSONObject(i).isNull("slotId")) {
-                                        slotId =
-                                            studentJsonArray.getJSONObject(i).getString("slotId")
-                                    }
+                                        if (!studentJsonArray.getJSONObject(i).isNull("slotId")) {
+                                            slotId =
+                                                studentJsonArray.getJSONObject(i).getString("slotId")
+                                        }
 
-                                    if (studentJsonArray.getJSONObject(i).getString("isPresent").equals("")) {
-                                        val attendanceStudentModel = AttendanceStudentModel(
-                                            studentJsonArray.getJSONObject(i)
-                                                .getString("studentId"),
-                                            studentJsonArray.getJSONObject(i)
-                                                .getString("studentName"),
-                                            studentJsonArray.getJSONObject(i).getString("slotId"),
-                                            "P",
-                                            studentJsonArray.getJSONObject(i).getString("rollNo"),
-                                            studentJsonArray.getJSONObject(i).getString("sem")
-                                        )
-                                        present++
-                                        listOfStudent.add(attendanceStudentModel)
-                                    } else {
-                                        val attendanceStudentModel = AttendanceStudentModel(
-                                            studentJsonArray.getJSONObject(i)
-                                                .getString("studentId"),
-                                            studentJsonArray.getJSONObject(i)
-                                                .getString("studentName"),
-                                            studentJsonArray.getJSONObject(i).getString("slotId"),
-                                            studentJsonArray.getJSONObject(i)
-                                                .getString("isPresent"),
-                                            studentJsonArray.getJSONObject(i).getString("rollNo"),
-                                            studentJsonArray.getJSONObject(i).getString("sem")
-                                        )
-                                        if (studentJsonArray.getJSONObject(i).getString("isPresent")
-                                                .equals("P")
-                                        )
-                                            present++
-                                        else
+                                        if (studentJsonArray.getJSONObject(i).getString("isPresent").equals("")) {
+                                            val attendanceStudentModel = AttendanceStudentModel(
+                                                studentJsonArray.getJSONObject(i)
+                                                    .getString("studentId"),
+                                                studentJsonArray.getJSONObject(i)
+                                                    .getString("studentName"),
+                                                studentJsonArray.getJSONObject(i).getString("slotId"),
+                                                "A",
+                                                studentJsonArray.getJSONObject(i).getString("rollNo"),
+                                                studentJsonArray.getJSONObject(i).getString("sem")
+                                            )
                                             absent++
-                                        listOfStudent.add(attendanceStudentModel)
+                                            listOfStudent.add(attendanceStudentModel)
+                                        } else {
+                                            val attendanceStudentModel = AttendanceStudentModel(
+                                                studentJsonArray.getJSONObject(i)
+                                                    .getString("studentId"),
+                                                studentJsonArray.getJSONObject(i)
+                                                    .getString("studentName"),
+                                                studentJsonArray.getJSONObject(i).getString("slotId"),
+                                                studentJsonArray.getJSONObject(i)
+                                                    .getString("isPresent"),
+                                                studentJsonArray.getJSONObject(i).getString("rollNo"),
+                                                studentJsonArray.getJSONObject(i).getString("sem")
+                                            )
+                                            if (studentJsonArray.getJSONObject(i).getString("isPresent")
+                                                    .equals("P")
+                                            )
+                                                present++
+                                            else
+                                                absent++
+                                            listOfStudent.add(attendanceStudentModel)
+                                        }
+
                                     }
 
+                                    listOfSlot.add(
+                                        SlotAttendanceStudentModel(
+                                            "Slot " + j.plus(1), "" + present, "" + absent, "F",
+                                            listOfStudent, period, slotId
+                                        )
+                                    )
                                 }
 
-                                listOfSlot.add(
-                                    SlotAttendanceStudentModel(
-                                        "Slot " + j.plus(1), "" + present, "" + absent, "F",
-                                        listOfStudent, period, slotId
-                                    )
-                                )
                             }
                             listOfSlot.get(0).isSelected = "T"
                             studentsAttendanceListAdapter?.updateList(listOfSlot.get(0).listOfStudent!!)

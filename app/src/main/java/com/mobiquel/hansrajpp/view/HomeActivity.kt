@@ -48,7 +48,7 @@ class HomeActivity : AppCompatActivity() {
     private val fragmentNoticeFragment = NoticeFragment()
     private val fragmentAttendanceStudentFragment = StudentAttendanceFragment()
     private val fragmentStudentHomeFragment = StudentHomeFragment()
-    private val fragmentProfileFragment = ProfileFragment()
+    private val fragmentProfileFragment = StudentProfileFragment()
     private val maintenanceFragment = MaintenanceFragment()
     private val wifiFragment = WifiFragment()
     private val webViewFragment = WebViewragment()
@@ -370,7 +370,7 @@ class HomeActivity : AppCompatActivity() {
                         .addToBackStack("2")
                     commit()
                 }
-                binding.edit.visibility = View.VISIBLE
+             //   binding.edit.visibility = View.VISIBLE
             }
             "maintenance" -> {
                 fragmentSupportManager.beginTransaction().apply {

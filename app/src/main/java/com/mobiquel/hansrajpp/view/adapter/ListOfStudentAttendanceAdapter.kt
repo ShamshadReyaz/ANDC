@@ -48,8 +48,11 @@ class ListOfStudentAttendanceAdapter(
                 val data=rankModel.split("separator")
                 itemView.t1.text =data[0]
                 itemView.t2.text =data[1]
+                //val typeOfClass =it..getJSONObject(0).getString("groupType")
+                itemView.t3.text ="Group Type: "+data[2]
 
             }
+
             itemView.viewlayout.setOnClickListener {
                 recyclerItemClickListener.onRecyclerItemClicked(pos)
             }

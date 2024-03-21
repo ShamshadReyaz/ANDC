@@ -97,7 +97,7 @@ class FacultyHomeActivity : AppCompatActivity() {
         context = this@FacultyHomeActivity
         apiViewModel = HomeAPIViewModel()
         version.text = "Version: " + getAppVersion()
-        getNotificationId()
+      //  getNotificationId()
         getGroup("")
         //getYourDostToken()
 
@@ -474,7 +474,6 @@ class FacultyHomeActivity : AppCompatActivity() {
                 dialogView.findViewById<AutoCompleteTextView>(R.id.paper)
             var sessionType =
                 dialogView.findViewById<AutoCompleteTextView>(R.id.sessionType)
-
             var dateOfAttendance =
                 dialogView.findViewById<EditText>(R.id.dateOfAttendance)
             var dateOfAttendancelay =

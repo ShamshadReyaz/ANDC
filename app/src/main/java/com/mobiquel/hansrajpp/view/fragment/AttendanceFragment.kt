@@ -407,14 +407,22 @@ class AttendanceFragment : Fragment() {
                         if (jsonobject.getString("errorCode").equals("0")) {
 
                             for (j in 0 until jsonobject.getJSONArray("responseObject").length()) {
-                                if(sessionType.equals(jsonobject.getJSONArray("responseObject").getJSONObject(j).getJSONObject("sessionRecord").getString("lectureType"))){
+                                //if(sessionType.equals(jsonobject.getJSONArray("responseObject").getJSONObject(j).getJSONObject("sessionRecord").getString("lectureType"))){
                                     var listOfStudent = ArrayList<AttendanceStudentModel>()
-                                    if (!jsonobject.getJSONArray("responseObject").getJSONObject(j).isNull("sessionRecord")) {
+
+                                if (!jsonobject.getJSONArray("responseObject").getJSONObject(j).isNull("sessionRecord") &&
+                                    !sessionType.equals(jsonobject.getJSONArray("responseObject").getJSONObject(j).getJSONObject("sessionRecord").getString("lectureType"))) {
+                                   break;
+                                }
+                                   if (!jsonobject.getJSONArray("responseObject").getJSONObject(j).isNull("sessionRecord")) {
                                         typeOfOperation = "UPDATE"
                                         period =
                                             jsonobject.getJSONArray("responseObject").getJSONObject(j)
                                                 .getJSONObject("sessionRecord").getString("period")
+
                                     }
+
+
                                     val studentJsonArray =
                                         jsonobject.getJSONArray("responseObject").getJSONObject(j)
                                             .getJSONArray("studentList")
@@ -470,7 +478,7 @@ class AttendanceFragment : Fragment() {
                                             listOfStudent, period, slotId
                                         )
                                     )
-                                }
+                                //}
 
                             }
                             listOfSlot.get(0).isSelected = "T"

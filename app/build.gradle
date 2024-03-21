@@ -17,7 +17,7 @@ android {
         applicationId "com.mobiquel.hansrajapp"
         minSdkVersion 21
         targetSdkVersion 33
-        versionCode 1
+        versionCode 4
         versionName "1.0.0"
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true

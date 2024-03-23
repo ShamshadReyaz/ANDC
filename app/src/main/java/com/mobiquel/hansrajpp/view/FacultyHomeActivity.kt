@@ -97,7 +97,7 @@ class FacultyHomeActivity : AppCompatActivity() {
         context = this@FacultyHomeActivity
         apiViewModel = HomeAPIViewModel()
         version.text = "Version: " + getAppVersion()
-      //  getNotificationId()
+        getNotificationId()
         getGroup("")
         //getYourDostToken()
 
@@ -207,7 +207,7 @@ class FacultyHomeActivity : AppCompatActivity() {
             if (token != null) {
                 notificationId = token
                 Log.e("TOKEN",token)
-                //checkSmartProfVersion()
+                checkSmartProfVersion()
 
             }
 

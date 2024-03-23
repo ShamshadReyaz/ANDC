@@ -14,8 +14,10 @@ import com.mobiquel.hansrajapp.databinding.FragmentNoticeBinding
 import com.mobiquel.hansrajpp.data.ApiManager
 import com.mobiquel.hansrajpp.utils.Preferences
 import com.mobiquel.hansrajpp.utils.showSnackBar
+import com.mobiquel.hansrajpp.utils.showToast
 import com.mobiquel.hansrajpp.view.adapter.NoticeListAdapter
 import com.mobiquel.hansrajpp.view.viewmodel.APIViewModel
+import com.mobiquel.lehpermit.data.Status
 import okhttp3.ResponseBody
 import org.json.JSONObject
 import retrofit2.Call
@@ -51,39 +53,48 @@ class NoticeFragment : Fragment() {
             Preferences!!.instance!!.userType!!
         )?.observe(this,
             Observer {
-
-                binding.progressBar.visibility = View.GONE
-                try {
-                    val stringResponse = it!!.data!!.string()
-                    val jsonobject = JSONObject(stringResponse)
-                    if (jsonobject.getString("errorCode").equals("1"))
-                        requireContext().showSnackBar(
-                            "Invalid Credentials! Please try again",
-                            binding.rlMain
-                        )
-                    else {
-
-                        var dataList = ArrayList<String>()
-                        for (i in 0 until jsonobject.getJSONArray("responseObject").length()) {
-                            dataList.add(
-                                jsonobject.getJSONArray("responseObject").getJSONObject(i)
-                                    .toString()
-                            )
-                        }
-                        val mAdapter = NoticeListAdapter(requireContext(), dataList)
-                        binding.listView.layoutManager = LinearLayoutManager(
-                            context,
-                            LinearLayoutManager.VERTICAL,
-                            false
-                        )
-                        binding.listView.adapter = mAdapter
-
-                        if (dataList.size == 0)
-                            binding.noResult.visibility = View.VISIBLE
-
+                when (it.status) {
+                    Status.ERROR -> {
+                        binding.progressBar.visibility = View.GONE
+                        binding.noResult.visibility = View.VISIBLE
+                        activity!!.showToast("Network Issue! Please try again.")
                     }
-                } catch (e: Exception) {
-                    e.printStackTrace()
+                    Status.SUCCESS -> {
+                        binding.progressBar.visibility = View.GONE
+                        try {
+                            val stringResponse = it!!.data!!.string()
+                            val jsonobject = JSONObject(stringResponse)
+                            if (jsonobject.getString("errorCode").equals("1"))
+                                requireContext().showSnackBar(
+                                    "Invalid Credentials! Please try again",
+                                    binding.rlMain
+                                )
+                            else {
+
+                                var dataList = ArrayList<String>()
+                                for (i in 0 until jsonobject.getJSONArray("responseObject")
+                                    .length()) {
+                                    dataList.add(
+                                        jsonobject.getJSONArray("responseObject").getJSONObject(i)
+                                            .toString()
+                                    )
+                                }
+                                val mAdapter = NoticeListAdapter(requireContext(), dataList)
+                                binding.listView.layoutManager = LinearLayoutManager(
+                                    context,
+                                    LinearLayoutManager.VERTICAL,
+                                    false
+                                )
+                                binding.listView.adapter = mAdapter
+
+                                if (dataList.size == 0)
+                                    binding.noResult.visibility = View.VISIBLE
+
+                            }
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+                    }
                 }
 
             })

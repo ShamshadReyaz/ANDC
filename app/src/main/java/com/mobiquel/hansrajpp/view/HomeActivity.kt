@@ -71,7 +71,7 @@ class HomeActivity : AppCompatActivity() {
         context = this@HomeActivity
         apiViewModel = HomeAPIViewModel()
         version.text = "Version: " + getAppVersion()
-        //getNotificationId()
+        getNotificationId()
         getYourDostToken()
 
 
@@ -158,7 +158,7 @@ class HomeActivity : AppCompatActivity() {
             val token = task.result
             if (token != null) {
                 notificationId = token
-               // checkSmartProfVersion()
+                checkSmartProfVersion()
 
             }
 

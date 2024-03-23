@@ -1,13 +1,12 @@
 package com.mobiquel.hansrajpp.view.fragment
 
 import android.content.Context
-import android.graphics.Paint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -15,20 +14,19 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.mobiquel.mdt112.`interface`.RecyclerItemClickListener
 import com.mobiquel.hansrajapp.R
 import com.mobiquel.hansrajapp.databinding.FragmentNoticeBinding
-import com.mobiquel.hansrajpp.utils.*
+import com.mobiquel.hansrajpp.utils.Preferences
+import com.mobiquel.hansrajpp.utils.showSnackBar
+import com.mobiquel.hansrajpp.utils.showToast
 import com.mobiquel.hansrajpp.view.adapter.ListOfStudentAttendanceAdapter
 import com.mobiquel.hansrajpp.view.adapter.ListOfStudentAttendanceDetailAdapter
 import com.mobiquel.hansrajpp.view.viewmodel.APIViewModel
-import kotlinx.android.synthetic.main.list_item_attendance_detail.view.*
-import kotlinx.android.synthetic.main.list_item_notices.view.*
+import com.mobiquel.lehpermit.data.Status
+import com.mobiquel.mdt112.`interface`.RecyclerItemClickListener
 import org.json.JSONArray
 import org.json.JSONObject
-import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
+import java.lang.Double.min
 
 class StudentAttendanceFragment : Fragment() {
 
@@ -56,57 +54,100 @@ class StudentAttendanceFragment : Fragment() {
         binding.progressBar.visibility = View.VISIBLE
         apiViewModel?.getStudentAttendance(Preferences!!.instance!!.userId!!)?.observe(this,
             Observer {
-                binding.progressBar.visibility = View.GONE
-                try {
-                    val stringResponse = it!!.data!!.string()
-                    val jsonobject = JSONObject(stringResponse)
-                    if (jsonobject.getString("errorCode").equals("1"))
-                        requireContext().showSnackBar("Invalid Credentials! Please try again", binding.rlMain)
-                    else {
-
-                        val jsonArray=jsonobject.getJSONArray("responseObject")
-                        attendanceHashMap= HashMap()
-                        for(i in 0 until jsonArray.length()){
-                            val jsonObject=jsonArray.getJSONObject(i)
-                            val key=jsonObject.getString("paperName")+"separator"+jsonObject.getString("section")+"separator"+jsonObject.getString("groupType")
-                            if(attendanceHashMap!!.containsKey(key)){
-                                var dataArray= attendanceHashMap!!.get(key)
-                                dataArray?.put(jsonObject)
-                                attendanceHashMap!!.set(key,dataArray!!)
-                            }else{
-                                var dataArray=JSONArray()
-                                dataArray?.put(jsonObject)
-                                attendanceHashMap!!.set(key,dataArray!!)
-                            }
-                        }
-                        var listOfKey=ArrayList<String>()
-                        attendanceHashMap!!.forEach { listOfKey.add(it.key) }
-                        if(listOfKey.size>0){
-                            listOfKey.sortBy { it }
-                            var adapter=ListOfStudentAttendanceAdapter(requireContext(),listOfKey,object :RecyclerItemClickListener{
-                                override fun onRecyclerItemClicked(position: Int) {
-                                        val jsonArray= attendanceHashMap!!.get(listOfKey.get(position))
-                                    showAttendanceDetailDialog(listOfKey.get(position),jsonArray!!)
-                                }
-                            })
-                            binding.listView.layoutManager = LinearLayoutManager(
-                                requireActivity(),
-                                LinearLayoutManager.VERTICAL,
-                                false
-                            )
-                            binding.listView.adapter = adapter
-                            //binding.footerLayout.visibility=View.VISIBLE
-                        }
-                        else
-                            binding.noResult.visibility=View.VISIBLE
-
-
+                when (it.status) {
+                    Status.ERROR -> {
+                        binding.progressBar.visibility = View.GONE
+                        binding.noResult.visibility = View.VISIBLE
+                        activity!!.showToast("Network Issue! Please try again.")
                     }
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
+                    Status.SUCCESS -> {
 
-            })
+                        binding.progressBar.visibility = View.GONE
+                        try {
+                            val stringResponse = it!!.data!!.string()
+                            val jsonobject = JSONObject(stringResponse)
+                            if (jsonobject.getString("errorCode").equals("1"))
+                                requireContext().showSnackBar(
+                                    "Invalid Credentials! Please try again",
+                                    binding.rlMain
+                                )
+                            else {
+
+                                val jsonArray = jsonobject.getJSONArray("responseObject")
+                                attendanceHashMap = HashMap()
+                                var totalAttendace = 0;
+                                var totalHeld = 0;
+                                var totalBenefit = 0
+                                for (i in 0 until jsonArray.length()) {
+                                    val jsonObject = jsonArray.getJSONObject(i)
+                                    totalAttendace += Integer.parseInt(jsonObject.getString("classesAttended"))
+                                    totalHeld += Integer.parseInt(jsonObject.getString("classesHeld"))
+                                    if (!jsonObject.isNull("benefits"))
+                                        totalBenefit += Integer.parseInt(jsonObject.getString("benefits"))
+
+                                    val key =
+                                        jsonObject.getString("paperName") + "separator" + jsonObject.getString(
+                                            "section"
+                                        ) + "separator" + jsonObject.getString("groupType")
+                                    if (attendanceHashMap!!.containsKey(key)) {
+                                        var dataArray = attendanceHashMap!!.get(key)
+                                        dataArray?.put(jsonObject)
+                                        attendanceHashMap!!.set(key, dataArray!!)
+                                    } else {
+                                        var dataArray = JSONArray()
+                                        dataArray?.put(jsonObject)
+                                        attendanceHashMap!!.set(key, dataArray!!)
+                                    }
+                                }
+                                var maxBenfit = (totalHeld / 3).toDouble()
+                                val actualBenefit =
+                                    min(totalBenefit.toDouble(), maxBenfit)
+                                val overallAttendacePercentage =
+                                    (totalAttendace / (totalHeld - actualBenefit)) * 100
+                                //String.format("%.2f", attendancePercent).toDouble()
+                                binding.footerLayout.visibility = View.VISIBLE
+                                binding.ins3.setText(
+                                    "Overall Attendance %" + String.format(
+                                        "%.2f",
+                                        overallAttendacePercentage
+                                    ).toDouble()
+                                )
+                                var listOfKey = ArrayList<String>()
+                                attendanceHashMap!!.forEach { listOfKey.add(it.key) }
+                                if (listOfKey.size > 0) {
+                                    listOfKey.sortBy { it }
+                                    var adapter = ListOfStudentAttendanceAdapter(
+                                        requireContext(),
+                                        listOfKey,
+                                        object : RecyclerItemClickListener {
+                                            override fun onRecyclerItemClicked(position: Int) {
+                                                val jsonArray =
+                                                    attendanceHashMap!!.get(listOfKey.get(position))
+                                                showAttendanceDetailDialog(
+                                                    listOfKey.get(position),
+                                                    jsonArray!!
+                                                )
+                                            }
+                                        })
+
+                                    binding.listView.layoutManager = LinearLayoutManager(
+                                        requireActivity(),
+                                        LinearLayoutManager.VERTICAL,
+                                        false
+                                    )
+                                    binding.listView.adapter = adapter
+                                    //binding.footerLayout.visibility=View.VISIBLE
+                                } else
+                                    binding.noResult.visibility = View.VISIBLE
+
+
+                            }
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+                    }
+
+            }})
        /* binding.ins2.paintFlags =
             binding.ins2.getPaintFlags() or Paint.UNDERLINE_TEXT_FLAG
         binding.ins3.paintFlags =

@@ -104,11 +104,24 @@ class FacultyHomeActivity : AppCompatActivity() {
         ViewCompat.setOnApplyWindowInsetsListener(binding.topLayout2) { view, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             // Add status bar height to top padding, keep other padding as original
-            view.setPadding(
+            /*view.setPadding(
                 originalPadding,
                 systemBars.top + originalPadding,
                 originalPadding,
                 originalPadding
+            )*/
+            binding.topLayout2.setPadding(
+                binding.topLayout2.paddingLeft,
+                systemBars.top,
+                binding.topLayout2.paddingRight,
+                binding.topLayout2.paddingBottom
+            )
+
+            binding.frameLayout.setPadding(
+                binding.frameLayout.paddingLeft,
+                binding.frameLayout.paddingTop,
+                binding.frameLayout.paddingRight,
+                systemBars.bottom
             )
             insets
         }

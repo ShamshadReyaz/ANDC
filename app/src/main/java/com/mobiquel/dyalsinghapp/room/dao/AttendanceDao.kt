@@ -1,0 +1,27 @@
+package com.mobiquel.dyalsinghapp.room.dao
+
+import androidx.room.*
+import com.mobiquel.dyalsinghapp.room.entity.AttendanceClassEntity
+
+@Dao
+interface AttendanceDao {
+
+    @Insert
+    suspend fun insert(attendance: AttendanceClassEntity):Long
+
+   /* @Query("UPDATE AttendanceClassEntity SET listOfStudent = :listOfStudent AND deletedListOfStudent = :deletedListOfStudent where id = :id")
+    suspend fun updateAttendanceById(listOfStudent: List<SlotAttendanceStudentModel>,deletedListOfStudent: List<SlotAttendanceStudentModel>,id:Int)
+*/
+    /*@Delete
+    suspend fun delete(attendance: AttendanceClassEntity)
+*/
+    @Query("delete from AttendanceClassEntity where id=:id")
+    suspend fun deleteAllattendanceById(id:Int)
+
+    @Query("select * from AttendanceClassEntity where facultyId = :facultyId AND virtualGroupId = :virtualGroupId AND paperId = :paperId AND sessionDate = :sessionDate")
+    suspend fun getAttendanceByCondition(facultyId:String?,virtualGroupId:String?,paperId:String?,sessionDate:String?): AttendanceClassEntity
+
+    @Query("select * from AttendanceClassEntity")
+    suspend fun getAllAttendance(): List<AttendanceClassEntity>
+
+}

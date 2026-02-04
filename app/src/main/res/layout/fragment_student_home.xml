@@ -85,7 +85,7 @@
             android:layout_width="match_parent"
             android:layout_height="180dp">
 
-            <com.mobiquel.hansrajpp.utils.autoscrollviewpager.AutoScrollViewPager
+            <com.mobiquel.dyalsinghapp.utils.autoscrollviewpager.AutoScrollViewPager
                 android:id="@+id/vp_banner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />

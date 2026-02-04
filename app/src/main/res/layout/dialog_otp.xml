@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:padding="20dp">
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Enter OTP"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:paddingBottom="8dp" />
+
+    <TextView
+        android:id="@+id/tvSubtitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="We sent a 4-digit code"
+        android:textSize="14sp"
+        android:gravity="center"
+        android:paddingBottom="16dp" />
+
+    <!-- OTP fields -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginBottom="18dp">
+
+        <EditText
+            android:id="@+id/etOtp1"
+            style="@style/OtpEdit"
+            android:layout_marginEnd="8dp" />
+
+        <EditText
+            android:id="@+id/etOtp2"
+            style="@style/OtpEdit"
+            android:layout_marginEnd="8dp" />
+
+        <EditText
+            android:id="@+id/etOtp3"
+            style="@style/OtpEdit"
+            android:layout_marginEnd="8dp" />
+
+        <EditText
+            android:id="@+id/etOtp4"
+            style="@style/OtpEdit"
+            android:layout_marginEnd="8dp" />
+
+            </LinearLayout>
+
+    <!-- Buttons -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="end">
+
+        <Button
+            android:id="@+id/btnCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="10sp"
+            android:text="Re-send OTP" />
+
+        <Button
+            android:id="@+id/btnVerify"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Verify"
+            android:textSize="10sp"
+
+            android:textColor="@color/black"
+            android:layout_marginStart="12dp" />
+    </LinearLayout>
+</LinearLayout>

@@ -20,7 +20,8 @@
                 android:id="@+id/sdv_banner"
                 android:layout_width="match_parent"
                 android:layout_height="170dp"
-                android:scaleType="fitXY"
+                android:src="@drawable/banner"
+                android:scaleType="centerCrop"
                 android:adjustViewBounds="true"
                 android:background="@color/white"
                 />

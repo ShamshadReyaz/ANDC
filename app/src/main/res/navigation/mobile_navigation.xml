@@ -6,13 +6,13 @@
     app:startDestination="@+id/navigation_notice">
     <fragment
         android:id="@+id/navigation_notice"
-        android:name="com.mobiquel.hansrajpp.view.fragment.NoticeFragment"
+        android:name="com.mobiquel.dyalsinghapp.view.fragment.NoticeFragment"
         android:label="NOTICE"
         tools:layout="@layout/fragment_notice" />
 
     <fragment
         android:id="@+id/navigation_profile"
-        android:name="com.mobiquel.hansrajpp.view.fragment.ProfileFragment"
+        android:name="com.mobiquel.dyalsinghapp.view.fragment.ProfileFragment"
         android:label="PROFILE"
         tools:layout="@layout/fragment_profile" />
 

@@ -2,7 +2,7 @@
   "project_info": {
     "project_number": "371259125442",
     "project_id": "mobiquel-2",
-    "storage_bucket": "mobiquel-2.appspot.com"
+    "storage_bucket": "mobiquel-2.firebasestorage.app"
   },
   "client": [
     {
@@ -12,12 +12,7 @@
           "package_name": "com.dharohar.app"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "371259125442-19h804kn1ublvfngjmtu7evhnctc6bc6.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
           "current_key": "AIzaSyCTezWhmiXK8uYupAjG9aoSTiELBFlBoDQ"
@@ -25,19 +20,83 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "371259125442-19h804kn1ublvfngjmtu7evhnctc6bc6.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "371259125442-gpq64do0or87j416iq4s694kbdpcus2s.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.mobiquel.smartprofandc"
-              }
-            }
-          ]
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:371259125442:android:31494290537a54109a555b",
+        "android_client_info": {
+          "package_name": "com.example.myapplication"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTezWhmiXK8uYupAjG9aoSTiELBFlBoDQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:371259125442:android:0c6501aae84beb7d9a555b",
+        "android_client_info": {
+          "package_name": "com.mobiquel.deshbandhu"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTezWhmiXK8uYupAjG9aoSTiELBFlBoDQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:371259125442:android:57928cb3436b60fc9a555b",
+        "android_client_info": {
+          "package_name": "com.mobiquel.dyalsinghapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTezWhmiXK8uYupAjG9aoSTiELBFlBoDQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:371259125442:android:9cd36bd0c04b78829a555b",
+        "android_client_info": {
+          "package_name": "com.mobiquel.efaapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTezWhmiXK8uYupAjG9aoSTiELBFlBoDQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
         }
       }
     },
@@ -45,15 +104,10 @@
       "client_info": {
         "mobilesdk_app_id": "1:371259125442:android:5023afec7714cbaa9a555b",
         "android_client_info": {
-          "package_name": "com.mobiquel.hansrajapp"
+          "package_name": "com.mobiquel.dyalsinghapp"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "371259125442-19h804kn1ublvfngjmtu7evhnctc6bc6.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
           "current_key": "AIzaSyCTezWhmiXK8uYupAjG9aoSTiELBFlBoDQ"
@@ -61,19 +115,64 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "371259125442-19h804kn1ublvfngjmtu7evhnctc6bc6.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "371259125442-gpq64do0or87j416iq4s694kbdpcus2s.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.mobiquel.smartprofandc"
-              }
-            }
-          ]
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:371259125442:android:b839a65ae11d3aa89a555b",
+        "android_client_info": {
+          "package_name": "com.mobiquel.jkcccscanner"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTezWhmiXK8uYupAjG9aoSTiELBFlBoDQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:371259125442:android:a0524b1062ae50809a555b",
+        "android_client_info": {
+          "package_name": "com.mobiquel.ladakhsurveyapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTezWhmiXK8uYupAjG9aoSTiELBFlBoDQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:371259125442:android:bed70c8f51af5a569a555b",
+        "android_client_info": {
+          "package_name": "com.mobiquel.sgtb"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTezWhmiXK8uYupAjG9aoSTiELBFlBoDQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
         }
       }
     },
@@ -84,12 +183,7 @@
           "package_name": "com.mobiquel.smartprofandc"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "371259125442-19h804kn1ublvfngjmtu7evhnctc6bc6.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
           "current_key": "AIzaSyCTezWhmiXK8uYupAjG9aoSTiELBFlBoDQ"
@@ -97,19 +191,7 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "371259125442-19h804kn1ublvfngjmtu7evhnctc6bc6.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "371259125442-gpq64do0or87j416iq4s694kbdpcus2s.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.mobiquel.smartprofandc"
-              }
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     },
@@ -120,12 +202,7 @@
           "package_name": "com.mobiquel.smartprofbharati"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "371259125442-19h804kn1ublvfngjmtu7evhnctc6bc6.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
           "current_key": "AIzaSyCTezWhmiXK8uYupAjG9aoSTiELBFlBoDQ"
@@ -133,19 +210,64 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "371259125442-19h804kn1ublvfngjmtu7evhnctc6bc6.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "371259125442-gpq64do0or87j416iq4s694kbdpcus2s.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.mobiquel.smartprofandc"
-              }
-            }
-          ]
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:371259125442:android:aa85cfc0d34175ce9a555b",
+        "android_client_info": {
+          "package_name": "com.mobiquel.smartprofdrc"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTezWhmiXK8uYupAjG9aoSTiELBFlBoDQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:371259125442:android:2d4c60efe02f1c7b9a555b",
+        "android_client_info": {
+          "package_name": "com.mobiquel.smartprofmlnc"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTezWhmiXK8uYupAjG9aoSTiELBFlBoDQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:371259125442:android:3fa876e805f9c3659a555b",
+        "android_client_info": {
+          "package_name": "com.mobiquel.smartprofrlac"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTezWhmiXK8uYupAjG9aoSTiELBFlBoDQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
         }
       }
     },
@@ -156,12 +278,7 @@
           "package_name": "com.mobiquel.smartprofsgnd"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "371259125442-19h804kn1ublvfngjmtu7evhnctc6bc6.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
           "current_key": "AIzaSyCTezWhmiXK8uYupAjG9aoSTiELBFlBoDQ"
@@ -169,19 +286,7 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "371259125442-19h804kn1ublvfngjmtu7evhnctc6bc6.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "371259125442-gpq64do0or87j416iq4s694kbdpcus2s.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.mobiquel.smartprofandc"
-              }
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     },
@@ -192,12 +297,7 @@
           "package_name": "com.mobiquel.smartprofvasanta"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "371259125442-19h804kn1ublvfngjmtu7evhnctc6bc6.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
           "current_key": "AIzaSyCTezWhmiXK8uYupAjG9aoSTiELBFlBoDQ"
@@ -205,19 +305,26 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "371259125442-19h804kn1ublvfngjmtu7evhnctc6bc6.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "371259125442-gpq64do0or87j416iq4s694kbdpcus2s.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.mobiquel.smartprofandc"
-              }
-            }
-          ]
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:371259125442:android:8fe50bc25ebaccfb9a555b",
+        "android_client_info": {
+          "package_name": "com.te.re"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTezWhmiXK8uYupAjG9aoSTiELBFlBoDQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
         }
       }
     }

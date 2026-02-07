@@ -35,6 +35,10 @@ object NetworkModule {
         )
         .add(
             "www.dsc.mobiquel.com",
+            "sha256/y7xVm0TVJNahMr2sZydE2jQH8SquXV9yLF9seROHHHU="
+        )
+        .add(
+            "www.dsc.mobiquel.com",
             "sha256/sbYXSYat4YdXJf0ksZZGAaUZDjmAKxoEmRYrbssKzDM="
         )
         .build()

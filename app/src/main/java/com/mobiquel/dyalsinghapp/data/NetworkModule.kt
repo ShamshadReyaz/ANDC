@@ -48,14 +48,14 @@ object NetworkModule {
     fun provideOkHttpClient(loggingInterceptor: HttpLoggingInterceptor,certificatePinner: CertificatePinner) =
         OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
-            .certificatePinner(certificatePinner)
+            /*.certificatePinner(certificatePinner)*/
             .build()
 
     @Provides
     @Singleton
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit =
         Retrofit.Builder()
-            .baseUrl("https://www.dsc.mobiquel.com/api_v1/")
+            .baseUrl("http://165.22.211.182:8080/RollCallANDC/rest/service/")
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()

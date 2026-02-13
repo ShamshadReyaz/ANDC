@@ -11,14 +11,14 @@
     </style>
 
     <style name="MyDatePickerStyle" parent="Theme.AppCompat.Light.Dialog">
-        <item name="android:colorAccent">@color/colorPink</item>
-        <item name="android:colorControlActivated">@color/colorPink</item>
+        <item name="android:colorAccent">@color/theme</item>
+        <item name="android:colorControlActivated">@color/theme</item>
         <item name="android:buttonBarPositiveButtonStyle">@style/DialogButtonStyled</item>
         <item name="android:buttonBarNegativeButtonStyle">@style/DialogButtonStyled</item>
     </style>
 
     <style name="DialogButtonStyled" parent="Widget.AppCompat.Button.Borderless">
-        <item name="android:textColor">@color/colorNavyBlue</item> <!-- button text color -->
+        <item name="android:textColor">@color/theme</item> <!-- button text color -->
     </style>
 
     <style name="Theme.Login" parent="Theme.MaterialComponents.Light.NoActionBar">
@@ -31,7 +31,7 @@
         <item name="android:windowOptOutEdgeToEdgeEnforcement">true</item>
 
         <!-- Status bar -->
-        <item name="android:statusBarColor">#F6DBDC</item>
+        <item name="android:statusBarColor">@color/theme</item>
 
         <!-- Typography -->
         <item name="fontFamily">@font/poppins_medium</item>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppTheme" parent="AppBaseTheme">
+
+        <!-- REQUIRED -->
+        <item name="android:windowActionBarOverlay">false</item>
+        <item name="android:windowContentOverlay">@null</item>
+
+        <!-- System bars -->
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <!-- Colors -->
+        <item name="colorControlNormal">#c5c5c5</item>
+        <item name="colorControlActivated">#E74C3C</item>
+        <item name="colorControlHighlight">#E74C3C</item>
+
+        <item name="actionBarSize">56dp</item>
+    </style>
+
+</resources>

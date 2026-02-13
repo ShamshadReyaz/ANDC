@@ -9,7 +9,7 @@
         android:id="@+id/topLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#F6DBDC"
+        android:background="#1B284A"
         android:elevation="10dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
@@ -23,7 +23,7 @@
             android:fontFamily="@font/poppins_semibold"
             android:includeFontPadding="false"
             android:text="@string/app_name"
-            android:textColor="@color/colorBlack"
+            android:textColor="@color/colorWhite"
             android:textSize="@dimen/d_18sp" />
         <ImageView
             android:id="@+id/logout"

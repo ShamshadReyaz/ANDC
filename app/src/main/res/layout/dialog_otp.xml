@@ -67,7 +67,7 @@
             android:id="@+id/btnCancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="10sp"
             android:text="Re-send OTP" />
 
@@ -78,7 +78,7 @@
             android:text="Verify"
             android:textSize="10sp"
 
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:layout_marginStart="12dp" />
     </LinearLayout>
 </LinearLayout>

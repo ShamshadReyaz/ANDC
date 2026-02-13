@@ -92,7 +92,7 @@ class FacultyHomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window.statusBarColor = android.graphics.Color.parseColor("#F6DBDC")
+            window.statusBarColor = android.graphics.Color.parseColor("#1B284A")
         }
         binding = ActivityHomeFacultyBinding.inflate(layoutInflater)
         setContentView(binding.root)

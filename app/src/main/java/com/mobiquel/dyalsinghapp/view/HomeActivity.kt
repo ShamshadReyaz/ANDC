@@ -72,7 +72,7 @@ class HomeActivity : AppCompatActivity() {
         
         // Set status bar color to match background
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window.statusBarColor = android.graphics.Color.parseColor("#F6DBDC")
+            window.statusBarColor = android.graphics.Color.parseColor("#1B284A")
         }
 
         binding = ActivityHomeBinding.inflate(layoutInflater)

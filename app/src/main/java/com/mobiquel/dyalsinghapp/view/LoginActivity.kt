@@ -135,12 +135,31 @@ class LoginActivity : AppCompatActivity() {
                         if (jsonobject.getString("errorCode").equals("1"))
                             showSnackBar("Invalid Credentials! Please try again", binding.rlMain)
                         else {
-                            showOtpDialog(this@LoginActivity,4){
+                            /*showOtpDialog(this@LoginActivity,4){
                                 if(it.equals("resend"))
                                     resendOtp(binding.username.text.toString())
                                 else
                                     verifyOtp(it,binding.username.text.toString(),jsonobject,"student")
-                            }
+                            }*/
+                            Preferences.instance!!.loadPreferences(this@LoginActivity)
+                            Preferences.instance!!.isLoginDone = "1"
+
+                            Preferences.instance!!.userType =
+                                "student"
+                            Preferences.instance!!.email =
+                                binding.username.text.toString()
+                            Preferences.instance!!.userId =
+                                jsonobject.getJSONObject("responseObject").getString("id")
+                            Preferences.instance!!.userName =
+                                jsonobject.getJSONObject("responseObject").getString("name")
+
+                            Preferences.instance!!.collegeRollNo =
+                                jsonobject.getJSONObject("responseObject").getString("enrollmentNo")
+
+                            Preferences.instance!!.savePreferences(this@LoginActivity)
+                            showToast(jsonobject.getString("errorMessage"))
+                            startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
+                            finish()
 
                         }
                     } catch (e: Exception) {

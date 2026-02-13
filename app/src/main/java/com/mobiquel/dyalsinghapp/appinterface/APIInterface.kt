@@ -11,7 +11,7 @@ import retrofit2.http.*
  */
 interface APIInterface {
     @FormUrlEncoded
-    @POST("studentLogin")
+    @POST("studentLoginWithEmail")
     fun studentLogin   (@FieldMap param:MutableMap<String, String>): Call<ResponseBody>
 
     @FormUrlEncoded
